@@ -42,6 +42,8 @@ class Club(models.Model):
     )
 
     # 메인 포스트
+    # main_post_id  = models.ForeignKey(Post)
+    main_post_id = models.PositiveIntegerField()
 
     # 멤버수
     num_of_memebers = models.PositiveIntegerField()
@@ -56,16 +58,22 @@ class Club(models.Model):
     url = models.CharField()
 
     # 지원가능여부
-    is_applicable = models.BooleanField(default=False)
-
-    # 지원가능기간
-    application_period = models.DateField()
+    is_apply = models.BooleanField(default=False)
 
     # 상시모집여부
     is_always_apply = models.BooleanField(default=False)
 
+    # 지원가능기간
+    apply_start = models.DateField(auto_now=False)
+    apply_end = models.DateField(auto_now=False)
+
     # 지원 url (google)
-    application_url = models.CharField()
+    apply_url = models.CharField(max_length=255)
 
     # 회장 user id
-    #  = models.ForeignKey(Seller)seller = models.ForeignKey(Seller)
+    #leader_id  = models.ForeignKey(User)
+    leader_id  = models.PositiveIntegerField()
+
+    # 관리자 id
+    admin1_id = models.PositiveIntegerField()
+    admin2_id = models.PositiveIntegerField()
