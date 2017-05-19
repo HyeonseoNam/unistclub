@@ -105,3 +105,4 @@ fabric.properties
 
 # Secret files
 secret.json
+venv/*
