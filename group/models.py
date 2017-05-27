@@ -10,10 +10,16 @@ type_list = (
 class Group(models.Model):
 
     # 그룹 이름
-    group_name = models.CharField(max_length=30, null=False)
+    group_name = models.CharField(max_length=255, null=False)
 
     # 종류(스터디, 친목모임 등)
-    group_status = models.CharField(max_length=15, null=True, blank=True)
+    group_status = models.CharField(max_length=255, null=True, blank=True)
+
+    # 모임 시간
+    meeting_time = models.CharField(max_length=255, null=True, blank=True)
+
+    # 모임 장소
+    meeting_place = models.CharField(max_length=255, null=True, blank=True)
 
     # 등록일
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -23,6 +29,10 @@ class Group(models.Model):
 
     # 모임 소개
     description = models.CharField(max_length=255, null=False, blank=True)
+
+    # 연락처 부분
+    contact = models.CharField(max_length=255, null=False, blank=True)
+
 
     # 지원가능여부
     is_apply = models.BooleanField(default=False)
