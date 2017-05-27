@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#ffffff">
+    {% block meta %}
+    {% endblock %}
+    <title>[UNIST CLUB]</title>
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block css %}{% endblock %}
+</head>
+<body>
+{% include 'main/header.html' %}
+{% block jumbotron %}{% endblock %}
+{% block content %}{% endblock %}
+
+{% include 'main/footer.html' %}
+{% block js %}{% endblock %}
+
+</body>
+</html>
