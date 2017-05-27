@@ -9,7 +9,6 @@ type_list = (
 )
 
 class Club(models.Model):
-    # sns_type = models.CharField(choices=sns_type_list, max_length=15, null=False)
 
     # 이름
     name = models.CharField(max_length=10, null=False)
