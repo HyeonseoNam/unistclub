@@ -106,4 +106,7 @@ fabric.properties
 # Secret files
 secret.json
 venv/*
+<<<<<<< HEAD
 myvenv/*
+=======
+>>>>>>> 7a2bf9b52cb9a2267971ccb7dfe57099896afa76
