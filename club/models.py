@@ -9,7 +9,6 @@ type_list = (
 )
 
 class Club(models.Model):
-    # sns_type = models.CharField(choices=sns_type_list, max_length=15, null=False)
 
     # 이름
     name = models.CharField(max_length=10, null=False)
@@ -55,7 +54,7 @@ class Club(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     # url
-    url = models.CharField()
+    url = models.CharField(max_length=255)
 
     # 지원가능여부
     is_apply = models.BooleanField(default=False)
