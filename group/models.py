@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-type_list = (
+status_list = (
     ("study", "스터디"),
     ("social", "친목모임"),
 )
@@ -13,7 +13,7 @@ class Group(models.Model):
     group_name = models.CharField(max_length=255, null=False)
 
     # 종류(스터디, 친목모임 등)
-    group_status = models.CharField(max_length=255, null=True, blank=True)
+    group_status = models.CharField(choices=status_list, max_length=15, null=False)
 
     # 모임 시간
     meeting_time = models.CharField(max_length=255, null=True, blank=True)
@@ -25,7 +25,7 @@ class Group(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     # 등록일
-    modified_at = models.DateTimeField(auto_now_add=True, auto_now=True)
+    modified_at = models.DateTimeField(auto_now=True)
 
     # 모임 소개
     description = models.CharField(max_length=255, null=False, blank=True)

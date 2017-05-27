@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from club.views import club_each
+from group.views import group_create
 
 urlpatterns = [
     url(r'', include('main.urls', namespace='main')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('account.urls', namespace='account')),
-    url(r'^club_each/', club_each, name='club_each')
+    url(r'^club_each/', club_each, name='club_each'),
+    url(r'^group_create/', group_create, name='group_create'),
 ]
