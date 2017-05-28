@@ -18,7 +18,9 @@
     {% for group in groups %}
         <a href="{{ group.get_absolute_url }}">
             <div class="group_each_wrapper">
-                {{ group.group_name }}
+                {{ group.group_name }} <br>
+                {{ group.group_status }} <br>
+                {{ group.description }} <br>
             </div>
         </a>
     {% endfor %}

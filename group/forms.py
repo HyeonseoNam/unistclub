@@ -22,3 +22,6 @@ class GroupForm(forms.ModelForm):
             'apply_start',
             'apply_end',
         )
+        widgets = {
+            'description': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+        }
