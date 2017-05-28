@@ -1,6 +1,9 @@
-{% extends 'main/base.html' %}
+{% extends 'group/group_base.html' %}
 {% load staticfiles %}
-{% block content %}
+{% block group_css %}
+
+{% endblock %}
+{% block group_content %}
 <h1>group_detail</h1>
     {{ group.group_name }} <br/>
     {{ group.group_status }} <br/>
