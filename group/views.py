@@ -5,12 +5,9 @@ import json
 
 # Create your views here.
 def group_main(request):
-    print('group_main')
     if request.method == 'POST':
         search_content = request.POST['search_content']
         groups = Group.objects.filter(group_name__contains=search_content)
-        print(groups)
-        print(groups[0].group_name)
         template = 'group/group_main.html'
         context = {'groups': groups}
         return render(request, template, context)

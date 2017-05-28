@@ -25,7 +25,5 @@ urlpatterns = [
     url(r'^club_each/', club_each, name='club_each'),
     url(r'^group_create/', group_create, name='group_create'),
     url(r'^groups/', group_main, name="group_main"),
-    # url(r'^group/', group_main, name='group'),
     url(r'^group/(?P<group_id>\d+)/$', group_detail, name='group_detail'),
-    # url(r'^group/(?P<group_id>\d+)/$', group_detail, name='group_detail'),
 ]
