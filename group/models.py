@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-
+from account.models import User
 # Create your models here.
 
 status_list = (
@@ -65,3 +65,9 @@ class Group(models.Model):
     @property
     def get_absolute_url(self):
         return reverse('group_detail', kwargs={"group_id": self.id})
+
+class Comment(models.Model):
+    group = models.ForeignKey(Group)
+    # user = models.ForeignKey(User)
+    user = models.PositiveIntegerField()
+    content = models.CharField(max_length=255, null=False, blank=True)

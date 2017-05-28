@@ -13,4 +13,39 @@
     {{ group.contact }} <br/>
     {{ group.apply_start }} <br/>
     {{ group.apply_end }} <br/>
+
+    <hr>
+    <form id="comment_form" action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
+        {{ comment_form.as_p }}
+{#        <input type="text" name="content"/>#}
+        <button type="submit">입력</button>
+    </form>
+    <h1>
+        {{ added_comment }}
+    </h1>
+    {% for comment in comments %}
+        <div>
+            {{ comment.user }} | {{ comment.content }}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block js %}
+    <script>
+    $(document).ready(function() {
+        $('#comment_form').submit(function() { // catch the form's submit event
+            $.ajax({ // create an AJAX call...
+                method: 'POST',
+                data: {csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                comment_content: $(this).find('input[type=text]').val()},
+                dataType: "json",
+                url: $(this).attr('action'), // the file to call
+                success: function(response) { // on success..
+                    console.log(response);
+                }
+            });
+            return false;
+        });
+    });
+    </script>
 {% endblock %}

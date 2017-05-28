@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import (
-    Group
+    Group, Comment
 )
 
 class GroupForm(forms.ModelForm):
@@ -25,3 +25,13 @@ class GroupForm(forms.ModelForm):
         widgets = {
             'description': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
         }
+
+class CommentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = Comment
+        fields = (
+            'content',
+        )
