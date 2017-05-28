@@ -6,19 +6,19 @@ import json
 # Create your views here.
 def group_main(request):
     print('group_main')
-    if request.is_ajax():
+    if request.method == 'POST':
         search_content = request.POST['search_content']
-        searched_group = Group.objects.filter(group_name__contains=search_content)
-        data = {
-            'groups': searched_group
-        }
-        return HttpResponse(data)
-
-
-    groups = Group.objects.all()
-    template = 'group/group_main.html'
-    context = {'groups': groups}
-    return render(request, template, context)
+        groups = Group.objects.filter(group_name__contains=search_content)
+        print(groups)
+        print(groups[0].group_name)
+        template = 'group/group_main.html'
+        context = {'groups': groups}
+        return render(request, template, context)
+    else:
+        groups = Group.objects.all()
+        template = 'group/group_main.html'
+        context = {'groups': groups}
+        return render(request, template, context)
 
 def group_detail(request, group_id):
     print('group_detail')

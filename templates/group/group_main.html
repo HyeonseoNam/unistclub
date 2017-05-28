@@ -27,21 +27,4 @@
 {% endblock %}
 
 {% block js %}
-    <script>
-    $(document).ready(function() {
-        $('#group_search_form').submit(function() { // catch the form's submit event
-            $.ajax({ // create an AJAX call...
-                method: 'POST',
-                data: {csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
-                search_content: $(this).find('input[type=text]').val()},
-                dataType: "json",
-                url: $(this).attr('action'), // the file to call
-                success: function(response) { // on success..
-                    console.log(response);
-                }
-            });
-            return false;
-        });
-    });
-    </script>
 {% endblock %}
