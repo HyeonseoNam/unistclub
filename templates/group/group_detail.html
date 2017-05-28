@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+{% block content %}
+<h1>group_detail</h1>
+    {{ group.group_name }} <br/>
+    {{ group.group_status }} <br/>
+    {{ group.meeting_time }} <br/>
+    {{ group.meeting_place }} <br/>
+    {{ group.description }} <br/>
+    {{ group.contact }} <br/>
+{% endblock %}

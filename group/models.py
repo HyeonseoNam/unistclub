@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 # Create your models here.
 
@@ -6,6 +7,17 @@ status_list = (
     ("study", "스터디"),
     ("social", "친목모임"),
 )
+
+class GroupQueryset(models.query.QuerySet):
+    def is_apply(self):
+        return self.filter(is_apply=True)
+
+class GroupManager(models.Manager):
+    def get_queryset(self):
+        return GroupQueryset(self.model, using=self._db)
+
+    def is_apply(self):
+        return self.get_queryset().is_apply()
 
 class Group(models.Model):
 
@@ -46,3 +58,10 @@ class Group(models.Model):
 
     # 관리자 id
     admin_id = models.PositiveIntegerField()
+
+    # Manager
+    objects = GroupManager()
+
+    @property
+    def get_absolute_url(self):
+        return reverse('group_detail', kwargs={"group_id": self.id})

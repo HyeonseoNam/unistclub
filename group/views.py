@@ -1,7 +1,25 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import GroupForm
+from .models import Group
 
 # Create your views here.
+def group_main(request):
+    print('group_main')
+    groups = Group.objects.all()
+    template = 'group/group_main.html'
+    context = {'groups': groups}
+    return render(request, template, context)
+
+def group_detail(request, group_id):
+    print('group_detail')
+    # 지원 가능한 인스턴스만 부를때!
+    # group_instance = Group.objects.is_apply()
+    group_instance = Group.objects.all()
+    group = get_object_or_404(group_instance, id=group_id)
+    template = 'group/group_detail.html'
+    context = {'group': group}
+    return render(request, template, context)
+
 def group_create(request):
     form = GroupForm()
     template = 'group/group_create.html'
