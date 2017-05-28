@@ -1,10 +1,20 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404,HttpResponse
 from .forms import GroupForm
 from .models import Group
+import json
 
 # Create your views here.
 def group_main(request):
     print('group_main')
+    if request.is_ajax():
+        search_content = request.POST['search_content']
+        searched_group = Group.objects.filter(group_name__contains=search_content)
+        data = {
+            'groups': searched_group
+        }
+        return HttpResponse(data)
+
+
     groups = Group.objects.all()
     template = 'group/group_main.html'
     context = {'groups': groups}
@@ -34,9 +44,7 @@ def group_create(request):
             # instance.admin_id = request.user.id
             instance.admin_id = 1
             instance.save()
-            # 메인페이지로 보내기
-            # return redirect('main')
-            return redirect('group_create')
+            return redirect('group_main')
         else:
             pass
 

@@ -7,6 +7,14 @@
 {% endblock %}
 
 {% block group_content %}
+    <div class="search_wrapper">
+        <form id="group_search_form" action="{% url 'group_main' %}" method="post">{% csrf_token %}
+            <input type="text" name="search_content"/>
+            <button type="submit">검색</button>
+        </form>
+    </div>
+    <br/>
+
     {% for group in groups %}
         <a href="{{ group.get_absolute_url }}">
             <div class="group_each_wrapper">
@@ -16,4 +24,24 @@
     {% endfor %}
     <a href="{% url 'group_create' %}">그룹 만들기</a>
 <h1>group_main</h1>
+{% endblock %}
+
+{% block js %}
+    <script>
+    $(document).ready(function() {
+        $('#group_search_form').submit(function() { // catch the form's submit event
+            $.ajax({ // create an AJAX call...
+                method: 'POST',
+                data: {csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                search_content: $(this).find('input[type=text]').val()},
+                dataType: "json",
+                url: $(this).attr('action'), // the file to call
+                success: function(response) { // on success..
+                    console.log(response);
+                }
+            });
+            return false;
+        });
+    });
+    </script>
 {% endblock %}

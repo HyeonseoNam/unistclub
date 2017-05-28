@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% block content %}
 <h1>form_for group</h1>
-    <form method="POST">{% csrf_token %}
+    <form action="{% url 'group_create' %}" method="POST">{% csrf_token %}
         {{ form.as_p }}
 
         <button type="submit">그룹 생성하기</button>
