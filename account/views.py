@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth.forms import UserCreationForm
+from .forms import UserCreationForm
 from django.contrib.auth.views import login, logout
 
 
@@ -9,6 +9,9 @@ def signup(request):
     """
     signup to register users
     """
+    template = 'registration/signup.html'
+    context = {}
+    userform = UserCreationForm()
     # 가입 양식 작성하하여 제출 시 POST
     if request.method == "POST":
         userform = UserCreationForm(request.POST)
@@ -21,9 +24,11 @@ def signup(request):
 
     # 가입 양식 미작성 시 GET. 아무처리하지 X
     elif request.method == "GET":
-            userform = UserCreationForm()
-    return render(request, "registration/signup.html", {
-        "userform": userform,
-    })
+        pass
+
+    context = {"userform" : userform}
+    return render(request, template, context)
+
+
 
 
