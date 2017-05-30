@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404,HttpResponse
 from .forms import GroupForm, CommentForm
 from .models import Group, Comment
 import json
+from django.core import serializers
 
 # Create your views here.
 def group_main(request):
@@ -16,6 +17,7 @@ def group_main(request):
     return render(request, template, context)
 
 def group_detail(request, group_id):
+    print(request)
     template = 'group/group_detail.html'
     comment_form = CommentForm()
     # 지원 가능한 인스턴스만 부를때!
@@ -28,7 +30,6 @@ def group_detail(request, group_id):
 
     # comment 작성
     if request.is_ajax():
-        print(request.POST)
         comment_form = CommentForm(request.POST or None, request.FILES or None)
         if comment_form.is_valid():
             passed_content = request.POST['comment_content']
@@ -39,8 +40,9 @@ def group_detail(request, group_id):
             # instance.user = request.user.id
             instance.user = 1
             instance.save()
-            data = {'added_comment': instance}
-            return HttpResponse(data)
+            data = {'comment_user': '1', 'added_comment': instance.content}
+            json_data = json.dumps(data)
+            return HttpResponse(json_data, content_type='application/json')
         else:
             pass
 

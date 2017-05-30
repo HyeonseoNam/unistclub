@@ -1,7 +1,7 @@
 {% extends 'group/group_base.html' %}
 {% load staticfiles %}
 {% block group_css %}
-
+    <link rel="stylesheet" href="{% static 'css/group_detail.css' %}">
 {% endblock %}
 {% block group_content %}
 <h1>group_detail</h1>
@@ -23,11 +23,13 @@
     <h1>
         {{ added_comment }}
     </h1>
-    {% for comment in comments %}
-        <div>
-            {{ comment.user }} | {{ comment.content }}
-        </div>
-    {% endfor %}
+    <div class="comments_wrapper">
+        {% for comment in comments %}
+            <div class="comment_wrapper">
+                {{ comment.user }} | {{ comment.content }}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block js %}
@@ -41,7 +43,8 @@
                 dataType: "json",
                 url: $(this).attr('action'), // the file to call
                 success: function(response) { // on success..
-                    console.log(response);
+                    $('.comments_wrapper').append('<div class="comment_wrapper">'+
+                        response["comment_user"] + ' | ' + response["added_comment"]+'</div>');
                 }
             });
             return false;
