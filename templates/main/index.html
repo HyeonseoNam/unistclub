@@ -7,6 +7,18 @@
     <title>Title</title>
 </head>
 <body>
+    {% if request.user.is_authenticated %}
+        {{  request.user.name }}님, id가 {{ request.user.login_id }}으로
+        email: {{ request.user.email }}
+        로그인되어있습니다.
+
+            <form method="post" action="{% url 'account:logout' %}">
+            {% csrf_token %}
+                <button type="submit">로그아웃</button>
+            </form>
+    {% else %}
+        비로그인
+    {% endif %}
     <h1 class="test">unist club, hello world!</h1>
 </body>
 </html>

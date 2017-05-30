@@ -13,12 +13,14 @@ class UcUserManager(BaseUserManager):
         """
         Creates and saves a User with the given email and password.
         """
-        user = self.model(login_id=login_id, **extra_fields)
-        user.user_id = ''.join(random.sample('0123456789',5))
-        # TODO - user의 random key id의 중복방지 추가하여야 함
-        # if UcUser.objects.filter(pk=newid).count() == 0:
-            # self.object_id = newid
 
+        user = self.model(login_id=login_id, name=name, email=self.normalize_email(email), **extra_fields)
+        user.user_id = ''.join(random.sample('0123456789',5))
+        """
+        TODO - user의 random key id의 중복방지 추가하여야 함
+        if UcUser.objects.filter(pk=newid).count() == 0:
+        self.object_id = newid
+        """
         user.set_password(password)
         user.save(using=self._db)
         return user

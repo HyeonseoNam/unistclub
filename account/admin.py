@@ -16,7 +16,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = UcUser
-        fields = ('login_id', 'name', 'email',)
+        fields = ('login_id', 'name',)
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -30,8 +30,8 @@ class UserCreationForm(forms.ModelForm):
         # Save the provided password in hashed format
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-
-        user.user_id = ''.join(random.sample('0123456789',5))
+        randkey =  ''.join(random.sample('0123456789',5))
+        user.user_id = 'r' + randkey
         # TODO - user의 random key id의 중복방지 추가하여야 함
         if commit:
             user.save()

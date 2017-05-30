@@ -55,7 +55,7 @@ class UcUser(AbstractBaseUser, PermissionsMixin):
 
     objects = UcUserManager()
 
-    USERNAME_FIELD = 'user_id'
+    USERNAME_FIELD = 'login_id'
     REQUIRED_FIELDS = ['name', 'email']
 
 
