@@ -63,6 +63,7 @@ footer {
   text-align: center;
   background-color: #000;
   color: white; 
+  position: relative;
 }
 
 .footer_content {
@@ -71,8 +72,7 @@ footer {
 }
 
 footer p {
-  float:left;
-  position:absolute;
+  float: left;
   padding-left: 5%;
 }
 
@@ -80,4 +80,83 @@ footer ul {
   float: right;
   padding-right: 5%;
   height: 100%;
+}
+
+/* main */
+.wrapper {
+  width: 100%;
+  margin-top: 5%;
+  margin-bottom: 15px;
+}
+
+.wrapper .center-col {
+  padding: 0% 10%;
+  position: relative;
+  height: 100%;
+}
+
+.wrapper .banner {
+  height: 200px;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.wrapper .banner h1 {
+  line-height: 200px;
+}
+.wrapper .container {
+  height: 60%;
+  padding-top: 15px;
+}
+
+.list-bar {
+  width: 5%;
+  min-width: 100px;
+  display: inline-block;
+  float: left;
+}
+
+.list-bar li a {
+  color: black;
+}
+
+.vertical-line {
+  height: 100%;
+  border-right: 1px solid black;
+  margin-right: 10px;
+}
+
+.cssCircle {
+  border-radius: 999px;
+  width: 20px;
+  height: 20px;
+  padding: 0px;
+  display: inline-block;
+  border: 1px solid black;
+  color: #003580;
+  text-align: center;
+}
+
+.plusSign {
+  line-height: 1.1em;
+}
+
+.content {
+  display: inline-block;
+  height: 100%;
+  width: 85%;
+}
+
+.content-row {
+  overflow: hidden;
+}
+
+.each-content {
+  margin-bottom: 30px;
+  border: 1px solid #C7C3BD;
+  height: 270px;
+  margin-right: 20px;
+  float: left;
+  overflow: hidden;
+  width: 27%;
 }
