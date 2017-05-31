@@ -106,3 +106,6 @@ fabric.properties
 # Secret files
 secret.json
 venv/*
+*/migrations/*
+!*/migrations/__init__.py
+db.sqlite3
