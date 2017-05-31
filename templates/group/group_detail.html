@@ -1,0 +1,54 @@
+{% extends 'group/group_base.html' %}
+{% load staticfiles %}
+{% block group_css %}
+    <link rel="stylesheet" href="{% static 'css/group_detail.css' %}">
+{% endblock %}
+{% block group_content %}
+<h1>group_detail</h1>
+    {{ group.group_name }} <br/>
+    {{ group.group_status }} <br/>
+    {{ group.meeting_time }} <br/>
+    {{ group.meeting_place }} <br/>
+    {{ group.description }} <br/>
+    {{ group.contact }} <br/>
+    {{ group.apply_start }} <br/>
+    {{ group.apply_end }} <br/>
+
+    <hr>
+    <form id="comment_form" action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
+        {{ comment_form.as_p }}
+{#        <input type="text" name="content"/>#}
+        <button type="submit">입력</button>
+    </form>
+    <h1>
+        {{ added_comment }}
+    </h1>
+    <div class="comments_wrapper">
+        {% for comment in comments %}
+            <div class="comment_wrapper">
+                {{ comment.user }} | {{ comment.content }} | {{ comment.created_at }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+    $(document).ready(function() {
+        $('#comment_form').submit(function() { // catch the form's submit event
+            $.ajax({ // create an AJAX call...
+                method: 'POST',
+                data: {csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                comment_content: $(this).find('input[type=text]').val()},
+                dataType: "json",
+                url: $(this).attr('action'), // the file to call
+                success: function(response) { // on success..
+                    $('.comments_wrapper').append('<div class="comment_wrapper">'+
+                        response["comment_user"] + ' | ' + response["added_comment"] + ' | ' + response["comment_created"]+'</div>');
+                }
+            });
+            return false;
+        });
+    });
+    </script>
+{% endblock %}
