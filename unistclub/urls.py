@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+
 from club.views import club_detail, club_main, club_create
 from group.views import group_create, group_main, group_detail
+
 
 urlpatterns = [
     url(r'', include('main.urls', namespace='main')),
