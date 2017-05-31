@@ -1,0 +1,14 @@
+{% extends 'club/club_base.html' %}
+{% load staticfiles %}
+{% block club_css %}
+    <link rel="stylesheet" href="{% static 'css/club/club_create.css' %}">
+{% endblock %}
+{% block club_content %}
+<h1>form_for club</h1>
+    <form action="{% url 'club_create' %}" method="POST">{% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">동아리 등록하기</button>
+    </form>
+
+{% endblock %}
