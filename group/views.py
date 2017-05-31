@@ -114,8 +114,6 @@ def group_create(request):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.admin = request.user # merge: 로그인 user 등록
-            print(request.user)
-            print(instance.admin)
             instance.save()
             return redirect('group_main')
         else:
