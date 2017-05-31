@@ -26,7 +26,7 @@
     <div class="comments_wrapper">
         {% for comment in comments %}
             <div class="comment_wrapper">
-                {{ comment.user }} | {{ comment.content }}
+                {{ comment.user }} | {{ comment.content }} | {{ comment.created_at }}
             </div>
         {% endfor %}
     </div>
@@ -44,7 +44,7 @@
                 url: $(this).attr('action'), // the file to call
                 success: function(response) { // on success..
                     $('.comments_wrapper').append('<div class="comment_wrapper">'+
-                        response["comment_user"] + ' | ' + response["added_comment"]+'</div>');
+                        response["comment_user"] + ' | ' + response["added_comment"] + ' | ' + response["comment_created"]+'</div>');
                 }
             });
             return false;

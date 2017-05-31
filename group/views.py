@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404,HttpResponse
 from .forms import GroupForm, CommentForm
 from .models import Group, Comment
+from datetime import datetime
+from pytz import timezone
 import json
 from django.core import serializers
 
@@ -40,8 +42,18 @@ def group_detail(request, group_id):
             # instance.user = request.user.id
             instance.user = 1
             instance.save()
-            data = {'comment_user': '1', 'added_comment': instance.content}
-            json_data = json.dumps(data)
+
+            se_tz = timezone('Asia/Seoul') # 서울 타임존
+            real_datetime = se_tz.normalize(instance.created_at.astimezone(se_tz)) # 서울로 일시 바꾸기
+            am_pm = real_datetime.strftime('%p')
+            if am_pm=="AM":
+                am_pm = "오전"
+            else:
+                am_pm = "오후"
+            ajax_datetime = real_datetime.strftime('%Y년 %m월 %d일 %H:%M ') # 년 월 일 시간까지 입력
+            ajax_datetime = ajax_datetime + am_pm # 오전 오후 붙이는 곳
+            data = {'comment_user': '1', 'added_comment': instance.content, 'comment_created': ajax_datetime}
+            json_data = json.dumps(data, sort_keys=True, default=str)
             return HttpResponse(json_data, content_type='application/json')
         else:
             pass
