@@ -50,7 +50,7 @@ def group_detail(request, group_id):
                 am_pm = "오후"
             ajax_datetime = real_datetime.strftime('%Y년 %m월 %d일 %H:%M ') # 년 월 일 시간까지 입력
             ajax_datetime = ajax_datetime + am_pm # 오전 오후 붙이는 곳
-            data = {'comment_user': '1', 'added_comment': instance.content, 'comment_created': ajax_datetime}
+            data = {'comment_user': instance.user.name, 'added_comment': instance.content, 'comment_created': ajax_datetime}
             json_data = json.dumps(data, sort_keys=True, default=str)
             return HttpResponse(json_data, content_type='application/json')
         else:
