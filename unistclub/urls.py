@@ -15,27 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-<<<<<<< HEAD
-from club.views import club_each
-from main.views import home
-=======
+
 from club.views import club_detail, club_main, club_create
 from group.views import group_create, group_main, group_detail
->>>>>>> b43cfe8954039896a4a7321f64e19ffdf00daff6
+
 
 urlpatterns = [
     url(r'', include('main.urls', namespace='main')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('account.urls', namespace='account')),
-<<<<<<< HEAD
-    url(r'^club_each/', club_each, name='club_each'),
-    url(r'^home', home, name='home')
-=======
     url(r'^club_create/', club_create, name='club_create'),
     url(r'^clubs/', club_main, name='club_main'),
     url(r'^club/(?P<club_id>\d+)/$', club_detail, name='club_detail'),
     url(r'^group_create/', group_create, name='group_create'),
     url(r'^groups/', group_main, name="group_main"),
     url(r'^group/(?P<group_id>\d+)/$', group_detail, name='group_detail'),
->>>>>>> b43cfe8954039896a4a7321f64e19ffdf00daff6
 ]
