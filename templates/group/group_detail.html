@@ -13,8 +13,30 @@
     {{ group.contact }} <br/>
     {{ group.apply_start }} <br/>
     {{ group.apply_end }} <br/>
+    {{ group.max_member }} <br/>
 
-    <hr>
+    <h3>함께하는 사람들</h3>
+    <div class="joined_wrapper">
+        {% for member in joined_list %}
+            <span>{{ member }}</span>
+        {% endfor %}
+    </div>
+
+    <h3>참여대기</h3>
+    <div class="waiting_wrapper">
+        {% for member in applied_list %}
+            <span>{{ member }}  </span>
+        {% endfor %}
+    </div>
+
+
+
+    <hr><br/>
+    <form action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
+        <input type="hidden" value="{{ group.id }}" name="group_id"/>
+        <button type="submit">참가신청하기</button>
+    </form>
+    <hr><br/>
     <form id="comment_form" action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
         {{ comment_form.as_p }}
 {#        <input type="text" name="content"/>#}
@@ -50,5 +72,11 @@
             return false;
         });
     });
+    
+    $(document).ready(function() {
+        if('{{ message }}'!=""){
+            alert('{{ message }}');
+        }
+    })
     </script>
 {% endblock %}

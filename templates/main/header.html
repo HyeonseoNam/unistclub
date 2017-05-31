@@ -10,7 +10,7 @@
       <li><a href="">CLUB</a></li>
         {% if user.is_authenticated %}
             <li><a href="">MYPAGE</a></li>
-            <li><a href="">LOGOUT</a></li>
+            <li><a href="/accounts/logout">LOGOUT</a></li>
         {% else %}
             <li><a href="/accounts/login">LOGIN</a></li>
             <li><a href="/accounts/signup">회원가입</a></li>

@@ -57,7 +57,13 @@ class Group(models.Model):
     apply_end = models.DateField(auto_now=False)
 
     # 관리자 id
-    admin = models.ForeignKey(UcUser)
+    admin = models.ForeignKey(UcUser, related_name="group_admin")
+
+    # 지원가능인원
+    max_member = models.PositiveIntegerField()
+
+    # 유저
+    members = models.ManyToManyField(UcUser, through='Membership')
 
     # Manager
     objects = GroupManager()
@@ -65,6 +71,12 @@ class Group(models.Model):
     @property
     def get_absolute_url(self):
         return reverse('group_detail', kwargs={"group_id": self.id})
+
+class Membership(models.Model):
+    member = models.ForeignKey(UcUser)
+    group = models.ForeignKey(Group)
+    date_joined = models.DateField(auto_now_add=True, auto_now=False)
+    status = models.BooleanField(default=False)
 
 class Comment(models.Model):
     group = models.ForeignKey(Group)
