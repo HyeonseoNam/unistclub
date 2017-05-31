@@ -4,47 +4,52 @@
     <link rel="stylesheet" href="{% static 'css/group_detail.css' %}">
 {% endblock %}
 {% block group_content %}
-<h1>group_detail</h1>
-    {{ group.group_name }} <br/>
-    {{ group.group_status }} <br/>
-    {{ group.meeting_time }} <br/>
-    {{ group.meeting_place }} <br/>
-    {{ group.description }} <br/>
-    {{ group.contact }} <br/>
-    {{ group.apply_start }} <br/>
-    {{ group.apply_end }} <br/>
-    {{ group.max_member }} <br/>
-
-    <h4>함께하는 사람들 {{ joined_list|length }} / {{ group.max_member }}</h4>
-    <div class="joined_wrapper">
-        {% for member in joined_list %}
-            <span>{{ member }}</span>
-        {% endfor %}
-    </div>
-
-    <h4>참여대기</h4>
-    <div class="waiting_wrapper">
-        {% for member in applied_list %}
-            <span>{{ member }}  </span>
-        {% endfor %}
-    </div>
-
-
-
-    <hr><br/>
     <form action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
         <input type="hidden" value="{{ group.id }}" name="group_id"/>
-        <button type="submit">참가신청하기</button>
+        <button type="submit">함께하기</button>
     </form>
+    그룹이름 : {{ group.group_name }} <br/>
+    <div>달력 : {{ today|timesince:group.apply_end }} 남음 | 사람 : {{ joined_list|length }} / {{ group.max_member }}
+       | *{{ group.group_status }}</div>
     <hr><br/>
+    모임시간 : {{ group.meeting_time }} <br/>
+    모임장소 : {{ group.meeting_place }} <br/>
+    내용 : {{ group.description }} <br/>
+    {% if request.user in joined_list or request.user == group.admin or request.user in applied_list%}
+    연락 : {{ group.contact }} <br/>
+    {% endif %}
+
+    <h4>함께하는 사람들 {{ joined_list|length }} / {{ group.max_member }}</h4>
+    {% if request.user in joined_list or request.user == group.admin%}
+        <div class="joined_wrapper">
+            {% for member in joined_list %}
+                <span>{{ member }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if request.user == group.admin %}
+        <h4>참여대기</h4>
+        <div class="waiting_wrapper">
+            {% for member in applied_list %}
+                <span>{{ member }}  </span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <br/>
+    <form action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
+        <input type="hidden" value="{{ group.id }}" name="group_id"/>
+        <button type="submit">함께하기</button>
+    </form>
+    <br/>
+    Comment
     <form id="comment_form" action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
         {{ comment_form.as_p }}
-{#        <input type="text" name="content"/>#}
         <button type="submit">입력</button>
     </form>
-    <h1>
-        {{ added_comment }}
-    </h1>
+    <br/>
+    <hr>
+    <br/>
     <div class="comments_wrapper">
         {% for comment in comments %}
             <div class="comment_wrapper">

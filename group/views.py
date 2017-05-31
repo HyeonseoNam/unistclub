@@ -88,8 +88,11 @@ def group_detail(request, group_id):
     for jm in joined_members:
         joined_list.append(jm.member)
 
+    # TODO D-7 이런식으로 몇일남았는지 계산하기
+
     context = {'group': group, 'comment_form': comment_form, 'comments': comments,
-               'applied_list': applied_list, 'joined_list':joined_list, 'message':message}
+               'applied_list': applied_list, 'joined_list':joined_list, 'message':message,
+               'today':datetime.now(),}
     return render(request, template, context)
 
 def group_create(request):
