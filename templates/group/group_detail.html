@@ -15,14 +15,14 @@
     {{ group.apply_end }} <br/>
     {{ group.max_member }} <br/>
 
-    <h3>함께하는 사람들</h3>
+    <h4>함께하는 사람들 {{ joined_list|length }} / {{ group.max_member }}</h4>
     <div class="joined_wrapper">
         {% for member in joined_list %}
             <span>{{ member }}</span>
         {% endfor %}
     </div>
 
-    <h3>참여대기</h3>
+    <h4>참여대기</h4>
     <div class="waiting_wrapper">
         {% for member in applied_list %}
             <span>{{ member }}  </span>

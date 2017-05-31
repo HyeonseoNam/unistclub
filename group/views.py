@@ -27,26 +27,8 @@ def group_detail(request, group_id):
     group_instance = Group.objects.all()
     group = get_object_or_404(group_instance, id=group_id)
 
-    # 그룹에 지원한 사람, 그룹에 들어간 사람과 그룹간의 관계 데이터
-    group_membership = group.membership_set
-
-    # 지원한 사람 관계 데이터
-    applied_members = group_membership.filter(status=False)
-    applied_list = []
-
-    # 그룹에 들어간 사람 관계 데이터
-    joined_members = group_membership.filter(status=True)
-    joined_list = []
-
-    # 관계 데이터에서 이름 뽑기(지원한 사람)
-    for am in applied_members:
-        applied_list.append(am.member)
-
-    # 관계 데이터에서 이름 뽑기(그룹에 들어간 사람)
-    for jm in joined_members:
-        joined_list.append(jm.member)
-
-    # TODO 좋은 방법 아니므로 좀더 좋은 방법 모색하기
+    # alert 메세지
+    message = ""
 
     # comment 불러오기
     comments = Comment.objects.filter(group=group)
@@ -80,27 +62,34 @@ def group_detail(request, group_id):
         # 참가신청하기
         else:
             if Membership.objects.filter(member=request.user, group=group).exists():
-                context = {'group': group, 'comment_form': comment_form, 'comments': comments,
-                           'message': '이미 신청했습니다.','applied_list': applied_list, 'joined_list':joined_list}
+                message='이미 신청했습니다.'
             else:
                 membership = Membership(group=group, member=request.user)
                 membership.save()
-                # 그룹에 지원한 사람, 그룹에 들어간 사람과 그룹간의 관계 데이터
-                group_membership = group.membership_set
-                # 지원한 사람 관계 데이터
-                applied_members = group_membership.filter(status=False)
-                applied_list = []
-                # 관계 데이터에서 이름 뽑기(지원한 사람)
-                for am in applied_members:
-                    applied_list.append(am.member)
+                message='신청이 완료되었습니다.'
 
-                context = {'group': group, 'comment_form': comment_form, 'comments': comments,
-                           'message': '신청이 완료되었습니다.','applied_list': applied_list, 'joined_list':joined_list}
+    # TODO 좋은 방법 아니므로 좀더 좋은 방법 모색하기
+    # 그룹에 지원한 사람, 그룹에 들어간 사람과 그룹간의 관계 데이터
+    group_membership = group.membership_set
 
-            return render(request, template, context)
+    # 지원한 사람 관계 데이터
+    applied_members = group_membership.filter(status=False)
+    applied_list = []
+
+    # 그룹에 들어간 사람 관계 데이터
+    joined_members = group_membership.filter(status=True)
+    joined_list = []
+
+    # 관계 데이터에서 이름 뽑기(지원한 사람)
+    for am in applied_members:
+        applied_list.append(am.member)
+
+    # 관계 데이터에서 이름 뽑기(그룹에 들어간 사람)
+    for jm in joined_members:
+        joined_list.append(jm.member)
 
     context = {'group': group, 'comment_form': comment_form, 'comments': comments,
-               'applied_list': applied_list, 'joined_list':joined_list}
+               'applied_list': applied_list, 'joined_list':joined_list, 'message':message}
     return render(request, template, context)
 
 def group_create(request):
