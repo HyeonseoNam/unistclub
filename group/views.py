@@ -38,9 +38,7 @@ def group_detail(request, group_id):
             instance = comment_form.save(commit=False)
             instance.group = group
             instance.content = passed_content
-            # 나중에 로그인했을때 로그인 유저가 바로 들어가게
-            # instance.user = request.user.id
-            instance.user = 1
+            instance.user = request.user.id # merge: 로그인 user 등록
             instance.save()
 
             se_tz = timezone('Asia/Seoul') # 서울 타임존
@@ -71,9 +69,7 @@ def group_create(request):
         form = GroupForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             instance = form.save(commit=False)
-            # 나중에 로그인했을때 로그인 유저가 바로 들어가게
-            # instance.admin_id = request.user.id
-            instance.admin_id = 1
+            instance.admin_id = request.user.id # merge: 로그인 user 등록
             instance.save()
             return redirect('group_main')
         else:

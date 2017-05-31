@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-from account.models import User
+from account.models import UcUser
 # Create your models here.
 
 status_list = (
@@ -57,7 +57,7 @@ class Group(models.Model):
     apply_end = models.DateField(auto_now=False)
 
     # 관리자 id
-    admin_id = models.PositiveIntegerField()
+    admin_id = models.ForeignKey(UcUser)
 
     # Manager
     objects = GroupManager()
@@ -68,7 +68,7 @@ class Group(models.Model):
 
 class Comment(models.Model):
     group = models.ForeignKey(Group)
-    # user = models.ForeignKey(User)
+    user = models.ForeignKey(UcUser)
     user = models.PositiveIntegerField()
     content = models.CharField(max_length=255, null=False, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
