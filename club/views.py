@@ -30,9 +30,7 @@ def club_create(request):
         form = ClubForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             instance = form.save(commit=False)
-            # 나중에 로그인했을때 로그인 유저가 바로 들어가게
-            # instance.admin_id = request.user.id
-            # instance.admin_id = 1
+            instance.admin_id = request.user.id  # merge: 로그인 user 등록
             instance.save()
             return redirect('club_main')
         else:
