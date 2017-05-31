@@ -71,3 +71,4 @@ class Comment(models.Model):
     # user = models.ForeignKey(User)
     user = models.PositiveIntegerField()
     content = models.CharField(max_length=255, null=False, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
