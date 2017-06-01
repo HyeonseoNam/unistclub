@@ -1,17 +1,16 @@
-
-    <nav class="nav-extended">
-      <div class="nav-background">
-        <div class="pattern active" style="background-image: url('http://placehold.it/1400x300');"></div>
-      </div>
+{% load staticfiles %}
+  </div>
       <div class="nav-wrapper container">
-        <a href="index.html" class="brand-logo"><i class="material-icons">camera</i>Gallery</a>
+        <a href="index.html" class="brand-logo">
+            <img class="nav-logo" src="{% static 'img/logo_transparent-02.png' %}">
+        </a>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-          <li class="active"><a href="index.html">Gallery</a></li>
-          <li><a href="index-dark.html">Dark Theme</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="docs.html">Docs</a></li>
-          <li><a class='dropdown-button' href='#' data-activates='feature-dropdown' data-belowOrigin="true" data-constrainWidth="false">Features<i class="material-icons right">arrow_drop_down</i></a></li>
+          <li class="active"><a href="{% url 'group_main' %}">Group</a></li>
+          <li><a href="{% url 'club_main' %}">Club</a></li>
+{#          <li><a href="blog.html"></a></li>#}
+{#          <li><a href="docs.html">Docs</a></li>#}
+          <li><a class='dropdown-button' href='#' data-activates='feature-dropdown' data-belowOrigin="true" data-constrainWidth="false">account<i class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
         <!-- Dropdown Structure -->
         <ul id='feature-dropdown' class='dropdown-content'>
@@ -20,13 +19,4 @@
           <li><a href="no-image.html">No Image Expand</a></li>
         </ul>
 
-        <div class="nav-header center">
-          <h1>I MAKE THINGS</h1>
-          <div class="tagline">Portfolio</div>
-        </div>
-      </div>
 
-      <!-- Fixed Masonry Filters -->
-      <div class="categories-wrapper purple lighten-1">
-        <div class="categories-container">
-          <ul class="categories container">
