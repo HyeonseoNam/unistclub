@@ -13,10 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
+from django.conf import settings
 from django.conf.urls import url, include
 from django.contrib import admin
+
 from club.views import club_detail, club_main, club_create
 from group.views import group_create, group_main, group_detail
+
 
 urlpatterns = [
     url(r'', include('main.urls', namespace='main')),
@@ -29,3 +33,7 @@ urlpatterns = [
     url(r'^groups/', group_main, name="group_main"),
     url(r'^group/(?P<group_id>\d+)/$', group_detail, name='group_detail'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

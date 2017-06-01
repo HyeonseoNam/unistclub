@@ -1,417 +1,72 @@
-{% extends 'main/base.html' %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% block content %}
-<!-- Gallery -->
-    <div id="portfolio" class="section gray">
-      <div class="container">
-        <div class="gallery row">
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img class="responsive-img" src="http://placehold.it/350x250" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Aquamarine</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Aquamarine</h3>
-                  <span class="price">$29.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
 
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img src="http://placehold.it/350x300" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Sun</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Sun</h3>
-                  <span class="price">$9.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
+{#    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">#}
 
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter bigbang">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img class="responsive-img" src="http://placehold.it/350x280" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Big Bang 1</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Big Bang 1</h3>
-                  <span class="price">$23.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
+    <title>unist.club</title>
+</head>
+<body>
+{#    {% if request.user.is_authenticated %}#}
+{#        {{  request.user.name }}님, id가 {{ request.user.login_id }}으로#}
+{#        email: {{ request.user.email }}#}
+{#        로그인되어있습니다.#}
+{##}
+{#            <form method="post" action="{% url 'account:logout' %}">#}
+{#            {% csrf_token %}#}
+{#                <button type="submit">로그아웃</button>#}
+{#            </form>#}
+{#    {% else %}#}
+{#        비로그인#}
+{#    {% endif %}#}
+    <h1 class="test">unist club, hello world!</h1>
 
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img src="http://placehold.it/350x320" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Maze</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Maze</h3>
-                  <span class="price">$11.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
-
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img src="http://placehold.it/350x260" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Ice</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Ice</h3>
-                  <span class="price">$14.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
-
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img src="http://placehold.it/350x290" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Cave</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Cave</h3>
-                  <span class="price">$4.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
-
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img src="http://placehold.it/350x240" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Grapefruit</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Grapefruit</h3>
-                  <span class="price">$14.99</span>
-                </div>
-
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
-
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter bigbang">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img class="responsive-img" src="http://placehold.it/350x300" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Big Bang 2</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Big Bang 2</h3>
-                  <span class="price">$40.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
-
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter bigbang">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img class="responsive-img" src="http://placehold.it/350x280" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Big Bang 3</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Big Bang 3</h3>
-                  <span class="price">$18.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
-
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter sacred">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img class="responsive-img" src="http://placehold.it/350x250" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Circle</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Circle</h3>
-                  <span class="price">$10.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
-
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter sacred">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img class="responsive-img" src="http://placehold.it/350x260" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Triangle</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Triangle</h3>
-                  <span class="price">$10.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
-
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter sacred">
-            <div class="gallery-curve-wrapper">
-              <a class="gallery-cover gray">
-                <img class="responsive-img" src="http://placehold.it/350x300" alt="placeholder">
-              </a>
-              <div class="gallery-header">
-                <span>Hexagon</span>
-              </div>
-              <div class="gallery-body">
-                <div class="title-wrapper">
-                  <h3>Hexagon</h3>
-                  <span class="price">$10.99</span>
-                </div>
-                <p class="description">
-Literally venmo before they sold out, DIY heirloom forage polaroid offal yr pop-up selfies health goth. Typewriter scenester hammock truffaut meditation, squid before they sold out polaroid portland tousled taxidermy vice. Listicle butcher thundercats, taxidermy pitchfork next level roof party crucifix narwhal kinfolk you probably haven't heard of them portland small batch.</p>
-                <p class="description">
-Ea salvia adipisicing vegan man bun. Flexitarian cupidatat skateboard flannel. Drinking vinegar marfa you probably haven't heard of them consequat post-ironic, shabby chic williamsburg raclette vaporware readymade selfies brunch. Venmo selvage biodiesel marfa. Tbh literally 3 wolf moon, proident elit raclette chambray consequat edison bulb four loko accusamus. Semiotics godard eiusmod, ex esse air plant quinoa vaporware selfies keytar. Actually yuccie ennui flannel single-origin coffee, williamsburg cardigan banjo forage pug distillery tumblr hexagon vinyl occaecat.</p>
-
-                <div class="carousel-wrapper">
-                  <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#two!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#three!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#four!"><img src="http://placehold.it/300x200"></a>
-                    <a class="carousel-item" href="#five!"><img src="http://placehold.it/300x200"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="gallery-action">
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">favorite</i></a>
-              </div>
-            </div>
-          </div>
-
+    <div class="wrapper container">
+	<div class="header">
+{#		<ul class="menu">#}
+{#			<li>menu1</li>#}
+{#			<li>menu2</li>#}
+{#		</ul>#}
+        <div class="terminal">
+            <span class="dollar"></span> Hello, UNIST !!
+            <br/>
+            <span class="dollar"></span> <b>스터디</b>나 여러 <b>모임</b>을 구할때,
+            <br/>
+            <span class="dollar"></span> 관심분야의 <b>동아리</b>를 파악할때
+            <br/>
+            <span class="dollar"></span> 우리의 소통채널은 <b>전단지뿐</b>입니다.
+            <br/>
+            <span class="dollar"></span> 그래서 <span class="useless">많은 커피를 마시며</span><span> </span>만들고있습니다.
+            <br/>
+            <br/>
+            <span class="dollar"></span> <b>모임과 동아리를 위한 플랫폼,</b>
+            <br/>
+            <span class="dollar"></span> <b>unist<span class="dot">.</span>club - <span class="dot">coming soon!! </span> ;D</b>
+            <br/>
         </div>
 
-      </div>
+		<img class="logo" src="static/img/logo_transparent-02.png">
+	</div>
 
-    </div><!-- /.container -->
+    <button class="link_btn facebook_btn">
+  페이지에 들러 스토리보기
+</button>
 
-{% endblock %}
 
+
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+
+</div>
+    <div class="background"></div>
+    <div class="background-cover"></div>
+
+
+
+</body>
+</html>
