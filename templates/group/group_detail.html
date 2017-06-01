@@ -8,6 +8,9 @@
         <input type="hidden" value="{{ group.id }}" name="group_id"/>
         <button type="submit">함께하기</button>
     </form>
+    <div class="image_wrapper">
+        <img src="{{ group.get_group_photo }}" style="width:100%"/><br/>
+    </div>
     그룹이름 : {{ group.group_name }} <br/>
     <div>달력 : {{ today|timesince:group.apply_end }} 남음 | 사람 : {{ joined_list|length }} / {{ group.max_member }}
        | *{{ group.group_status }}</div>
