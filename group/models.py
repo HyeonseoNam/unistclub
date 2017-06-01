@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
 from account.models import UcUser
@@ -19,6 +20,10 @@ class GroupManager(models.Manager):
     def is_apply(self):
         return self.get_queryset().is_apply()
 
+# 그룹 이미지 받는 장소
+def download_group_image(instance, filename):
+    return "groups/%s/%s" % (instance.group_name, filename)
+
 class Group(models.Model):
 
     # 그룹 이름
@@ -26,6 +31,13 @@ class Group(models.Model):
 
     # 종류(스터디, 친목모임 등)
     group_status = models.CharField(choices=status_list, max_length=15, null=False)
+
+    # 그룹 이미지
+    group_photo = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to=download_group_image
+    )
 
     # 모임 시간
     meeting_time = models.CharField(max_length=255, null=True, blank=True)
@@ -57,7 +69,13 @@ class Group(models.Model):
     apply_end = models.DateField(auto_now=False)
 
     # 관리자 id
-    admin_id = models.ForeignKey(UcUser)
+    admin = models.ForeignKey(UcUser, related_name="group_admin")
+
+    # 지원가능인원
+    max_member = models.PositiveIntegerField()
+
+    # 유저
+    members = models.ManyToManyField(UcUser, through='Membership')
 
     # Manager
     objects = GroupManager()
@@ -65,10 +83,39 @@ class Group(models.Model):
     @property
     def get_absolute_url(self):
         return reverse('group_detail', kwargs={"group_id": self.id})
+    @property
+    def get_group_photo(self):
+        # TODO preprocess로 이미지 크기 미리 줄여주기
+        # group_photo가 있는지 확인
+        if self.group_photo:
+            # local setting
+            if settings.DEBUG:
+                return settings.MEDIA_URL + '%s'%(self.group_photo)
+            # production setting
+            else:
+                return '%s%s' % (settings.MEDIA_ROOT, self.media)
+        #else:
+            # TODO 소셜 로그인시 사진 가져오기
+            # if social account
+            # if SocialAccount.objects.filter(user_id=self.id):
+            #     social_user = SocialAccount.objects.filter(user_id=self.id)
+            #     if len(social_user):
+            #         return "http://graph.facebook.com/{}/picture?width=100&height=100".format(social_user[0].uid)
+            # # no profile
+            # else:
+            #     # 유저 이메일 주소에 따라 1~3 숫자로 변환
+            #     pseudo_random_num = int(int(self.email.encode('hex'), 16) % 3) + 1
+            #     random_profile = static('img/no_profile_' + str(pseudo_random_num) + '.png')
+            #     return random_profile
+
+class Membership(models.Model):
+    member = models.ForeignKey(UcUser)
+    group = models.ForeignKey(Group)
+    date_joined = models.DateField(auto_now_add=True, auto_now=False)
+    status = models.BooleanField(default=False)
 
 class Comment(models.Model):
     group = models.ForeignKey(Group)
     user = models.ForeignKey(UcUser)
-    user = models.PositiveIntegerField()
     content = models.CharField(max_length=255, null=False, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)

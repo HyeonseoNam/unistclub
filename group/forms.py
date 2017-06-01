@@ -21,6 +21,8 @@ class GroupForm(forms.ModelForm):
             'is_always_apply',
             'apply_start',
             'apply_end',
+            'max_member',
+            'group_photo'
         )
         widgets = {
             'description': forms.Textarea(attrs={'cols': 80, 'rows': 20}),

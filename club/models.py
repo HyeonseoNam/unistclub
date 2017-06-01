@@ -73,7 +73,3 @@ class Club(models.Model):
     # 회장 user id
     leader_id  = models.ForeignKey(UcUser)
     # TODO : admin을 manytomany로 두고 그 중 1하면 leader로 두개하면 어떨까 - 일단 admin은 놔둠
-
-    # 관리자 id
-    # admin1_id = models.PositiveIntegerField()
-    # admin2_id = models.PositiveIntegerField()

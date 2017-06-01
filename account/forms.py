@@ -1,3 +1,4 @@
+import random
 from django import forms
 # from django.contrib.auth.forms import UserCreationForm
 from .models import UcUser
@@ -49,6 +50,7 @@ class UserCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
+        user.user_id = ''.join(random.sample('0123456789', 5))
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
