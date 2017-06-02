@@ -33,40 +33,59 @@ def group_detail(request, group_id):
     # comment 불러오기
     comments = Comment.objects.filter(group=group)
 
-    if request.POST:
-        # comment 작성
-        if request.is_ajax():
-            comment_form = CommentForm(request.POST or None, request.FILES or None)
-            if comment_form.is_valid():
-                passed_content = request.POST['comment_content']
-                instance = comment_form.save(commit=False)
-                instance.group = group
-                instance.content = passed_content
-                instance.user = request.user # merge: 로그인 user 등록
-                instance.save()
+    # comment 작성
+    if request.is_ajax():
+        # 멤버 추가 혹은 삭제 부분
+        if 'member_change' in request.POST:
+            passed_user_id = int(request.POST["user_id"])
+            selected_user = UcUser.objects.get(user_id=passed_user_id)
+            selected_membership = Membership.objects.get(member=selected_user, group=group)
+            # 멤버 추가하는 부분
+            if 'adding' in request.POST:
+                if selected_membership.status == False:
+                    selected_membership.status = True
+                    selected_membership.save()
+            # 참여한 멤버 삭제하는 부분
+            if 'deleting' in request.POST:
+                if selected_membership.status == True:
+                    selected_membership.status = False
+                    selected_membership.save()
 
-                se_tz = timezone('Asia/Seoul') # 서울 타임존
-                real_datetime = se_tz.normalize(instance.created_at.astimezone(se_tz)) # 서울로 일시 바꾸기
-                am_pm = real_datetime.strftime('%p')
-                if am_pm=="AM":
-                    am_pm = "오전"
-                else:
-                    am_pm = "오후"
-                ajax_datetime = real_datetime.strftime('%Y년 %m월 %d일 %H:%M ') # 년 월 일 시간까지 입력
-                ajax_datetime = ajax_datetime + am_pm # 오전 오후 붙이는 곳
-                data = {'comment_user': instance.user, 'added_comment': instance.content, 'comment_created': ajax_datetime}
-                json_data = json.dumps(data, sort_keys=True, default=str)
-                return HttpResponse(json_data, content_type='application/json')
+            data = {'selected_user_id':selected_user.user_id, 'selected_user_name':selected_user.name}
+            json_data = json.dumps(data, sort_keys=True, default=str)
+            return HttpResponse(json_data, content_type='application/json')
+        # 댓글 작성하는 부분
+        comment_form = CommentForm(request.POST or None, request.FILES or None)
+        if comment_form.is_valid():
+            passed_content = request.POST['comment_content']
+            instance = comment_form.save(commit=False)
+            instance.group = group
+            instance.content = passed_content
+            instance.user = request.user # merge: 로그인 user 등록
+            instance.save()
+
+            se_tz = timezone('Asia/Seoul') # 서울 타임존
+            real_datetime = se_tz.normalize(instance.created_at.astimezone(se_tz)) # 서울로 일시 바꾸기
+            am_pm = real_datetime.strftime('%p')
+            if am_pm=="AM":
+                am_pm = "오전"
             else:
-                pass
-        # 참가신청하기
+                am_pm = "오후"
+            ajax_datetime = real_datetime.strftime('%Y년 %m월 %d일 %H:%M ') # 년 월 일 시간까지 입력
+            ajax_datetime = ajax_datetime + am_pm # 오전 오후 붙이는 곳
+            data = {'comment_user': instance.user, 'added_comment': instance.content, 'comment_created': ajax_datetime}
+            json_data = json.dumps(data, sort_keys=True, default=str)
+            return HttpResponse(json_data, content_type='application/json')
         else:
-            if Membership.objects.filter(member=request.user, group=group).exists():
-                message='이미 신청했습니다.'
-            else:
-                membership = Membership(group=group, member=request.user)
-                membership.save()
-                message='신청이 완료되었습니다.'
+            pass
+    # 참가신청하기
+    elif request.POST:
+        if Membership.objects.filter(member=request.user, group=group).exists():
+            message='이미 신청했습니다.'
+        else:
+            membership = Membership(group=group, member=request.user)
+            membership.save()
+            message='신청이 완료되었습니다.'
 
     # TODO 좋은 방법 아니므로 좀더 좋은 방법 모색하기
     # 그룹에 지원한 사람, 그룹에 들어간 사람과 그룹간의 관계 데이터
