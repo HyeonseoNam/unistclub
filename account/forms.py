@@ -29,7 +29,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = UcUser
-        fields = ("login_id", "name","email", "password1", "password2")
+        fields = ("login_id", "name","email", "password1", "password2", "photo")
         field_classes = {'login_id': UsernameField}
 
     def __init__(self, *args, **kwargs):

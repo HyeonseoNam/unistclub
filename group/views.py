@@ -1,11 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404,HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404,HttpResponse,HttpResponseRedirect
 from .forms import GroupForm, CommentForm
 from .models import Group, Comment, Membership
 from account.models import UcUser
 from datetime import datetime
 from pytz import timezone
 import json
-from django.core import serializers
 
 # Create your views here.
 def group_main(request):
@@ -25,7 +24,7 @@ def group_detail(request, group_id):
     # 지원 가능한 인스턴스만 부를때!
     # group_instance = Group.objects.is_apply()
     group_instance = Group.objects.all()
-    group = get_object_or_404(group_instance, id=group_id)
+    group = get_object_or_404(group_instance, group_id=group_id)
 
     # alert 메세지
     message = ""
@@ -33,7 +32,7 @@ def group_detail(request, group_id):
     # comment 불러오기
     comments = Comment.objects.filter(group=group)
 
-    # comment 작성
+    # comment 작성 또는 멤버 추가나 삭제관련
     if request.is_ajax():
         # 멤버 추가 혹은 삭제 부분
         if 'member_change' in request.POST:
@@ -78,14 +77,16 @@ def group_detail(request, group_id):
             return HttpResponse(json_data, content_type='application/json')
         else:
             pass
-    # 참가신청하기
-    elif request.POST:
-        if Membership.objects.filter(member=request.user, group=group).exists():
-            message='이미 신청했습니다.'
-        else:
-            membership = Membership(group=group, member=request.user)
-            membership.save()
-            message='신청이 완료되었습니다.'
+
+    # 어디서 redirect해서 왔는지 확인하기
+    if request.session['redirect'] is '1':
+        message = "이미 참가 신청했습니다."
+    elif request.session['redirect'] is '2':
+        message = "신청 완료했습니다."
+    elif request.session['redirect'] is '3':
+        message = "신청이 취소되었습니다."
+    # 새로고침시 message를 날리기 않기 위해 초기화
+    request.session['redirect']=0
 
     # TODO 좋은 방법 아니므로 좀더 좋은 방법 모색하기
     # 그룹에 지원한 사람, 그룹에 들어간 사람과 그룹간의 관계 데이터
@@ -113,6 +114,33 @@ def group_detail(request, group_id):
                'applied_list': applied_list, 'joined_list':joined_list, 'message':message,
                'today':datetime.now(),}
     return render(request, template, context)
+
+def membership_cancel(request):
+    passed_group_id = request.POST["group_id"]
+    group_instance = Group.objects.all()
+    group = get_object_or_404(group_instance, group_id=passed_group_id)
+    url = group.get_absolute_url
+    membership_instance = Membership.objects.all()
+    membership = get_object_or_404(membership_instance, group=group, member=request.user)
+    membership.delete()
+    # 신청을 취소한 경우 3
+    request.session['redirect'] = '3'
+    return HttpResponseRedirect(url)
+
+def membership_participate(request):
+    passed_group_id = request.POST["group_id"]
+    group_instance = Group.objects.all()
+    group = get_object_or_404(group_instance, group_id=passed_group_id)
+    if Membership.objects.filter(member=request.user, group=group).exists():
+        # 이미 신청한 경우 1
+        request.session['redirect'] = '1'
+    else:
+        membership = Membership(group=group, member=request.user)
+        membership.save()
+        # 신청이 완료된 경우 2
+        request.session['redirect'] = '2'
+    url = group.get_absolute_url
+    return HttpResponseRedirect(url)
 
 def group_create(request):
     form = GroupForm()

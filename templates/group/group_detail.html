@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="{% static 'css/group_detail.css' %}">
 {% endblock %}
 {% block group_content %}
-    <form action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
-        <input type="hidden" value="{{ group.id }}" name="group_id"/>
+    <form action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
+        <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
         <button type="submit">함께하기</button>
     </form>
     <div class="image_wrapper">
@@ -25,7 +25,7 @@
     <h4>함께하는 사람들 {{ joined_list|length }} / {{ group.max_member }}</h4>
     {% if request.user in joined_list or request.user == group.admin%}
         <div class="joined_wrapper">
-            <form id="joined_form" action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
+            <form id="joined_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
                 {% for member in joined_list %}
                     <div class="joined_member_wrapper" user_id="{{ member.user_id }}">
                         <span>{{ member.name }}  </span>
@@ -38,7 +38,7 @@
     {% if request.user == group.admin %}
         <h4>참여대기</h4>
         <div class="waiting_wrapper">
-            <form id="waiting_form" action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
+            <form id="waiting_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
                 {% for member in applied_list %}
                     <div class="applied_member_wrapper" user_id="{{ member.user_id }}">
                         <span>{{ member.name }}  </span>
@@ -50,13 +50,22 @@
     {% endif %}
 
     <br/>
-    <form action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
-        <input type="hidden" value="{{ group.id }}" name="group_id"/>
+
+    {% if request.user in applied_list or request.user in joined_list %}
+    <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
+        <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
+        <button type="submit">취소하기</button>
+    </form>
+    {% else %}
+    <form action="/group/membership_participate/" method="POST">{% csrf_token %}
+        <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
+
         <button type="submit">함께하기</button>
     </form>
+    {% endif %}
     <br/>
     Comment
-    <form id="comment_form" action="/group/{{ group.id }}/" method="POST">{% csrf_token %}
+    <form id="comment_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
         {{ comment_form.as_p }}
         <button type="submit">입력</button>
     </form>
@@ -168,5 +177,9 @@
             alert('{{ message }}');
         }
     });
+
+    {% if messages %}
+        alert('hi');
+    {% endif %}
     </script>
 {% endblock %}
