@@ -12,24 +12,27 @@
     <div class="container-fluid form">
   <div class="container">
     <div class="card login_card" style="background-image: url('{% static 'img/login_card.jpg' %}');">
-          <form method="post" class="sign">
+
+          <form method="post" class="sign"  action="{% url 'account:login' %}">
+          {% csrf_token %}
             <div class="card_background blue"></div>
             <div class="input-field col s12">
             <i class="material-icons prefix">account_circle</i>
-            <input id="icon_prefix" type="text" name="emaillog" class="validate">
+            <input id="icon_prefix" type="text" name="username" class="validate">
             <label for="icon_prefix">ID 를 입력하세요.</label>
           </div>
           <div class="input-field col s12">
             <i class="material-icons prefix">lock</i>
-            <input id="icon_prefix" type="password" name="passworddb" class="validate">
+            <input id="icon_prefix" type="password" name="password" class="validate">
             <label for="icon_prefix">Password 를 입력하세요.</label>
           </div>
 
             <div class="center-align">
-                <button type="submit" name="login" class="btn blue accent-2 waves-effect waves-light ">로그인하기</button>
-                <p>유저가 아니신가요?<a href="signup">&nbsp;&nbsp;회권가입 하기</a></p>
+                <button type="submit" name="login" class="btn blue accent-2 waves-effect waves-light " value="login">로그인하기</button>
+                <p>유저가 아니신가요?<a href="{% url 'account:signup' %}">&nbsp;&nbsp;회권가입 하기</a></p>
             </div>
           </form>
+
     </div>
   </div>
 </div>

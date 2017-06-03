@@ -13,33 +13,45 @@
   <div class="container">
     <div class="card login_card" style="background-image: url('{% static 'img/signup_card.jpg' %}');">
           <form method="post" class="sign">
+              {% csrf_token %}
               <div class="card_background blue"></div>
             <div class="input-field col s12">
             <i class="material-icons prefix">account_circle</i>
-            <input id="icon_prefix" type="text" name="emaillog" class="validate">
-            <label for="icon_prefix">Email</label>
+{#            <input id="icon_prefix1" type="text" name="emaillog" class="validate">#}
+                {{ userForm.login_id }}
+            <label for="login_id">로그인 ID</label>
+          </div>
+              <div class="input-field col s12">
+            <i class="material-icons prefix">perm_identity
+</i>
+{#            <input id="icon_prefix1" type="text" name="emaillog" class="validate">#}
+                {{ userForm.name }}
+            <label for="name">이름(실명)</label>
           </div>
 
             <div class="input-field col s12">
             <i class="material-icons prefix">email</i>
-            <input id="icon_prefix" type="text" name="emaillog" class="validate">
-            <label for="icon_prefix">Email</label>
+{#            <input id="icon_prefix" type="text" name="emaillog" class="validate">#}
+                {{ userForm.email }}
+            <label for="email">UNIST 이메일</label>
           </div>
 
           <div class="input-field col s12">
             <i class="material-icons prefix">lock</i>
-            <input id="icon_prefix" type="password" name="passworddb" class="validate">
-            <label for="icon_prefix">password</label>
+{#            <input id="icon_prefix" type="password" name="passworddb" class="validate">#}
+              {{ userForm.password1 }}
+            <label for="password1">비밀번호</label>
           </div>
 
           <div class="input-field col s12">
             <i class="material-icons prefix">lock</i>
-            <input id="icon_prefix" type="password" name="passworddb" class="validate">
-            <label for="icon_prefix">Confirm Password</label>
+{#            <input id="icon_prefix" type="password" name="passworddb" class="validate">#}
+              {{ userForm.password2 }}
+            <label for="password2">비밀번호 확인</label>
           </div>
 
             <div class="center-align">
-                <button type="submit" name="sign" class="btn blue accent-2  waves-effect waves-light ">Sign Up</button>
+                <button type="submit" name="sign" class="btn blue accent-2  waves-effect waves-light ">가입하기</button>
                 <p>이미 멤버이신가요? <a href="signin">&nbsp;&nbsp;로그인 하기</a></p>
             </div>
           </form>

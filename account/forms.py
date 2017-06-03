@@ -34,6 +34,26 @@ class UserCreationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['login_id'].widget.attrs.update({
+          'class' : 'validate',
+            'id' : 'login_id'
+        })
+        self.fields['name'].widget.attrs.update({
+          'class' : 'validate',
+            'id' : 'name'
+        })
+        self.fields['email'].widget.attrs.update({
+          'class' : 'validate',
+            'id' : 'email'
+        })
+        self.fields['password1'].widget.attrs.update({
+          'class' : 'validate',
+            'id' : 'password1'
+        })
+        self.fields['password2'].widget.attrs.update({
+          'class' : 'validate',
+            'id' : 'password2'
+        })
         # self.fields[self._meta.model.USERNAME_FIELD].widget.attrs.update({'autofocus': ''})
 
     def clean_password2(self):
