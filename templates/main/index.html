@@ -1,72 +1,58 @@
+{% extends 'group/group_base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="kr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
 
-{#    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">#}
 
-    <title>unist.club</title>
-</head>
-<body>
-{#    {% if request.user.is_authenticated %}#}
-{#        {{  request.user.name }}님, id가 {{ request.user.login_id }}으로#}
-{#        email: {{ request.user.email }}#}
-{#        로그인되어있습니다.#}
-{##}
-{#            <form method="post" action="{% url 'account:logout' %}">#}
-{#            {% csrf_token %}#}
-{#                <button type="submit">로그아웃</button>#}
-{#            </form>#}
-{#    {% else %}#}
-{#        비로그인#}
-{#    {% endif %}#}
-    <h1 class="test">unist club, hello world!</h1>
+{% block nav %}
+{# ---- Todo: nav 배경색 설정 ---- #}
+    <nav class="nav-extended nav-full-header z-depth-0 index">
+      <div class="nav-background">
+{# ---- Todo: nav 배경이미지 설정 ---- #}
+        <div class="index_pattern active" style="background-image: url('{% static 'img/index_background.jpg' %}');"></div>
+        <div class="background-cover gradient "></div>
+{% endblock %}
 
-    <div class="wrapper container">
-	<div class="header">
-{#		<ul class="menu">#}
-{#			<li>menu1</li>#}
-{#			<li>menu2</li>#}
-{#		</ul>#}
-        <div class="terminal">
-            <span class="dollar"></span> Hello, UNIST !!
-            <br/>
-            <span class="dollar"></span> <b>스터디</b>나 여러 <b>모임</b>을 구할때,
-            <br/>
-            <span class="dollar"></span> 관심분야의 <b>동아리</b>를 파악할때
-            <br/>
-            <span class="dollar"></span> 우리의 소통채널은 <b>전단지뿐</b>입니다.
-            <br/>
-            <span class="dollar"></span> 그래서 <span class="useless">많은 커피를 마시며</span><span> </span>만들고있습니다.
-            <br/>
-            <br/>
-            <span class="dollar"></span> <b>모임과 동아리를 위한 플랫폼,</b>
-            <br/>
-            <span class="dollar"></span> <b>unist<span class="dot">.</span>club - <span class="dot">coming soon!! </span> ;D</b>
-            <br/>
-        </div>
+{% block sub_nav %}
+    <script>
 
-		<img class="logo" src="static/img/logo_transparent-02.png">
-	</div>
+    </script>
+{# ---- Todo: nav 문구 설정 ---- #}
+            <div class="nav-header center index">
+            <h1>
 
-    <button class="link_btn facebook_btn">
-  페이지에 들러 스토리보기
-</button>
+                <div id="typewriter-wrapper" class="centered">
+                    <span id="typewriter1"></span>
+                    <span id="typewriter2" class="strong"></span>
+                    <span id="typewriter3"></span>
+                    <span id="typewriter4" class="strong"></span>
+                    <span id="typewriter5"></span>
+                    <span id="typewriter6"></span>
+                    <span id="typewriter7" class="strong"></span>
+                    <span id="typewriter8"></span>
+                </div>
+
+            </h1>
+            </div>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
 
 
 
-    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static 'js/index.js' %}"></script>
-
-</div>
-    <div class="background"></div>
-    <div class="background-cover"></div>
 
 
+{% endblock %}
 
-</body>
-</html>
+{% block js %}
+    <script src="{% static 'js/vendor/hangul.js' %}"></script>
+    <script src="{% static 'js/vendor/typewriter-bundle.js' %}"></script>
+    <script src="{% static 'js/typer_custom.js' %}"></script>
+{% endblock %}
+
+
+

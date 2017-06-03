@@ -1,0 +1,344 @@
+
+.gradient {
+  background: #1466d6;
+  background: -moz-linear-gradient(108deg, #1466d6 0%, #1cd8d2 100%);
+  background: -webkit-linear-gradient(108deg, #1466d6 0%, #1cd8d2 100%);
+  background: linear-gradient(108deg, #1466d6 0%, #1cd8d2 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1466d6', endColorstr='#1cd8d2',GradientType=1 );
+}
+
+.gradient-1 {
+  background: #1466d6;
+  background: -moz-linear-gradient(-108deg, #1466d6 0%, #1cd8d2 100%);
+  background: -webkit-linear-gradient(-108deg, #1466d6 0%, #1cd8d2 100%);
+  background: linear-gradient(-108deg, #1466d6 0%, #1cd8d2 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1466d6', endColorstr='#1cd8d2',GradientType=1 );
+}
+
+
+.page-footer {
+  margin-top: 0px !important;
+}
+
+.page-footer a {
+  transition: .5s;
+}
+
+.page-footer a:hover {
+  opacity: .6;
+  transition: .5s;
+}
+
+.page-footer .foot {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.page-footer .foot .social {
+  transition: .5s;
+}
+
+.page-footer .foot .social:hover {
+  transition: .5s;
+  opacity: 1;
+}
+
+.page-footer .foot .social .fa-linkedin {
+  transition: .5s;
+}
+
+.page-footer .foot .social .fa-linkedin:hover {
+  color: #007bb5;
+  transition: .5s;
+  font-size: 2rem;
+}
+
+.page-footer .foot .social .fa-twitter {
+  transition: .5s;
+}
+
+.page-footer .foot .social .fa-twitter:hover {
+  color: #55acee;
+  transition: .5s;
+  font-size: 2rem;
+}
+
+.page-footer .foot .social .fa-github {
+  transition: .5s;
+}
+
+.page-footer .foot .social .fa-github:hover {
+  color: #000;
+  transition: .5s;
+  font-size: 2rem;
+}
+
+.form {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.form .card {
+  /*background-image: url("../img/sign.png");*/
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: cover;
+  padding-left: 50%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.16);
+  transition: .5s;
+}
+
+@media screen and (max-width: 700px) {
+  .form .card {
+    background-image: none;
+    padding-left: 0px;
+  }
+}
+
+.form .card:hover {
+  box-shadow: 0px 14px 62px 0px rgba(0, 0, 0, 0.26);
+  transition: .5s;
+}
+
+.form .card .sign {
+  /*background-color: #4f8de0;*/
+  padding-top: 127px;
+  padding-bottom: 127px;
+  padding-left: 10%;
+  padding-right: 10%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+@media screen and (max-width: 700px) {
+  .form .card .sign {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+}
+
+.form .card .sign .btn {
+  border-radius: 5px;
+  background-color: #55e2dd;
+  width: 141px;
+  height: 50px;
+  color: #fff;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.form .card .sign p {
+  color: #fff;
+  text-align: center;
+}
+
+.form .card .sign p a {
+  color: #55e2dd;
+  transition: .5s;
+}
+
+.form .card .sign p a:hover {
+  transition: .5s;
+  opacity: .5;
+}
+
+.form .card .sign .input-field label {
+  color: #fff;
+}
+
+.form .card .sign .input-field input {
+  color: #fff;
+}
+
+.form .card .sign .prefix {
+  color: #fff;
+}
+
+.form .card .sign .input-field input[type=text]:focus + label {
+  color: #fff;
+}
+
+.form .card .sign .input-field input[type=text]:focus {
+  border-bottom: 1px solid #fff;
+  box-shadow: 0 1px 0 0 #fff;
+}
+
+.form .card .sign .input-field input[type=text].valid {
+  border-bottom: 1px solid #fff;
+  box-shadow: 0 1px 0 0 #fff;
+}
+
+.form .card .sign .input-field input[type=text].invalid {
+  border-bottom: 1px solid #b71c1c;
+  box-shadow: 0 1px 0 0 #b71c1c;
+}
+
+.form .card .sign .input-field input[type=password]:focus + label {
+  color: #fff;
+}
+
+.form .card .sign .input-field input[type=password]:focus {
+  border-bottom: 1px solid #fff;
+  box-shadow: 0 1px 0 0 #fff;
+}
+
+.form .card .sign .input-field input[type=password].valid {
+  border-bottom: 1px solid #fff;
+  box-shadow: 0 1px 0 0 #fff;
+}
+
+.form .card .sign .input-field input[type=password].invalid {
+  border-bottom: 1px solid #b71c1c;
+  box-shadow: 0 1px 0 0 #b71c1c;
+}
+
+.woow {
+  text-shadow: rgba(73, 69, 81, 0.12) 1px 1px, rgba(73, 69, 81, 0.12) 2px 2px, rgba(73, 69, 81, 0.12) 3px 3px, rgba(73, 69, 81, 0.12) 4px 4px, rgba(73, 69, 81, 0.12) 5px 5px, rgba(73, 69, 81, 0.12) 6px 6px, rgba(73, 69, 81, 0.12) 7px 7px, rgba(73, 69, 81, 0.12) 8px 8px;
+}
+
+/* label color */
+.input-field label {
+  color: #4f8de0;
+}
+
+/* label focus color */
+.input-field input[type=text]:focus + label {
+  color: #4f8de0;
+}
+
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #4f8de0;
+  box-shadow: 0 1px 0 0 #4f8de0;
+}
+
+/* valid color */
+.input-field input[type=text].valid {
+  border-bottom: 1px solid #55e2dd;
+  box-shadow: 0 1px 0 0 #55e2dd;
+}
+
+/* invalid color */
+.input-field input[type=text].invalid {
+  border-bottom: 1px solid #b71c1c;
+  box-shadow: 0 1px 0 0 #b71c1c;
+}
+
+/* label focus color */
+.input-field input[type=password]:focus + label {
+  color: #4f8de0;
+}
+
+/* label underline focus color */
+.input-field input[type=password]:focus {
+  border-bottom: 1px solid #4f8de0;
+  box-shadow: 0 1px 0 0 #4f8de0;
+}
+
+/* valid color */
+.input-field input[type=password].valid {
+  border-bottom: 1px solid #55e2dd;
+  box-shadow: 0 1px 0 0 #55e2dd;
+}
+
+/* invalid color */
+.input-field input[type=password].invalid {
+  border-bottom: 1px solid #b71c1c;
+  box-shadow: 0 1px 0 0 #b71c1c;
+}
+
+/* label focus color */
+.input-field input[type=email]:focus + label {
+  color: #4f8de0;
+}
+
+/* label underline focus color */
+.input-field input[type=email]:focus {
+  border-bottom: 1px solid #4f8de0;
+  box-shadow: 0 1px 0 0 #4f8de0;
+}
+
+/* valid color */
+.input-field input[type=email].valid {
+  border-bottom: 1px solid #55e2dd;
+  box-shadow: 0 1px 0 0 #55e2dd;
+}
+
+/* invalid color */
+.input-field input[type=email].invalid {
+  border-bottom: 1px solid #b71c1c;
+  box-shadow: 0 1px 0 0 #b71c1c;
+}
+
+/* label focus color */
+.input-field input[type=number]:focus + label {
+  color: #4f8de0;
+}
+
+/* label underline focus color */
+.input-field input[type=number]:focus {
+  border-bottom: 1px solid #4f8de0;
+  box-shadow: 0 1px 0 0 #4f8de0;
+}
+
+/* valid color */
+.input-field input[type=number].valid {
+  border-bottom: 1px solid #55e2dd;
+  box-shadow: 0 1px 0 0 #55e2dd;
+}
+
+/* invalid color */
+.input-field input[type=number].invalid {
+  border-bottom: 1px solid #b71c1c;
+  box-shadow: 0 1px 0 0 #b71c1c;
+}
+
+/* label focus color */
+.input-field textarea[type=text]:focus + label {
+  color: #4f8de0;
+}
+
+/* label underline focus color */
+.input-field textarea[type=text]:focus {
+  border-bottom: 1px solid #4f8de0;
+  box-shadow: 0 1px 0 0 #4f8de0;
+}
+
+/* valid color */
+.input-field textarea[type=text].valid {
+  border-bottom: 1px solid #4f8de0;
+  box-shadow: 0 1px 0 0 #4f8de0;
+}
+
+/* invalid color */
+.input-field textarea[type=text].invalid {
+  border-bottom: 1px solid #b71c1c;
+  box-shadow: 0 1px 0 0 #b71c1c;
+}
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: #4f8de0;
+}
+form.sign {
+    position: relative;
+    z-index: 1;
+}
+.login_card .card_background {
+    overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.8;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: -1;
+}
+
+.registration_btn a {
+    font-size: 10px;
+    line-height: 56px;
+}

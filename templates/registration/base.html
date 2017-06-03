@@ -1,0 +1,32 @@
+{% extends 'group/group_base.html' %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+{% endblock %}
+
+
+{% block nav %}
+{# ---- Todo: nav 배경색 설정 ---- #}
+    <nav class="nav-extended gradient">
+      <div class="nav-background">
+{# ---- Todo: nav 배경이미지 설정 ---- #}
+        <div class="pattern active" style="background-image: url('{% static 'img/login_background.jpg' %}');"></div>
+{% endblock %}
+
+{% block sub_nav %}
+{# ---- Todo: nav 문구 설정 ---- #}
+            <div class="nav-header center">
+            {% block registration_title %}
+            {% endblock %}
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    {% block registration_content %}
+    {% endblock %}
+{% endblock %}
+
+{% block js %}
+{% endblock %}

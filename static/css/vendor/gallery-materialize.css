@@ -2834,6 +2834,15 @@ ul.staggered-list li {
   .show-on-medium {
     display: block !important;
   }
+  /* 중간사이즈에서 그룹 제목위치 조정 */
+  .gallery-body .title-wrapper h3 {
+    padding-top: 35px;
+  }
+  /* 중간사이즈에서 함께하는 사람들 사이 gutter 수정 */
+  .people-item {
+    padding-right:20px !important;
+    padding-left: 20px !important;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -3002,7 +3011,7 @@ td, th {
 
 .collection {
   margin: 0.5rem 0 1rem 0;
-  border: 1px solid #e0e0e0;
+  /*border: 1px solid #e0e0e0;*/
   border-radius: 2px;
   overflow: hidden;
   position: relative;
@@ -3011,29 +3020,29 @@ td, th {
 .collection .collection-item {
   background-color: #fff;
   line-height: 1.5rem;
-  padding: 10px 20px;
+  padding: 20px 20px;
   margin: 0;
   border-bottom: 1px solid #e0e0e0;
 }
 
 .collection .collection-item.avatar {
   min-height: 84px;
-  padding-left: 72px;
+  padding-left: 100px;
   position: relative;
 }
 
 .collection .collection-item.avatar .circle {
   position: absolute;
-  width: 42px;
-  height: 42px;
+  width: 60px;
+  height: 60px;
   overflow: hidden;
-  left: 15px;
+  left: 20px;
   display: inline-block;
   vertical-align: middle;
 }
 
 .collection .collection-item.avatar i.circle {
-  font-size: 18px;
+  font-size: 20px;
   line-height: 42px;
   color: #fff;
   background-color: #999;
@@ -3041,11 +3050,18 @@ td, th {
 }
 
 .collection .collection-item.avatar .title {
-  font-size: 16px;
+  font-size: 18px;
+}
+.collection .collection-item.avatar .time {
+  margin-left: 15px;
+  font-size: 15px;
 }
 
 .collection .collection-item.avatar p {
-  margin: 0;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 23px;
+  margin: 5px 0;
 }
 
 .collection .collection-item.avatar .secondary-content {
@@ -8889,17 +8905,36 @@ nav .categories-wrapper .categories-container .categories > li {
   background-color: #fff;
   z-index: 1;
 }
+.gallery-body section {
+  margin-bottom: 30px;
+}
 
 .gallery .gallery-body .title-wrapper {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .gallery .gallery-body .title-wrapper h1, .gallery .gallery-body .title-wrapper h2, .gallery .gallery-body .title-wrapper h3, .gallery .gallery-body .title-wrapper h4, .gallery .gallery-body .title-wrapper h5 {
   margin: 0 0 10px 0;
 }
 
-.gallery .gallery-body .title-wrapper .price {
+/* 그룹 작은 정보 */
+.gallery .gallery-body .title-wrapper .info,
+.gallery .gallery-body .people .people-num,
+.collection .collection-item.avatar .time {
   color: #777;
+}
+.gallery .gallery-body .people .people-num{
+  font-size: 1.0rem;
+}
+.gallery .gallery-body .title-wrapper .info li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.gallery .gallery-body .title-wrapper .info li i,
+.gallery .gallery-body .people .people-num i {
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 .gallery .gallery-body .description {
@@ -9038,3 +9073,71 @@ nav .categories-wrapper .categories-container .categories > li {
     padding-top: 56px;
   }
 }
+
+/* 그룹 디테일 - 함께하는 사람들 */
+.people-item .avatar {
+  /*padding: 0 2px;*/
+  text-align: center;
+}
+.people-item .avatar img.circle {
+  width: 100%;
+}
+.people-item .name {
+  margin-top:0px;
+  margin-bottom:10px;
+  text-align: center;
+}
+.people-item a {
+  color: inherit;
+}
+
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* 그룹 - 함께하기 버튼 */
+.center-action {
+    text-align: center;
+    margin: 30px 0;
+}
+
+
+/* list를 인라인으로. 코멘트 아이콘 */
+.list-inline {
+  padding-left: 0;
+  margin-top:10px;
+    /*margin-left: -5px;*/
+    /*list-style: none;*/
+  box-sizing: inherit;
+  /*margin-right: 10px;*/
+}
+.list-inline li {
+  display: inline-block;
+  margin-right: 6px;
+}
+.list-inline a {
+  margin-right: 10px;
+}
+.list-inline li i {
+  vertical-align: middle;
+  font-size: 1.2rem;
+  color: #777;
+}
+
+
+.group_comment_write .avatar {
+  padding-bottom: 60px;
+}
+
+.group_comment_write textarea {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 23px;
+}
+
+.gallery-body hr {
+  margin-bottom: 35px;
+}
+

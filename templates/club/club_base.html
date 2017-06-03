@@ -32,9 +32,17 @@
           </ul>
         </div>
       </div>
+    </nav>
 {% endblock %}
 
 {% block content %}
     {% block club_content %}
     {% endblock %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        $("#li_club").addClass("active");
+    </script>
+    {% block club_js %}{% endblock %}
 {% endblock %}

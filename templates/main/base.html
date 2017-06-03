@@ -26,11 +26,12 @@
     {% include 'main/_header_piece_2.html' %} {# 무시 #}
 
     {% block content %}{% endblock %}
-    {% block js %}{% endblock %}
+
 
     <!-- Javascript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>#}
 {#    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>#}
+        <script src="{% static 'js/vendor/jquery-3.2.1.min.js' %}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="{% static 'js/vendor/imagesloaded.pkgd.min.js' %} "></script>
     <script src="{% static 'js/vendor/masonry.pkgd.min.js' %} "></script>
@@ -38,6 +39,6 @@
     <script src="{% static 'js/vendor/color-thief.min.js' %} "></script>
     <script src="{% static 'js/vendor/galleryExpand.js' %} "></script>
     <script src="{% static 'js/vendor/init.js' %} "></script>
-
+    {% block js %}{% endblock %}
   </body>
 </html>

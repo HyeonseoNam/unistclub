@@ -32,9 +32,17 @@
           </ul>
         </div>
       </div>
+    </nav>
 {% endblock %}
 
 {% block content %}
     {% block group_content %}
     {% endblock %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        $("#li_group").addClass("active");
+    </script>
+    {% block group_js %}{% endblock %}
 {% endblock %}
