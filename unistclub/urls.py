@@ -19,7 +19,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from club.views import club_detail, club_main, club_create
-from group.views import group_create, group_main, group_detail, membership_cancel, membership_participate
+from group.views import group_create, group_main, group_detail,\
+    membership_cancel, membership_participate, group_change
 
 
 urlpatterns = [
@@ -34,6 +35,7 @@ urlpatterns = [
     url(r'^group/(?P<group_id>\d+)/$', group_detail, name='group_detail'),
     url(r'^group/membership_cancel', membership_cancel, name="membership_cancel"),
     url(r'^group/membership_participate', membership_participate, name="membership_participate"),
+    url(r'^group/change/(?P<group_id>\d+)/$', group_change, name='group_change'),
 ]
 
 if settings.DEBUG:
