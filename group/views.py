@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404,HttpResponse,HttpResponseRedirect
-from .forms import GroupForm, CommentForm
+from django.shortcuts import render, redirect, get_object_or_404,HttpResponse,HttpResponseRedirect,Http404
+from .forms import GroupForm, CommentForm, GroupChangeForm
 from .models import Group, Comment, Membership
 from account.models import UcUser
 from datetime import datetime
@@ -77,6 +77,10 @@ def group_detail(request, group_id):
             return HttpResponse(json_data, content_type='application/json')
         else:
             pass
+
+    # 처음 들어갈때 redirect 없으면 에러남!
+    if 'redirect' not in request.session:
+        request.session['redirect'] = 0
 
     # 어디서 redirect해서 왔는지 확인하기
     if request.session['redirect'] is '1':
@@ -158,4 +162,31 @@ def group_create(request):
         else:
             pass
 
+    return render(request, template, context)
+
+def group_change(request, group_id):
+    # ID로 group 조회
+    group = get_object_or_404(Group, group_id=group_id)
+
+    # 유저가 판매자인지 체크
+    if group.admin != request.user:
+        # 판매자가 아니면 404 에러 호출
+        raise Http404
+
+    form = GroupChangeForm(instance=group)
+    if request.method == 'POST':
+        form = GroupChangeForm(request.POST or None, request.FILES or None, instance=group)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.admin = request.user
+            instance.save()
+            return redirect('/groups')
+
+        else:
+            pass
+    template = 'group/group_change.html'
+    context = {
+        "form": form,
+        "group": group
+    }
     return render(request, template, context)
