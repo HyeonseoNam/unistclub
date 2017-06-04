@@ -9141,3 +9141,9 @@ nav .categories-wrapper .categories-container .categories > li {
   margin-bottom: 35px;
 }
 
+/* 그룹추가하기 카드 */
+.gallery-add {
+  height: 250px;
+  width: 100%;
+  background-color: #00acc1;
+}
