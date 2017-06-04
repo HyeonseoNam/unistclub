@@ -1,3 +1,4 @@
+import random
 from django import forms
 
 from .models import (
@@ -27,6 +28,12 @@ class GroupForm(forms.ModelForm):
         widgets = {
             'description': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
         }
+    def save(self, commit=True):
+        group = super(GroupForm, self).save(commit=False)
+        group.group_id = ''.join(random.sample('0123456789', 5))
+        if commit:
+            group.save()
+        return group
 
 class CommentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
