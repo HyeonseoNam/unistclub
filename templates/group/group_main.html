@@ -21,8 +21,12 @@
                 {{ group.group_status }} <br>
                 {{ group.description }} <br>
             </div>
+            {% if group.admin == request.user %}
+                <a href="/group/change/{{ group.group_id }}/">수정하기</a>
+            {% endif %}
         </a>
     {% endfor %}
+
     <a href="{% url 'group_create' %}">그룹 만들기</a>
 <h1>group_main</h1>
 {% endblock %}
