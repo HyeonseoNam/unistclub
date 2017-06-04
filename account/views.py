@@ -44,7 +44,7 @@ def signup(request):
     userForm = UserCreationForm()
     # 가입 양식 작성하하여 제출 시 POST
     if request.method == "POST":
-        userForm = UserCreationForm(request.POST)
+        userForm = UserCreationForm(request.POST, request.FILES or None)
         # valid할 경우만 저장 TODO:is_valid() 양식에 맞게 생성필요.
         if userForm.is_valid():
             userForm.save()

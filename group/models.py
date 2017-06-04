@@ -22,9 +22,12 @@ class GroupManager(models.Manager):
 
 # 그룹 이미지 받는 장소
 def download_group_image(instance, filename):
-    return "groups/%s/%s" % (instance.group_name, filename)
+    return "groups/%s/%s" % (instance.group_id, filename)
 
 class Group(models.Model):
+
+    # 고유 키
+    group_id = models.CharField(max_length=16, unique=True, primary_key=True)
 
     # 그룹 이름
     group_name = models.CharField(max_length=255, null=False)
@@ -82,7 +85,7 @@ class Group(models.Model):
 
     @property
     def get_absolute_url(self):
-        return reverse('group_detail', kwargs={"group_id": self.id})
+        return reverse('group_detail', kwargs={"group_id": self.group_id})
     @property
     def get_group_photo(self):
         # TODO preprocess로 이미지 크기 미리 줄여주기

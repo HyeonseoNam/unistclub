@@ -5,7 +5,7 @@
     <title>회원가입 | unist.club</title>
 </head>
 <body>
-    <form action="{% url 'account:signup' %}" id="signup" method="POST">
+    <form action="{% url 'account:signup' %}" id="signup" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ userForm.as_p }}
         <input type="submit">
