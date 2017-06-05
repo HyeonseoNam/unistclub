@@ -168,9 +168,9 @@ def group_change(request, group_id):
     # ID로 group 조회
     group = get_object_or_404(Group, group_id=group_id)
 
-    # 유저가 판매자인지 체크
+    # 유저가 작성자인지 체크
     if group.admin != request.user:
-        # 판매자가 아니면 404 에러 호출
+        # 작성자가 아니면 404 에러 호출
         raise Http404
 
     form = GroupChangeForm(instance=group)
@@ -190,3 +190,18 @@ def group_change(request, group_id):
         "group": group
     }
     return render(request, template, context)
+
+def group_delete(request, group_id):
+    # ID로 group 조회
+    group = get_object_or_404(Group, group_id=group_id)
+
+    # 유저가 작성자인지 체크
+    if group.admin != request.user:
+        # 작성자가 아니면 404 에러 호출
+        raise Http404
+
+
+    if request.method == 'POST':
+        group.delete()
+
+    return redirect('group_main')
