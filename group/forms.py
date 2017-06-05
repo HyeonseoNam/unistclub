@@ -9,6 +9,7 @@ class GroupForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(GroupForm, self).__init__(*args, **kwargs)
 
+
     class Meta:
         model = Group
         fields = (
@@ -62,9 +63,15 @@ class GroupChangeForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CommentForm, self).__init__(*args, **kwargs)
+        self.fields['content'].widget.attrs.update({
+          'class' : 'materialize-textarea',
+        })
 
     class Meta:
         model = Comment
         fields = (
             'content',
         )
+        widgets = {
+            'content': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+        }

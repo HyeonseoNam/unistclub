@@ -1,0 +1,185 @@
+{% extends 'group/group_base.html' %}
+{% load staticfiles %}
+{% block group_css %}
+    <link rel="stylesheet" href="{% static 'css/group_detail.css' %}">
+{% endblock %}
+{% block group_content %}
+    <form action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
+        <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
+        <button type="submit">함께하기</button>
+    </form>
+    <div class="image_wrapper">
+        <img src="{{ group.get_group_photo }}" style="width:100%"/><br/>
+    </div>
+    그룹이름 : {{ group.group_name }} <br/>
+    <div>달력 : {{ today|timesince:group.apply_end }} 남음 | 사람 : {{ joined_list|length }} / {{ group.max_member }}
+       | *{{ group.group_status }}</div>
+    <hr><br/>
+    모임시간 : {{ group.meeting_time }} <br/>
+    모임장소 : {{ group.meeting_place }} <br/>
+    내용 : {{ group.description }} <br/>
+    {% if request.user in joined_list or request.user == group.admin or request.user in applied_list%}
+    연락 : {{ group.contact }} <br/>
+    {% endif %}
+
+    <h4>함께하는 사람들 {{ joined_list|length }} / {{ group.max_member }}</h4>
+    {% if request.user in joined_list or request.user == group.admin%}
+        <div class="joined_wrapper">
+            <form id="joined_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
+                {% for member in joined_list %}
+                    <div class="joined_member_wrapper" user_id="{{ member.user_id }}">
+                        <span>{{ member.name }}  </span>
+                        <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+    {% endif %}
+    {% if request.user == group.admin %}
+        <h4>참여대기</h4>
+        <div class="waiting_wrapper">
+            <form id="waiting_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
+                {% for member in applied_list %}
+                    <div class="applied_member_wrapper" user_id="{{ member.user_id }}">
+                        <span>{{ member.name }}  </span>
+                        <button class="member_add_btn" type="button" data_id="{{ member.user_id }}">추가하기</button>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+    {% endif %}
+
+    <br/>
+
+    {% if request.user in applied_list or request.user in joined_list %}
+    <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
+        <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
+        <button type="submit">취소하기</button>
+    </form>
+    {% else %}
+    <form action="/group/membership_participate/" method="POST">{% csrf_token %}
+        <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
+
+        <button type="submit">함께하기</button>
+    </form>
+    {% endif %}
+    <br/>
+    Comment
+    <form id="comment_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">입력</button>
+    </form>
+    <br/>
+    <hr>
+    <br/>
+    <div class="comments_wrapper">
+        {% for comment in comments %}
+            <div class="comment_wrapper">
+                {{ comment.user }} | {{ comment.content }} | {{ comment.created_at }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+    $(document).ready(function() {
+        $('#comment_form').submit(function() { // catch the form's submit event
+            $.ajax({ // create an AJAX call...
+                method: 'POST',
+                data: {csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                comment_content: $(this).find('input[type=text]').val()},
+                dataType: "json",
+                url: $(this).attr('action'), // the file to call
+                success: function(response) { // on success..
+                    $('.comments_wrapper').append('<div class="comment_wrapper">'+
+                        response["comment_user"] + ' | ' + response["added_comment"] + ' | ' + response["comment_created"]+'</div>');
+                }
+            });
+            return false;
+        });
+
+        // 멤버 추가하기
+        // dynamically appened element call
+        var temp_data_id = "";
+        $('#waiting_form').on('click', ".member_add_btn",function(){
+            temp_data_id = $(this).attr('data_id');
+            $('#waiting_form').submit();
+        });
+
+        $('#waiting_form').submit(function () { // catch the form's submit even
+            $.ajax({ // create an AJAX call...
+                method: 'POST',
+                data: {
+                    csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                    user_id: temp_data_id,
+                    adding: 1,
+                    member_change:1,
+                },
+                dataType: "json",
+                url: $(this).attr('action'), // the file to call
+                success: function (response) { // on success..
+                    var temp = response['selected_user_id'];
+                    $('.applied_member_wrapper[user_id='+temp+']')[0].remove();
+                    $('#joined_form').append('<div class="joined_member_wrapper" user_id='
+                        +temp+'>'+ '<span>'+response['selected_user_name'] +'</span>'
+                        + '<button class=member_delete_btn type=button data_id=' +
+                        response['selected_user_id'] +'>' + '삭제하기' + '</button>' +'</div>');
+
+                    $("#joined_form .joined_member_wrapper").sort(sort_li).appendTo('#joined_form'); // append again to the list
+                }
+            });
+            return false;
+        });
+
+        // 멤버 삭제하기
+        // dynamically appened element call
+        var temp_data_id2 = "";
+        $('#joined_form').on('click', ".member_delete_btn",function(){
+            temp_data_id2 = $(this).attr('data_id');
+            $('#joined_form').submit();
+        });
+
+        $('#joined_form').submit(function () { // catch the form's submit even
+            $.ajax({ // create an AJAX call...
+                method: 'POST',
+                data: {
+                    csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                    user_id: temp_data_id2,
+                    deleting: 1,
+                    member_change:1,
+                },
+                dataType: "json",
+                url: $(this).attr('action'), // the file to call
+                success: function (response) { // on success..
+                    var temp = response['selected_user_id'];
+                    $('.joined_member_wrapper[user_id='+temp+']')[0].remove();
+                    $('#waiting_form').append('<div class="applied_member_wrapper" user_id='
+                        +temp+'>'+ '<span>'+response['selected_user_name'] +'</span>'
+                        + '<button class=member_add_btn type=button data_id=' +
+                        response['selected_user_id'] +'>' + '추가하기' + '</button>' +'</div>');
+
+                    $("#waiting_form .applied_member_wrapper").sort(sort_li).appendTo('#waiting_form'); // append again to the list
+                }
+            });
+            return false;
+        });
+    });
+
+
+    // sort function callback
+    function sort_li(a, b){
+        return ($(b).attr('user_id')) < ($(a).attr('user_id')) ? 1 : -1;
+    }
+    
+    $(document).ready(function() {
+        if('{{ message }}'!=""){
+            alert('{{ message }}');
+        }
+    });
+
+    {% if messages %}
+        alert('hi');
+    {% endif %}
+    </script>
+{% endblock %}

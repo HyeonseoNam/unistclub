@@ -2,30 +2,238 @@
 {% load staticfiles %}
 
 {% block group_css %}
-    <link rel="stylesheet" href="{% static 'css/group_main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/group_main.css' %}">
+{% endblock %}
+
+{% block group_nav %}
+{# ---- Todo: sub-nav 배경색 설정 ---- #}
+      <div class="categories-wrapper light-blue darken-1">
+        <div class="categories-container">
+          <ul class="categories container">
+            <li class="active"><a href="#all">All</a></li>
+            <li><a href="#my">참여중인 그룹</a></li>
+            <li><a href="#ongoing">진행중인 그룹</a></li>
+            <li><a href="#closed">종료된 그룹</a></li>
+          </ul>
+        </div>
+      </div>
 {% endblock %}
 
 {% block group_content %}
-    <div class="search_wrapper">
-        <form id="group_search_form" action="{% url 'group_main' %}" method="post">{% csrf_token %}
-            <input type="text" name="search_content"/>
-            <button type="submit">검색</button>
-        </form>
-    </div>
-    <br/>
-
-    {% for group in groups %}
-        <a href="{{ group.get_absolute_url }}">
-            <div class="group_each_wrapper">
-                {{ group.group_name }} <br>
-                {{ group.group_status }} <br>
-                {{ group.description }} <br>
+  <!-- Gallery -->
+  <div id="portfolio" class="section gray">
+  <div class="container">
+    <div class="gallery row">
+      {#{% for i in "1234567890123" %}#}
+      {% for group in groups %}
+        {#            <a href="{{ group.get_absolute_url }}">#}
+        {#                <div class="group_each_wrapper">#}
+        {#                {{ group.group_name }} <br>#}
+        {#                {{ group.group_status }} <br>#}
+        {#                {{ group.description }} <br>#}
+        {#            </div>#}
+        {#        </a>#}
+        {#    {% endfor %}#}
+        {# Todo: 신청가능한지 태그클래스 남기기 #}
+        <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
+          <div class="gallery-curve-wrapper">
+            <a class="gallery-cover gray">
+              <img class="responsive-img" src="{{ group.get_group_photo }}" alt="placeholder">
+            </a>
+            <div class="gallery-header">
+              <span>{{ group.group_name }}</span>
             </div>
-        </a>
-    {% endfor %}
+            <div class="gallery-body">
+              <div class="title-wrapper">
+                <h3>{{ group.group_name }}</h3>
+                <ul class="info">
+                  <li><i class="material-icons">event</i>{{ today|timesince:group.apply_end }} 남음</li>
+                  {# Todo: group_main - joined_list를 불러올수있어야함 #}
+                  <li><i class="material-icons">supervisor_account</i>5명 / {{ group.max_member }}정원</li>
+                  <li><i class="material-icons">info</i>{{ group.group_status }}</li>
+                </ul>
+              </div>
+              <hr>
+              <section>
+                <p class="description">
+                  {{ group.description }}
+                </p>
+              </section>
+
+            </div>
+            <div class="gallery-action">
+              <a href="/group/{{ group.group_id }}/" class="btn-floating btn-large waves-effect waves-light">자세히</a>
+            </div>
+          </div>
+        </div>
+        <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
+          <div class="gallery-curve-wrapper">
+            <a class="gallery-cover gray">
+              {#                            <img class="responsive-img" src="http://placehold.it/350x250" alt="placeholder">#}
+              <img class="responsive-img" src="{{ group.get_group_photo }}" alt="placeholder">
+            </a>
+            <div class="gallery-header">
+              <span>{{ group.group_name }}</span>
+            </div>
+            <div class="gallery-body">
+              <div class="title-wrapper">
+                <h3>{{ group.group_name }}</h3>
+                <ul class="info">
+                  <li><i class="material-icons">event</i>{{ today|timesince:group.apply_end }} 남음</li>
+                  {# Todo: group_main - joined_list를 불러올수있어야함 #}
+                  <li><i class="material-icons">supervisor_account</i>5명 / {{ group.max_member }}정원</li>
+                  <li><i class="material-icons">info</i>{{ group.group_status }}</li>
+                </ul>
+              </div>
+              <hr>
+              <section>
+                <h5>모임시간</h5>
+                <p class="description">
+                  {{ group.meeting_time }}
+                </p>
+              </section>
+              <section>
+                <h5>모임장소</h5>
+                <p class="description">
+                  {{ group.meeting_place }}
+                </p>
+              </section>
+              <section>
+                <h5>설명</h5>
+                <p class="description">
+                  {{ group.description }}
+                </p>
+              </section>
+              {# Todo: group_main if문처리 해주어야 한다. #}
+              <section class="people clearfix">
+                <h5>함께하는 사람들&nbsp;&nbsp;&nbsp;<span class="people-num"><i class="material-icons">supervisor_account</i>5명 / {{ group.max_member }}정원</span>
+                </h5>
+              {# Todo: group_main 에서 people 불러와야한다. list의 사람들 #}
+                {% for i in "12345" %}
+                  <div class="people-item col l1 m2 s2 ">
+                  <div class="avatar">
+                    <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle ">
+                  </div>
+                  <a href=""><h6 class="name">Title</h6></a>
+                </div>
+                {% endfor %}
+
+                <br>
+              </section>
+              {% if request.user == group.admin %}
+              <section class="people clearfix">
+                <h5>참여대기&nbsp;&nbsp;&nbsp;<span class="people-num"><i
+                        class="material-icons">supervisor_account</i>3명</span>
+                </h5>
+
+                <div class="people-item col l1 m2 s2 ">
+                  <div class="avatar">
+                    <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle ">
+                  </div>
+                  <a href=""><h6 class="name">Title</h6></a>
+                </div>
+                <div class="people-item col l1 m2 s2 ">
+                  <div class="avatar">
+                    <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle ">
+                  </div>
+                  <a href=""><h6 class="name">Title</h6></a>
+                </div>
+                <div class="people-item col l1 m2 s2 ">
+                  <div class="avatar">
+                    <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle ">
+                  </div>
+                  <a href=""><h6 class="name">Title</h6></a>
+                </div>
+                <div class="people-item col l1 m2 s2 ">
+                  <div class="avatar">
+                    <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle ">
+                  </div>
+                  <a href=""><h6 class="name">Title</h6></a>
+                </div>
+
+              </section>
+            {% endif %}
+              <!-- 참여하기 폼으로 넘어가는 버튼 -->
+
+
+              <section class="group_comment_write">
+                <ul class="collection card">
+                  <li class="collection-item avatar"> <!-- -->
+                    <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                    <!-- TODO: form action 달기 -->
+                    <form class="input-field">
+                      <textarea id="comment_form" class="materialize-textarea"></textarea>
+                      <label for="comment_form">댓글을 입력하세요</label>
+                      <button type="submit" class="btn right">Submit</button>
+                    </form>
+
+                  </li>
+                </ul>
+
+              </section>
+              <section class="group_comment">
+                <ul class="collection card">
+                  {% for i in "12345" %}
+                    <li class="collection-item avatar">
+                      <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                      <span class="title">남현11</span> <span class="time">3일전</span>
+                      <p>
+                        정말 좋은 그룹이네요 ! 꼭 참가하고싶습니다.
+                      </p>
+                      <ul class="list-inline">
+                        {#                                            TODO: 아이콘 애니메이션 넣기 edit 기능 #}
+                        <li><a href="#"><i class="material-icons">thumb_up</i></a></li>
+                        <li><a href="#"><i class="material-icons">mode_edit</i></a></li>
+                        <li><a href="#"><i class="material-icons">delete</i></a></li>
+                      </ul>
+
+                    </li>
+                  {% endfor %}
+                </ul>
+              </section>
+
+            </div>
+            <div class="gallery-action">
+              <a class="btn-floating btn-large waves-effect waves-light"><i
+                      class="material-icons">input</i></a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      {# group create 호출 #}
+      <a href="{% url 'group_create' %}">
+        <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
+          <div class="gallery-add"></div>
+        </div>
+      </a>
+
+    </div>
     <a href="{% url 'group_create' %}">그룹 만들기</a>
-<h1>group_main</h1>
+  </div><!-- /.container -->
+
+
+  {# ====== 이전코드, 검색관련 뽑아쓸것 ====== #}
+  {#    <div class="search_wrapper">#}
+  {#        <form id="group_search_form" action="{% url 'group_main' %}" method="post">{% csrf_token %}#}
+  {#            <input type="text" name="search_content"/>#}
+  {#            <button type="submit">검색</button>#}
+  {#        </form>#}
+  {#    </div>#}
+  {#    <br/>#}
+  {##}
+  {#    {% for group in groups %} #}
+  {#        <a href="{{ group.get_absolute_url }}">#}
+  {#            <div class="group_each_wrapper">#}
+  {#                {{ group.group_name }} <br>#}
+  {#                {{ group.group_status }} <br>#}
+  {#                {{ group.description }} <br>#}
+  {#            </div>#}
+  {#        </a>#}
+  {#    {% endfor %}#}
+
+  {#<h1>group_main</h1>#}
 {% endblock %}
 
-{% block js %}
+{% block group_js %}
+  <script src="{% static 'js/vendor/galleryExpand.js' %} "></script>
 {% endblock %}

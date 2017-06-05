@@ -5,7 +5,35 @@
     {% block group_css %}{% endblock %}
 {% endblock %}
 
+{% block nav %}
+{# ---- Todo: nav 배경색 설정 ---- #}
+    <nav class="nav-extended light-blue lighten-1">
+      <div class="nav-background">
+{# ---- Todo: nav 배경이미지 설정 ---- #}
+        <div class="pattern active" style="background-image: url('{% static 'img/group_background.jpg' %}');"></div>
+{% endblock %}
+
+{% block sub_nav %}
+{# ---- Todo: nav 문구 설정 ---- #}
+            <div class="nav-header center">
+          <h1>공통의 주제로 뭉치다,</h1>
+          <div class="tagline">Grouping</div>
+        </div>
+      </div>
+<!-- Sub - Header -->
+    {% block group_nav %}
+    {% endblock %}
+    </nav>
+{% endblock %}
+
 {% block content %}
     {% block group_content %}
     {% endblock %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        $("#li_group").addClass("active");
+    </script>
+    {% block group_js %}{% endblock %}
 {% endblock %}
