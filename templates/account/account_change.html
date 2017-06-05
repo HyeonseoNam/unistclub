@@ -1,0 +1,9 @@
+{% extends 'account/account_base.html' %}
+{% load staticfiles %}
+
+{% block account_css %}
+{% endblock %}
+
+{% block account_content %}
+    <h3>{{ request.user.name }}의 정보 수정하기</h3>
+{% endblock %}

@@ -5,7 +5,7 @@ from account import views
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import logout, login
-from .views import signup
+from .views import signup, account_detail, account_change
 
 
 urlpatterns = [
@@ -24,6 +24,8 @@ urlpatterns = [
         # 'next_page': '/accounts/login',
         'next_page': '/',
     }, name='logout'),
+    url(r'^detail/$', account_detail, name='account_detail'),
+    url(r'^change/$', account_change, name='account_change'),
 
 
 

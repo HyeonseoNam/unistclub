@@ -3,6 +3,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+from .models import UcUser
+from group.models import Membership, Group, Comment
 
 from django.template import RequestContext
 # from .models import UcUser
@@ -60,5 +62,38 @@ def signup(request):
     return render(request, template, context)
 
 
+def account_detail(request):
+    user = request.user
+    membership = Membership.objects.get(member=user)
 
+    # 멤버십에서 joined, waiting인 멤버십 쿼리셋 뽑기
+    membership_joined = membership.__class__.objects.filter(status=True)
+    membership_waiting = membership.__class__.objects.filter(status=False)
 
+    joined_group_list = []
+    waiting_group_list = []
+
+    for m in membership_joined:
+        joined_group_list.append(m.group)
+
+    for m in membership_waiting:
+        waiting_group_list.append(m.group)
+
+    mycomments = Comment.objects.filter(user=user)
+
+    template = 'account/account_detail.html'
+    context={'joined_groups':joined_group_list, 'waiting_groups':waiting_group_list,
+             'mycomments':mycomments}
+    return render(request, template, context)
+
+def account_change(request):
+    user = request.user
+
+    # form = UserChangeForm(instance=user)
+
+    template = 'account/account_change.html'
+    context = {
+        # "form": form,
+        #
+    }
+    return render(request, template, context)
