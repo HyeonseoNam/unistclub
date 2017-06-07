@@ -14,16 +14,8 @@
 {% endblock %}
 
 {% block sub_nav %}
-{# ---- Todo: nav 문구 설정 ---- #}
-            <div class="nav-header center">
-          <h1>공통의 주제로 뭉치다,</h1>
-          <div class="tagline">Grouping</div>
-        </div>
-      </div>
-<!-- Sub - Header -->
     {% block group_nav %}
     {% endblock %}
-    </nav>
 {% endblock %}
 
 {% block content %}
@@ -36,4 +28,5 @@
         $("#li_group").addClass("active");
     </script>
     {% block group_js %}{% endblock %}
+
 {% endblock %}
