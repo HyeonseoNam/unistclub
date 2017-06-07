@@ -1,12 +1,15 @@
 from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.db.models.signals import pre_save, post_save, post_delete
 from account.models import UcUser
 # Create your models here.
 
 status_list = (
     ("study", "스터디"),
     ("social", "친목모임"),
+    ("common", "공통주제"),
+    ("etc", "기타"),
 )
 
 class GroupQueryset(models.query.QuerySet):
@@ -110,6 +113,24 @@ class Group(models.Model):
             #     pseudo_random_num = int(int(self.email.encode('hex'), 16) % 3) + 1
             #     random_profile = static('img/no_profile_' + str(pseudo_random_num) + '.png')
             #     return random_profile
+
+
+def group_post_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.group_photo:
+        if instance.group_status == "study":
+            instance.group_photo = 'default/study.jpg'
+            instance.save()
+        elif instance.group_status == "social":
+            instance.group_photo = 'default/social.jpeg'
+            instance.save()
+        elif instance.group_status == "common":
+            instance.group_photo = 'default/common.jpeg'
+            instance.save()
+        else:
+            instance.group_photo = 'default/etc.jpeg'
+            instance.save()
+
+post_save.connect(group_post_save_receiver, sender=Group)
 
 class Membership(models.Model):
     member = models.ForeignKey(UcUser)
