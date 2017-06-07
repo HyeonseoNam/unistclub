@@ -4,3 +4,6 @@
     width:30%;
     margin:auto;
 }
+.comment_delete_form{
+    display: inline-block;
+}

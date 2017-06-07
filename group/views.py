@@ -31,7 +31,6 @@ def group_detail(request, group_id):
 
     # comment 불러오기
     comments = Comment.objects.filter(group=group)
-
     # comment 작성 또는 멤버 추가나 삭제관련
     if request.is_ajax():
         # 멤버 추가 혹은 삭제 부분
@@ -53,6 +52,22 @@ def group_detail(request, group_id):
             data = {'selected_user_id':selected_user.user_id, 'selected_user_name':selected_user.name}
             json_data = json.dumps(data, sort_keys=True, default=str)
             return HttpResponse(json_data, content_type='application/json')
+
+        if 'comment_change' in request.POST:
+            if 'deleting' in request.POST:
+                passed_comment_id = int(request.POST["comment_id"])
+                passed_comment = Comment.objects.get(id=request.POST["comment_id"])
+                # 유저가 작성자인지 체크
+                if passed_comment.user != request.user:
+                    # 작성자가 아니면 404 에러 호출
+                    raise Http404
+                passed_comment.delete()
+
+                data = {'selected_comment_id': passed_comment_id}
+                json_data = json.dumps(data, sort_keys=True, default=str)
+                return HttpResponse(json_data, content_type='application/json')
+
+
         # 댓글 작성하는 부분
         comment_form = CommentForm(request.POST or None, request.FILES or None)
         if comment_form.is_valid():
@@ -72,7 +87,7 @@ def group_detail(request, group_id):
                 am_pm = "오후"
             ajax_datetime = real_datetime.strftime('%Y년 %m월 %d일 %H:%M ') # 년 월 일 시간까지 입력
             ajax_datetime = ajax_datetime + am_pm # 오전 오후 붙이는 곳
-            data = {'comment_user': instance.user, 'added_comment': instance.content, 'comment_created': ajax_datetime}
+            data = {'comment_user': instance.user, 'added_comment': instance.content, 'comment_created': ajax_datetime, 'comment_id':instance.id}
             json_data = json.dumps(data, sort_keys=True, default=str)
             return HttpResponse(json_data, content_type='application/json')
         else:

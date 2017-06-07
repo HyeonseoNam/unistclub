@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response,redirect
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .forms import UserCreationForm
+from .forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from .models import UcUser
 from group.models import Membership, Group, Comment
@@ -64,15 +64,11 @@ def signup(request):
 
 def account_detail(request):
     user = request.user
-    membership = Membership.objects.get(member=user)
-
-    # 멤버십에서 joined, waiting인 멤버십 쿼리셋 뽑기
-    membership_joined = membership.__class__.objects.filter(status=True)
-    membership_waiting = membership.__class__.objects.filter(status=False)
-
     joined_group_list = []
     waiting_group_list = []
-
+    mycomments = []
+    membership_joined = Membership.objects.filter(member=user, status=True)
+    membership_waiting = Membership.objects.filter(member=user, status=False)
     for m in membership_joined:
         joined_group_list.append(m.group)
 
@@ -80,6 +76,7 @@ def account_detail(request):
         waiting_group_list.append(m.group)
 
     mycomments = Comment.objects.filter(user=user)
+    # 멤버십에서 joined, waiting인 멤버십 쿼리셋 뽑기
 
     template = 'account/account_detail.html'
     context={'joined_groups':joined_group_list, 'waiting_groups':waiting_group_list,
@@ -88,12 +85,17 @@ def account_detail(request):
 
 def account_change(request):
     user = request.user
-
-    # form = UserChangeForm(instance=user)
+    form = UserChangeForm(instance=user)
+    if request.method == "POST":
+        form = UserChangeForm(request.POST, request.FILES or None, instance=user)
+        if form.is_valid():
+            # instance = form.save(commit=False)
+            # instance.save()
+            form.save(user)
+            return redirect('/accounts/detail/')
 
     template = 'account/account_change.html'
     context = {
-        # "form": form,
-        #
+        "form": form,
     }
     return render(request, template, context)
