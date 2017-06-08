@@ -36,8 +36,7 @@ def group_detail(request, group_id):
     if request.is_ajax():
         # 멤버 추가 혹은 삭제 부분
         if 'member_change' in request.POST:
-            print('member_change')
-            passed_user_id = int(request.POST["user_id"])
+            passed_user_id = request.POST["user_id"]
             selected_user = UcUser.objects.get(user_id=passed_user_id)
             selected_membership = Membership.objects.get(member=selected_user, group=group)
             # 멤버 추가하는 부분

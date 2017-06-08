@@ -358,6 +358,7 @@
                 dataType: "json",
                 url: $(this).attr('action'), // the file to call
                 success: function(response) { // on success..
+                    {# Todo: 성공 알람 띄워주기 #}
                     $('#comment_form').find('textarea').val(' ');
                     $("html, body").animate({ scrollTop: $(document).height() }, 500);
                     var item = $(
