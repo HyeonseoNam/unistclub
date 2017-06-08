@@ -5,6 +5,7 @@ from account.models import UcUser
 from datetime import datetime, date
 from pytz import timezone
 import json
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def group_main(request):
@@ -18,6 +19,7 @@ def group_main(request):
     context = {'groups': groups}
     return render(request, template, context)
 
+@login_required(login_url='/accounts/login')
 def group_detail(request, group_id):
     template = 'group/group_detail.html'
     comment_form = CommentForm()

@@ -5,6 +5,7 @@ from .forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from .models import UcUser
 from group.models import Membership, Group, Comment
+from django.contrib.auth.decorators import login_required
 
 from django.template import RequestContext
 # from .models import UcUser
@@ -44,6 +45,7 @@ def signup(request):
     """
     template = 'registration/signup.html'
     userForm = UserCreationForm()
+    message = ""
     # 가입 양식 작성하하여 제출 시 POST
     if request.method == "POST":
         userForm = UserCreationForm(request.POST, request.FILES or None)
@@ -51,17 +53,19 @@ def signup(request):
         if userForm.is_valid():
             userForm.save()
             return HttpResponseRedirect(
-                reverse("account:signup_ok_url")    # signup_ok라는 url으로
+                reverse("account:login")    #
             )
+        else:
+            message="패스워드가 일치하지 않습니다."
 
     # 가입 양식 미작성 시 GET. 아무처리하지 X
     elif request.method == "GET":
         pass
 
-    context = {"userForm" : userForm}
+    context = {"userForm" : userForm, "message": message}
     return render(request, template, context)
 
-
+@login_required(login_url='/accounts/login')
 def account_detail(request):
     user = request.user
     joined_group_list = []
@@ -83,6 +87,7 @@ def account_detail(request):
              'mycomments':mycomments}
     return render(request, template, context)
 
+@login_required(login_url='/accounts/login')
 def account_change(request):
     user = request.user
     form = UserChangeForm(instance=user)
