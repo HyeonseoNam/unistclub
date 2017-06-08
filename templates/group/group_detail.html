@@ -151,8 +151,7 @@
                           <img src="{{ member.get_user_photo }}" alt="" class="circle z-depth-1">
                           <button class="member_delete_btn z-depth-1-half red lighten-1 " style="display: none;" type="button" data_id="{{ member.user_id }}">-</button>
                         </div>
-                          {# Todo: user page url 넣기 #}
-                        <a href="#"><h6 class="name">{{ member.name }}</h6></a>
+                        <a href="/accounts/{{ member.user_id }}"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                       </div>
@@ -169,8 +168,7 @@
                             <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>
                           </form>
                         </div>
-                        {# todo: 유저 링크설정 #}
-                        <a href="#"><h6 class="name">{{ member.name }}</h6></a>
+                        <a href="/accounts/{{ member.user_id }}"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                     </div>
@@ -205,8 +203,7 @@
                           <img src="{{ member.get_user_photo }}" alt="" class="circle z-depth-1">
                           <button class=" z-depth-1-half blue accent-2"  type="button" data_id="{{ member.user_id }}">+</button>
                         </div>
-                          {# Todo: user page url 넣기 #}
-                        <a href="#"><h6 class="name">{{ member.name }}</h6></a>
+                        <a href="/accounts/{{ member.user_id }}"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                       </div>
@@ -220,8 +217,7 @@
                         <div class="avatar">
                           <img src="{{ member.get_user_photo }}" alt="" class="circle z-depth-1">
                         </div>
-                          {# Todo: user page url 넣기 #}
-                        <a href="#"><h6 class="name">{{ member.name }}</h6></a>
+                        <a href="/accounts/{{ member.user_id }}"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                       </div>
@@ -288,8 +284,11 @@
                 <form action="group/{{ group.group_id }}" id="comment_delete_form" method="post">{% csrf_token %}
                   {% for comment in comments %}
                     <li class="collection-item avatar">
-                      <img src="{{ commnet.user.get_user_photo }}" alt="" class="circle z-depth-1">
-                      <span class="title">{{ comment.user.name }}</span> <span class="time">{{ comment.created_at }}</span>
+                      <a href="/accounts/{{ comment.user.user_id }}">
+                        <img src="{{ comment.user.get_user_photo }}" alt="" class="circle z-depth-1">
+
+
+                      <span class="title">{{ comment.user.name }}</span>  </a> <span class="time">{{ comment.created_at }}</span>
                       <p>
                         {{ comment.content }}
                       </p>
@@ -362,7 +361,6 @@
                 dataType: "json",
                 url: $(this).attr('action'), // the file to call
                 success: function(response) { // on success..
-                    {# Todo: 성공 알람 띄워주기 #}
                     $('#comment_form').find('textarea').val(' ');
                     $("html, body").animate({ scrollTop: $(document).height() }, 500);
                     var item = $(
