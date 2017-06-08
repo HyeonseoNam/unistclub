@@ -263,7 +263,7 @@
       <section class="group_comment_write">
                 <ul class="collection card">
                   <li class="collection-item avatar"> <!-- -->
-                    <img src="{{ request.user.photo }}" alt="" class="circle z-depth-1">
+                    <img src="{{ request.user.get_user_photo }}" alt="" class="circle z-depth-1">
                     <form class="input-field" id="comment_form" action="/group/{{ group.group_id }}/" method="POST">
                       {% csrf_token %}
                       {{ comment_form.content }}
@@ -296,11 +296,11 @@
                         {# TODO: 댓글 삭제, 수정기능 연동, if문달기 #}
 {#                        <li><a href="#"><i class="material-icons">thumb_up</i></a></li>#}
 {#                        <li><a href="#"><i class="material-icons">mode_edit</i></a></li>#}
-                        {% if request.user == comment.user %}
-                        <li>
-                        <button class="comment_delete_btn" data_id="{{ comment.id }}" type="button"><i class="material-icons">delete</i></button>
+{#                        {% if request.user == comment.user %}#}
+{#                        <li>#}
+{#                        <button class="comment_delete_btn" data_id="{{ comment.id }}" type="button"><i class="material-icons">delete</i></button>#}
 {#                          <a href="#"><i class="material-icons">delete</i></a></li>#}
-                        {% endif %}
+{#                        {% endif %}#}
                       </ul>
 
                     </li>
@@ -367,7 +367,7 @@
                         "<img src='" + response["comment_user_photo"] + "' alt='user_photo' class='circle z-depth-1'>" +
                         "<span class='title'>" + response["comment_user"] + "</span> <span class='time'>" + response["comment_created"] + "</span>" +
                         "<p>" + response["added_comment"] + "</p> </li>").hide();
-                    $('#comment_wrapper').append(item);
+                    $('#comment_delete_form').append(item);
                     item.fadeIn(1500);
 
                 }
