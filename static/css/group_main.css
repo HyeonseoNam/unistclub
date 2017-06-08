@@ -70,3 +70,14 @@ label{
 .chip.tag.terminated{
     background-color:#DFDFDF;
 }
+/* 가장 작은 화면 */
+@media only screen and (max-width: 600px) {
+    .search_wrapper {
+        display: none;
+    }
+}
+
+.search_wrapper button {
+    background: transparent;
+    border: 0;
+}
