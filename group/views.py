@@ -177,7 +177,6 @@ def group_create(request):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.admin = request.user # merge: 로그인 user 등록
-
             # 자기 자신도 멤버로 참여하기
             membership = Membership(group=instance, member=request.user, status=True)
             membership.save()
