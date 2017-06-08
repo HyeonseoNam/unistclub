@@ -54,6 +54,8 @@ def signup(request):
     """
     # 만약에 유저가 로그인 되어있다면 메인으로 보내기
     if request.user.is_anonymous:
+        pass
+    elif request.user:
         return redirect('/')
 
     template = 'registration/signup.html'
