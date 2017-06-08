@@ -81,7 +81,11 @@
       {% endfor %}
 
     </div>
-    <a href="{% url 'group_create' %}">그룹 만들기</a>
+  <div class="fixed-action-btn group-creation-btn">
+    <a href="{% url 'group_create' %}" class="btn-floating waves-effect waves-light btn-large blue accent-2">
+        그룹생성
+    </a>
+  </div>
   </div><!-- /.container -->
 
 
