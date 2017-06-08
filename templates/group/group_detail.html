@@ -1,5 +1,7 @@
 {% extends 'group/group_base.html' %}
 {% load staticfiles %}
+{% load clubtags %}
+
 {% block group_css %}
     <link rel="stylesheet" href="{% static 'css/group_main.css' %}">
   <link rel="stylesheet" href="{% static 'css/group_detail.css' %}">
@@ -23,6 +25,27 @@
       <div class="row">
         <div class="col l5 m5 s12 detail-wrapper">
         <div class="detail-image-cover">
+            {% if group.admin == request.user %}
+                    <div class="chip tag admin">
+                        내가 만든 그룹
+                    </div>
+                {% elif request.user|is_participating:group.group_id == 2 %}
+                    <div class="chip tag participating">
+                        참여중
+                    </div>
+                {% elif request.user|is_participating:group.group_id == 3 %}
+                    <div class="chip tag waiting">
+                        참여대기중
+                    </div>
+                {% elif group.is_always_apply or group.is_apply %}
+                    <div class="chip tag applying">
+                        지원가능
+                    </div>
+                {% else %}
+                    <div class="chip tag terminated">
+                        지원마감
+                    </div>
+                {% endif %}
               {#                            <img class="responsive-img" src="http://placehold.it/350x250" alt="placeholder">#}
           <img class="responsive-img" src="{{ group.get_group_photo }}" alt="placeholder" id="group_photo_img">
         </div>
@@ -232,7 +255,11 @@
         {% else %}
         <form action="{% url 'membership_participate' %}" method="POST">{% csrf_token %}
             <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
-            <button class="btn-large waves-effect waves-light blue accent-2" type="submit">함께 참여하기</button>
+            {% if group.is_always_apply or group.is_apply %}
+                <button class="btn-large waves-effect waves-light blue accent-2" type="submit">함께하기</button>
+            {% else %}
+                <button class="btn-large waves-effect waves-light blue accent-2" type="button" disabled>함께하기</button>
+            {% endif %}
         </form>
         {% endif %}
 
