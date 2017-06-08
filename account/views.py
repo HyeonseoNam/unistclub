@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response,redirect
+from django.shortcuts import render, render_to_response,redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .forms import UserCreationForm, UserChangeForm
@@ -81,8 +81,8 @@ def signup(request):
     return render(request, template, context)
 
 @login_required(login_url='/accounts/login')
-def account_detail(request):
-    user = request.user
+def account_detail(request, user_id):
+    user = get_object_or_404(UcUser, user_id=user_id)
     joined_group_list = []
     waiting_group_list = []
     mycomments = []

@@ -24,7 +24,7 @@ urlpatterns = [
         # 'next_page': '/accounts/login',
         'next_page': '/',
     }, name='logout'),
-    url(r'^detail/$', account_detail, name='account_detail'),
+    url(r'^(?P<user_id>\d+)/$', account_detail, name='account_detail'),
     url(r'^change/$', account_change, name='account_change'),
 
 
