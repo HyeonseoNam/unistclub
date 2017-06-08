@@ -1,0 +1,58 @@
+{% extends 'group/group_base.html' %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+
+{% block nav %}
+{# ---- Todo: nav 배경색 설정 ---- #}
+    <nav class="nav-extended nav-full-header z-depth-0 index">
+      <div class="nav-background">
+{# ---- Todo: nav 배경이미지 설정 ---- #}
+        <div class="index_pattern active" style="background-image: url('{% static 'img/index_background.jpg' %}');"></div>
+        <div class="background-cover gradient "></div>
+{% endblock %}
+
+{% block sub_nav %}
+    <script>
+
+    </script>
+{# ---- Todo: nav 문구 설정 ---- #}
+            <div class="nav-header center index">
+            <h1>
+
+                <div id="typewriter-wrapper" class="centered">
+                    <span id="typewriter1"></span>
+                    <span id="typewriter2" class="strong"></span>
+                    <span id="typewriter3"></span>
+                    <span id="typewriter4" class="strong"></span>
+                    <span id="typewriter5"></span>
+                    <span id="typewriter6"></span>
+                    <span id="typewriter7" class="strong"></span>
+                    <span id="typewriter8"></span>
+                </div>
+
+            </h1>
+            </div>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/vendor/hangul.js' %}"></script>
+    <script src="{% static 'js/vendor/typewriter-bundle.js' %}"></script>
+    <script src="{% static 'js/typer_custom.js' %}"></script>
+{% endblock %}
+
+
+
