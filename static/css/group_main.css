@@ -32,3 +32,52 @@ label{
     padding-bottom: 4px;
     color: rgba(0,0,0,0.6);
 }
+
+/* datepicker가 있는 row의 margin 조정 */
+.row-datepicker .card-content-row {
+    margin-top: 0 !important;
+}
+
+.group-creation-btn {
+    font-size: 10px;
+    line-height: 56px;
+}
+
+/* 카드의 태그들 */
+.chip.tag{
+    position:absolute;
+    top:9px;
+    right:2px;
+    color:white;
+}
+
+.chip.tag.admin{
+    background-color:#0d47a1 ;
+}
+
+.chip.tag.participating{
+    background-color:#1e88e5;
+}
+
+.chip.tag.waiting{
+    background-color:#9fa8da;
+}
+
+.chip.tag.applying{
+    background-color:#4caf50;
+}
+
+.chip.tag.terminated{
+    background-color:#DFDFDF;
+}
+/* 가장 작은 화면 */
+@media only screen and (max-width: 600px) {
+    .search_wrapper {
+        display: none;
+    }
+}
+
+.search_wrapper button {
+    background: transparent;
+    border: 0;
+}

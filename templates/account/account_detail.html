@@ -2,33 +2,120 @@
 {% load staticfiles %}
 
 {% block account_css %}
+  <link rel="stylesheet" href="{% static 'css/account.css' %}">
 {% endblock %}
 
+{% block account_nav %}
+{# ---- Todo: nav 문구 설정 ---- #}
+            <div class="nav-header center">
+          <h1>소개하세요.</h1>
+          <div class="tagline">&nbsp;</div>
+        </div>
+      </div>
+  </nav>
+{% endblock %}
+
+
 {% block account_content %}
-    <h3>{{ request.user.name }}님의 마이페이지입니다.</h3>
-    <a href="/accounts/change/">내정보 수정하기</a>
-    <br>
+<div class="section" id="account">
+  <div class="container">
+    <div class="row">
+      <div class="card">
+         <div class="card-content">
 
-    내가 속한 그룹 <br/>
-    <hr>
-    {% for joined_group in joined_groups %}
-        <a href="{% url 'group_detail' joined_group.group_id  %}">{{ joined_group.group_name }}</a><br/>
-    {% endfor %}
-    <br>
-    <br/>
+            {# 프로필 사진 및 기본정보 #}
+            <div class="row card-content-row">
+              <div class="col l4 m4 s12">
+                <div class="card-profile-wrapper">
+{#                  <img src="{{ request.user.photo }}" alt="account-profile" class="card-profile">#}
+                  <img src="{{ user.get_user_photo }}" alt="account-profile" class="card-profile circle z-depth-1-half">
+                </div>
+                <span class=""></span>
+              </div>
+              <div class="col l8 m8 s12" >
 
-    참여 대기중인 그룹 <br/>
-    <hr>
-    {% for waiting_group in waiting_groups %}
-        <a href="{% url 'group_detail' waiting_group.group_id  %}">{{ waiting_group.group_name }}</a><br/>
-    {% endfor %}
-    <br>
+                  <span class="card-title">{{ user.name }}</span>
+                  {# Todo: email은 자신의 것만 보인다. #}
+              {% if request.user == user %}
+                <p>{{ user.email }} <span class="notyet">&nbsp;비공개</span></p>
+              {% endif %}
 
-    내가 작성한 댓글 <br/>
-    <hr>
-    {% for comment in mycomments %}
-        <a href="{% url 'group_detail' comment.group.group_id  %}">{{ comment.group.group_name }}</a>에서 작성된 댓글 : {{ comment.content }}<br/>
-    {% endfor %}
-    <br>
+                  {% if user.major == '' %}
+                    <p class="notyet">전공정보가 입력되어 있지 않습니다.</p>
+                  {% else %}
+                    <p>{{ user.major }} | {{ user.minor }}</p>
+                  {% endif %}
+                  {% if user.description == '' %}
+                    <p class="notyet">소개글이 작성되어 있지 않습니다.</p>
+                  {% else %}
+                    <p>{{ user.description }}</p>
+                  {% endif %}
+
+              </div>
+            </div>
+
+           <hr>
+
+         <section class="account-group-participating">
+           <span class="card-title">
+             사용자가 속한 그룹 {{ joined_groups|length }}
+            </span>
+           <div class="row">
+           {% if joined_groups|length == 0 %}
+             <p class="notyet">아직 참여중인 그룹이 없습니다.</p>
+           {% else %}
+             {% for joined_group in joined_groups %}
+             <div class="col l4 m6 s12">
+             <a href="{% url 'group_detail' joined_group.group_id  %}">
+               <div class="card inner-card-sizing">
+                 <div class="inner-card-image" style="background-image: url('{{ joined_group.get_group_photo }}');">
+                   <div class="inner-background"></div>
+                   <span class="inner-card-title">{{ joined_group.group_name }}</span>
+                 </div>
+
+               </div>
+               </a>
+             </div>
+            {% endfor %}
+           {% endif %}
+            </div>
+         </section>
+         <hr>
+
+         <section class="account-group-waiting">
+           <span class="card-title">
+             참여 대기중인 그룹 {{ waiting_groups|length }}
+            </span>
+
+            <div class="row">
+            {% if waiting_groups|length == 0 %}
+             <p class="notyet">아직 참여신청한 그룹이 없습니다.</p>
+           {% else %}
+           {% for waiting_group in waiting_groups %}
+             <div class="col l4 m6 s12">
+             <a href="{% url 'group_detail' waiting_group.group_id  %}">
+               <div class="card inner-card-sizing">
+                 <div class="inner-card-image" style="background-image: url('{{ waiting_group.get_group_photo }}');">
+                   <div class="inner-background"></div>
+                   <span class="inner-card-title">{{ waiting_group.group_name }}</span>
+                 </div>
+
+               </div>
+               </a>
+             </div>
+            {% endfor %}
+            {% endif %}
+            </div>
+         </section>
+
+
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block account_js %}
 
 {% endblock %}

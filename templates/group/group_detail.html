@@ -1,12 +1,13 @@
 {% extends 'group/group_base.html' %}
 {% load staticfiles %}
+{% load clubtags %}
+
 {% block group_css %}
     <link rel="stylesheet" href="{% static 'css/group_main.css' %}">
   <link rel="stylesheet" href="{% static 'css/group_detail.css' %}">
 {% endblock %}
 
 {% block group_nav %}
-{# ---- Todo: nav 문구 설정 ---- #}
             <div class="nav-header center">
           <h1>&nbsp;</h1>
           <div class="tagline">&nbsp;</div>
@@ -24,6 +25,27 @@
       <div class="row">
         <div class="col l5 m5 s12 detail-wrapper">
         <div class="detail-image-cover">
+            {% if group.admin == request.user %}
+                    <div class="chip tag admin">
+                        내가 만든 그룹
+                    </div>
+                {% elif request.user|is_participating:group.group_id == 2 %}
+                    <div class="chip tag participating">
+                        참여중
+                    </div>
+                {% elif request.user|is_participating:group.group_id == 3 %}
+                    <div class="chip tag waiting">
+                        참여대기중
+                    </div>
+                {% elif group.is_always_apply or group.is_apply %}
+                    <div class="chip tag applying">
+                        지원가능
+                    </div>
+                {% else %}
+                    <div class="chip tag terminated">
+                        지원마감
+                    </div>
+                {% endif %}
               {#                            <img class="responsive-img" src="http://placehold.it/350x250" alt="placeholder">#}
           <img class="responsive-img" src="{{ group.get_group_photo }}" alt="placeholder" id="group_photo_img">
         </div>
@@ -112,7 +134,7 @@
             <div class="card-content">
               {# 참여중인 사람들 #}
               <section class="participating-people">
-                    <span class="card-title"><i class="material-icons">supervisor_account</i> 참여중인 사람들&nbsp;&nbsp;&nbsp;<span class="people-num">{{ joined_list|length }}명 / {{ group.max_member }}정원&nbsp;&nbsp;&nbsp;</span>
+                    <span class="card-title"><i class="material-icons">supervisor_account</i> 참여중인 사람들&nbsp;&nbsp;&nbsp;<span class="people-num"><span id="joined_num">{{ joined_list|length }}</span>명 / {{ group.max_member }}정원&nbsp;&nbsp;&nbsp;</span>
                       {% if request.user == group.admin %}
                         {# 그룹장인 경우 '편집' 버튼이 활성화되어있다. #}
                         <a class="btn blue-grey lighten-3" id="participating-edit">편집</a>
@@ -122,19 +144,14 @@
                     {# 그룹장의 경우 편집 #}
                     {% if request.user == group.admin %}
                       <form id="joined_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
-                      <div class="people-wrapper">
-                      {# Todo: for 문 수정 #}
-                      {% for i in "123456789012345" %}
-                        <div class="people-item ">
+                      <div class="people-wrapper joined">
+                      {% for member in joined_list %}
+                        <div class="people-item joined" user_id="{{ member.user_id }}">
                         <div class="avatar">
-                          {# Todo: 사람들 이미지 넣기 #}
-                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
-    {#                      <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>#}
-                          {# Todo: member id 넣기 문 수정 #}
-                          <button class="member_delete_btn z-depth-1-half red lighten-1 " style="display: none;" type="button" data_id="">-</button>
+                          <img src="{{ member.get_user_photo }}" alt="" class="circle z-depth-1">
+                          <button class="z-depth-1-half red lighten-1 member_delete_btn" style="display: none;" type="button" data_id="{{ member.user_id }}">-</button>
                         </div>
-                          {# Todo: user page url 넣기, 이름넣기 #}
-                        <a href="#"><h6 class="name">이름</h6></a>
+                        <a href="/accounts/{{ member.user_id }}"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                       </div>
@@ -143,16 +160,12 @@
                     {# 참여중인 사람들#}
                     {% elif request.user in joined_list %}
                     <div class="people-wrapper">
-                      {% for i in "123456789012345" %}
-                        <div class="people-item ">
+                      {% for member in joined_list %}
+                        <div class="people-item">
                         <div class="avatar">
-                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle  z-depth-1">
-
-                          <form id="joined_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
-                            <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>
-                          </form>
+                          <img src="{{ member.get_user_photo }}" alt="" class="circle  z-depth-1">
                         </div>
-                        <a href=""><h6 class="name">Title</h6></a>
+                        <a href="/accounts/{{ member.user_id }}"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                     </div>
@@ -174,26 +187,20 @@
                 </section>
               {# 참여대기 사람들 #}
               <section class="waiting-people">
-                    <span class="card-title"><i class="material-icons">supervisor_account</i> 참여대기중&nbsp;&nbsp;&nbsp;<span class="people-num">{{ applied_list|length }}명</span>
+                  <span class="card-title"><i class="material-icons">supervisor_account</i> 참여대기중&nbsp;&nbsp;&nbsp;<span class="people-num"><span id="waiting_num">{{ applied_list|length }}</span>명</span>
                     </span>
 
                     {# [그룹장]의 경우 편집 #}
                     {% if request.user == group.admin %}
                     <form id="waiting_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
-                      <div class="people-wrapper">
-                      {# Todo: for 문 수정 #}
-                      {% for i in "123456789012345" %}
-    {#                    {% for member in joined_list %}#}
-                        <div class="people-item ">
+                      <div class="people-wrapper waiting">
+                      {% for member in applied_list %}
+                        <div class="people-item waiting" user_id="{{ member.user_id }}">
                         <div class="avatar">
-                          {# Todo: 사람들 이미지 넣기 #}
-                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
-    {#                      <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>#}
-                          {# Todo: member id 넣기 문 수정 #}
-                          <button class=" z-depth-1-half blue accent-2"  type="button" data_id="">+</button>
+                          <img src="{{ member.get_user_photo }}" alt="" class="circle z-depth-1">
+                          <button class="z-depth-1-half blue accent-2 member_add_btn"  type="button" data_id="{{ member.user_id }}">+</button>
                         </div>
-                          {# Todo: user page url 넣기, 이름넣기 #}
-                        <a href="#"><h6 class="name">이름</h6></a>
+                        <a href="/accounts/{{ member.user_id }}"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                       </div>
@@ -202,16 +209,12 @@
                     {# [참여중인 사람들] 혹은 [대기중인 사람들] #}
                     {% elif request.user in joined_list or request.user in applied_list %}
                     <div class="people-wrapper">
-                      {# Todo: for 문 수정 #}
-                      {% for i in "123456789012345" %}
-    {#                    {% for member in joined_list %}#}
-                        <div class="people-item ">
+                      {% for member in applied_list %}
+                        <div class="people-item">
                         <div class="avatar">
-                          {# Todo: 사람들 이미지 넣기 #}
-                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                          <img src="{{ member.get_user_photo }}" alt="" class="circle z-depth-1">
                         </div>
-                          {# Todo: user page url 넣기, 이름넣기 #}
-                        <a href="#"><h6 class="name">이름</h6></a>
+                        <a href="/accounts/{{ member.user_id }}"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                       </div>
@@ -232,21 +235,24 @@
         <div class="col l12 m12 s12 detail-submit">
         {% if request.user in applied_list or request.user in joined_list %}
           {% if request.user == group.admin %}
-            {# Todo: 그룹수정하기 액션 부여 #}
-            <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
+            <form action="{% url 'group_change' group.group_id %}" method="POST">{% csrf_token %}
               <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
               <button class="btn-large waves-effect waves-light orange lighten-3" type="submit">그룹 수정하기</button>
             </form>
           {% else %}
-            <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
+            <form action="{% url 'membership_cancel' %}" method="POST">{% csrf_token %}
               <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
               <button class="btn-large waves-effect waves-light blue lighten-4" type="submit">참여취소하기</button>
             </form>
           {% endif %}
         {% else %}
-        <form action="/group/membership_participate/" method="POST">{% csrf_token %}
+        <form action="{% url 'membership_participate' %}" method="POST">{% csrf_token %}
             <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
-            <button class="btn-large waves-effect waves-light blue accent-2" type="submit">함께하기</button>
+            {% if group.is_always_apply or group.is_apply %}
+                <button class="btn-large waves-effect waves-light blue accent-2" type="submit">함께하기</button>
+            {% else %}
+                <button class="btn-large waves-effect waves-light blue accent-2" type="button" disabled>함께하기</button>
+            {% endif %}
         </form>
         {% endif %}
 
@@ -257,8 +263,7 @@
       <section class="group_comment_write">
                 <ul class="collection card">
                   <li class="collection-item avatar"> <!-- -->
-                    {# Todo: group_detail avatar 이미지변경 #}
-                    <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                    <img src="{{ request.user.photo }}" alt="" class="circle z-depth-1">
                     <form class="input-field" id="comment_form" action="/group/{{ group.group_id }}/" method="POST">
                       {% csrf_token %}
                       {{ comment_form.content }}
@@ -273,29 +278,41 @@
       {# 댓글 list section #}
       <section class="group_comment">
                 <ul class="collection card" id="comment_wrapper">
+                <form action="group/{{ group.group_id }}" id="comment_delete_form" method="post">{% csrf_token %}
                   {% for comment in comments %}
                     <li class="collection-item avatar">
-                    {# Todo: group_detail comment avatar 이미지변경 #}
-                      <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
-                      <span class="title">{{ comment.user.name }}</span> <span class="time">{{ comment.created_at }}</span>
+                      <a href="/accounts/{{ comment.user.user_id }}">
+                        <img src="{{ comment.user.get_user_photo }}" alt="" class="circle z-depth-1">
+
+
+                      <span class="title">{{ comment.user.name }}</span>  </a> <span class="time">{{ comment.created_at }}</span>
                       <p>
                         {{ comment.content }}
                       </p>
-{#                      <ul class="list-inline">#}
+
+
+
+                      <ul class="list-inline">
                         {# TODO: 댓글 삭제, 수정기능 연동, if문달기 #}
 {#                        <li><a href="#"><i class="material-icons">thumb_up</i></a></li>#}
 {#                        <li><a href="#"><i class="material-icons">mode_edit</i></a></li>#}
-{#                        <li><a href="#"><i class="material-icons">delete</i></a></li>#}
-{#                      </ul>#}
+                        {% if request.user == comment.user %}
+                        <li>
+                        <button class="comment_delete_btn" data_id="{{ comment.id }}" type="button"><i class="material-icons">delete</i></button>
+{#                          <a href="#"><i class="material-icons">delete</i></a></li>#}
+                        {% endif %}
+                      </ul>
 
                     </li>
                   {% endfor %}
+                </form>
                 </ul>
               </section> <!-- //section -->
 
     </div>
   </div>
 </div>
+
 
 {% endblock %}
 
@@ -378,14 +395,17 @@
                 dataType: "json",
                 url: $(this).attr('action'), // the file to call
                 success: function (response) { // on success..
+                    $('.member_delete_btn').removeClass('display');
+                    chage_number_when_member_change(true);
                     var temp = response['selected_user_id'];
-                    $('.applied_member_wrapper[user_id='+temp+']')[0].remove();
-                    $('#joined_form').append('<div class="joined_member_wrapper" user_id='
-                        +temp+'>'+ '<span>'+response['selected_user_name'] +'</span>'
-                        + '<button class=member_delete_btn type=button data_id=' +
-                        response['selected_user_id'] +'>' + '삭제하기' + '</button>' +'</div>');
+                    $('.people-item.waiting[user_id='+temp+']')[0].remove();
+                    $('.people-wrapper.joined').append('<div class="people-item joined" user_id='
+                    + temp + '>'+'<div class="avatar">' + '<img src="'+response["selected_user_photo"] + '" alt="" class="circle z-depth-1">'
+                    + '<button class="z-depth-1-half red lighten-1 member_delete_btn" style="display: none;" type="button" data_id='
+                    + temp + '>-</button></div><a href="/accounts/'+temp+'"><h6 class="name">' +response['selected_user_name']
+                        +'</h6></div>');
 
-                    $("#joined_form .joined_member_wrapper").sort(sort_li).appendTo('#joined_form'); // append again to the list
+                    $(".people-wrapper.joined .people-item.joined").sort(sort_li).appendTo('.people-wrapper.joined'); // append again to the list
                 }
             });
             return false;
@@ -411,14 +431,17 @@
                 dataType: "json",
                 url: $(this).attr('action'), // the file to call
                 success: function (response) { // on success..
+                    chage_number_when_member_change(false);
+                    $('.member_delete_btn').removeClass('display');
                     var temp = response['selected_user_id'];
-                    $('.joined_member_wrapper[user_id='+temp+']')[0].remove();
-                    $('#waiting_form').append('<div class="applied_member_wrapper" user_id='
-                        +temp+'>'+ '<span>'+response['selected_user_name'] +'</span>'
-                        + '<button class=member_add_btn type=button data_id=' +
-                        response['selected_user_id'] +'>' + '추가하기' + '</button>' +'</div>');
+                    $('.people-item.joined[user_id='+temp+']')[0].remove();
+                    $('.people-wrapper.waiting').append('<div class="people-item waiting" user_id='
+                    + temp + '>'+'<div class="avatar">' + '<img src="'+response["selected_user_photo"] + '" alt="" class="circle z-depth-1">'
+                    + '<button class="z-depth-1-half blue accent-2 member_add_btn" type="button" data_id='
+                    + temp + '>+</button></div><a href="/accounts/'+temp+'"><h6 class="name">' +response['selected_user_name']
+                        +'</h6></div>');
 
-                    $("#waiting_form .applied_member_wrapper").sort(sort_li).appendTo('#waiting_form'); // append again to the list
+                    $(".people-wrapper.waiting .people-item.waiting").sort(sort_li).appendTo('.people-wrapper.waiting'); // append again to the list
                 }
             });
             return false;
@@ -456,6 +479,22 @@
     function sort_li(a, b){
         return ($(b).attr('user_id')) < ($(a).attr('user_id')) ? 1 : -1;
     }
+
+    function chage_number_when_member_change(flag){
+        var waiting_num =  parseInt($('#waiting_num').text());
+        var joined_num =  parseInt($('#joined_num').text());
+        if(flag){
+            joined_num = joined_num + 1;
+            waiting_num = waiting_num - 1;
+        }else{
+            joined_num = joined_num - 1;
+            waiting_num = waiting_num + 1;
+        }
+        $('#waiting_num').text(String(waiting_num));
+        $('#joined_num').text(String(joined_num));
+        return false;
+    }
+
 
     $(document).ready(function() {
         if('{{ message }}'!=""){

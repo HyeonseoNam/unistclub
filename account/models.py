@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.signals import pre_save, post_save, post_delete
 
 from .managers import UcUserManager
 
@@ -94,3 +95,11 @@ class UcUser(AbstractBaseUser, PermissionsMixin):
         #     pseudo_random_num = int(int(self.email.encode('hex'), 16) % 3) + 1
         #     random_profile = static('img/no_profile_' + str(pseudo_random_num) + '.png')
         #     return random_profile
+
+
+def user_post_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.photo:
+        instance.photo = 'default/user.png'
+        instance.save()
+
+post_save.connect(user_post_save_receiver, sender=UcUser)

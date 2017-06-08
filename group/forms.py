@@ -9,10 +9,25 @@ class GroupForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(GroupForm, self).__init__(*args, **kwargs)
 
+        self.fields['group_name'].widget.attrs.update({
+            'placeholder' : "Ex) 웹 프로그래밍 스터디 같이하실분 ~ ",
+        })
+        self.fields['meeting_time'].widget.attrs.update({
+            'placeholder' : "Ex) 매주 일요일이 될 것 같아요.",
+        })
+        self.fields['meeting_place'].widget.attrs.update({
+            'placeholder' : "Ex) 정기적으로 스터디룸 202-1 예약하기로 해요.",
+        })
+        self.fields['contact'].widget.attrs.update({
+            'placeholder' : "Ex) 참가신청시 010-0000-0000 혹은 카톡 @abc로 연락주세요. (신청자만 보입니다.)",
+        })
+        self.fields['max_member'].widget.attrs.update({
+            'placeholder' : "Ex) 7 ",
+        })
         self.fields['description'].widget.attrs.update({
             'class' : 'materialize-textarea',
+            'placeholder' : "모임에 대한 자세한 설명을 적어주세요.",
         })
-
         self.fields['apply_start'].widget.attrs.update({
             'class' : 'datepicker',
             'type' : 'date',
