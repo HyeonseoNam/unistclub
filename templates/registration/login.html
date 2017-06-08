@@ -1,14 +1,45 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>회원가입 | unist.club</title>
-</head>
-<body>
-    <form action="{% url 'account:login_url' %}" id="login" method="POST">
-        {% csrf_token %}
-        {{ form.as_table }}
-        <input type="submit">
-    </form>
-</body>
-</html>
+{% extends 'registration/base.html' %}
+{% load staticfiles %}
+
+{% block registration_title %}
+            <h1>문화의 시작, </h1>
+            <div class="tagline">로그인</div>
+            </div>
+{% endblock %}
+
+{% block registration_content %}
+
+    <div class="container-fluid form">
+  <div class="container">
+    <div class="card login_card" style="background-image: url('{% static 'img/login_card.jpg' %}');">
+
+          <form method="post" class="sign"  action="{% url 'account:login' %}">
+          {% csrf_token %}
+            <div class="card_background blue"></div>
+            <div class="input-field col s12">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="icon_prefix" type="text" name="username" class="validate">
+            <label for="icon_prefix">ID 를 입력하세요.</label>
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">lock</i>
+            <input id="icon_prefix" type="password" name="password" class="validate">
+            <label for="icon_prefix">Password 를 입력하세요.</label>
+          </div>
+
+            <div class="center-align">
+                <button type="submit" name="login" class="btn blue accent-2 waves-effect waves-light " value="login">로그인하기</button>
+                <p>유저가 아니신가요?<a href="{% url 'account:signup' %}">&nbsp;&nbsp;회권가입 하기</a></p>
+            </div>
+          </form>
+
+    </div>
+  </div>
+</div>
+
+ <div class="fixed-action-btn registration_btn">
+    <a href="{% url 'account:signup' %}" class="btn-floating waves-effect waves-light btn-large blue accent-2">
+        회원가입
+    </a>
+  </div>
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'group/group_base.html' %}
+{% load staticfiles %}
+{% block group_css %}
+    <link rel="stylesheet" href="{% static 'css/group_main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/group_create.css' %}">
+{% endblock %}
+
+{% block group_nav %}
+{# ---- Todo: nav 문구 설정 ---- #}
+            <div class="nav-header center">
+          <h1>그룹생성하기</h1>
+          <div class="tagline">&nbsp;</div>
+        </div>
+      </div>
+  </nav>
+{% endblock %}
+
+
+{% block group_content %}
+
+<div class="section" id="group_create">
+  <div class="container">
+
+
+    <div class="row">
+
+
+      <div class="card">
+
+         <div class="card-content">
+
+            <div class="row card-content-row">
+              <div class="input-field clearfix">
+              <label for="{{ form.group_name.label }}">그룹제목을 입력하세요.</label>
+              {{ form.group_name }}
+              </div>
+            </div>
+
+           <div class="row card-content-row">
+             <div class="input-field clearfix" id="group_category">
+              {{ form.group_status }}
+             </div>
+           </div>
+
+           <div class="row card-content-row">
+             <div class="input-field clearfix">
+              {{ form.meeting_time }}
+               <label for="{{ form.meeting_time.label }}">간략한 모임일정을 적어주세요.</label>
+             </div>
+           </div>
+
+           <div class="row card-content-row">
+             <div class="input-field clearfix">
+              {{ form.meeting_place }}
+               <label for="{{ form.meeting_place.label }}">예상되는 모임장소를 적어주세요.</label>
+             </div>
+           </div>
+
+           <div class="row card-content-row">
+             <div class="input-field clearfix">
+              {{ form.description }}
+               <label for="{{ form.description.label }}">모임에 대한 소개를 적어주세요.</label>
+             </div>
+           </div>
+
+           <div class="row card-content-row">
+             <div class="input-field clearfix">
+              {{ form.contact }}
+               <label for="{{ form.contact.label }}">참여자가 연락할 연락처를 기재해주세요. - (전화번호, 카톡아이디, 페북 등)</label>
+             </div>
+           </div>
+
+            <div class="card-content-row col l6">
+             <div class="input-field ">
+              {{ form.apply_start }}
+               <label for="{{ form.apply_start.label }}">시작</label>
+             </div>
+           </div>
+
+           <div class="card-content-row col l6">
+             <div class="input-field ">
+              {{ form.apply_end }}
+               <label for="{{ form.apply_end.label }}">종료</label>
+             </div>
+           </div>
+
+            <div class="row card-content-row ">
+             <div class="input-field clearfix">
+              {{ form.max_member }}
+                 <label for="{{ form.max_member.label }}">참여자가 연락할 연락처를 기재해주세요. - (전화번호, 카톡아이디, 페북 등)</label>
+             </div>
+           </div>
+
+
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block group_js %}
+  <script>
+
+  $(document).ready(function() {
+
+    {# datepicker 태그 initialization #}
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15 // Creates a dropdown of 15 years to control year
+    });
+
+    {# select 태그 initialization #}
+    $('select').material_select();
+
+  });
+
+  </script>
+{% endblock %}

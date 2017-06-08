@@ -1,0 +1,11 @@
+/* */
+*{
+    margin:0;
+    padding:0;
+}
+
+.nav-logo {
+    padding-top: 10px;
+    width: 170px;
+    height: auto;
+}

@@ -1,0 +1,34 @@
+.group_each_wrapper{
+    width:200px;
+    height:200px;
+    border:1px solid black;
+}
+
+label{
+    vertical-align: top;
+}
+
+
+
+/* 각 section의 제목에 해당 */
+#group_photo_row .card-content h5,
+#group_create .card-content h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* 각 section의 내용에 해당 */
+#group_photo_row .card-content p,
+#group_create .card-content p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: rgba(0,0,0,0.6);
+}
+
+/* 카드의 icon */
+.detail .card-content i
+#group_create .card-content i {
+    vertical-align: middle;
+    padding-bottom: 4px;
+    color: rgba(0,0,0,0.6);
+}

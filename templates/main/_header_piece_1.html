@@ -1,0 +1,37 @@
+{% load staticfiles %}
+  </div>
+      <div class="nav-wrapper container">
+        <a href="/" class="brand-logo">
+            <img class="nav-logo" src="{% static 'img/logo_transparent-02.png' %}">
+        </a>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li id="li_group"><a href="{% url 'group_main' %}">Group</a></li>
+          <li id="li_club"><a href="{% url 'club_main' %}">Club</a></li>
+
+        {# 로그인이 되어있다면 #}
+        {% if request.user.is_authenticated %}
+          <li>
+              <a class='dropdown-button' href='#' data-activates='feature-dropdown' data-belowOrigin="true" data-constrainWidth="false">
+                  {{ request.user.name }}
+                  <i class="material-icons right">arrow_drop_down</i>
+              </a>
+                            <!-- Dropdown Structure -->
+            <ul id='feature-dropdown' class='dropdown-content'>
+                {# TOdo: mypage 만들고 등록하기. #}
+                <li><a href="#">My</a></li>
+                <li><a href="{% url 'account:logout' %}">로그아웃</a></li>
+            </ul>
+          </li>
+        {# 로그인이 되어있지 않다면 #}
+        {% else %}
+            <li>
+              <a href='{% url 'account:login' %}'>Login
+              </a>
+          </li>
+        {% endif %}
+
+        </ul>
+
+
+

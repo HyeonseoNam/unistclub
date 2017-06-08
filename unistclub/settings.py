@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'main',
     'account',
     'club',
+    'group',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
+
+# Media setting
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# custom user model
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'account.login'
+AUTH_USER_MODEL = 'account.UcUser'

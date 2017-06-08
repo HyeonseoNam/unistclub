@@ -1,0 +1,221 @@
+.comment_wrapper{
+}
+.image_wrapper{
+    width:30%;
+    margin:auto;
+}
+<<<<<<< HEAD
+.group_participate {
+    text-align: center;
+}
+
+
+
+/* 그룹 메인사진 */
+.detail-wrapper .detail-image-cover {
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  transition: top .5s;
+  z-index: 2;
+}
+
+.detail-wrapper .detail-image-cover img {
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
+  min-width: 100%;
+  width: auto;
+  display: block;
+}
+
+
+/* 그룹 사진 위치 상향 */
+.detail {
+    position: relative;
+    z-index: 20;
+}
+
+
+/* 모바일 화면에서의 customizing */
+@media only screen and (max-width: 600px) {
+
+    /* body의 양옆에 padding이 붙음  */
+    #group_photo_row > .row {
+        padding: 0 20px;
+    }
+    /* 카드의 제목부분 양옆 padding 없애기  */
+    .detail-wrapper {
+        padding: 0 !important;
+    }
+    /* 카드의 제목부분 양옆 padding, 아래 margin없애기  */
+    .detail-title-wrapper {
+        padding: 0 !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* 댓글, 댓글쓰기 왼쪽 프로필 사진 크기 조정 */
+    .detail .collection-item.avatar img {
+      /* 이미지 사이즈 관련 */
+      width: 45px !important;
+      height: 45px !important;
+      margin-left: -7px;
+    }
+    .detail .collection-item.avatar {
+      /* 이미지 사이즈 공간 관련 */
+      padding-left: 70px;
+    }
+
+}
+
+
+#group_photo_row .detail-title-wrapper h3 {
+    font-size: 2.0rem;
+}
+
+/* 각 section의 제목에 해당 */
+#group_photo_row .detail-body section{
+    margin: 50px 0;
+
+}
+
+
+
+
+
+/* 참여하기 버튼의 wrapper */
+.detail .detail-submit form {
+  padding: 40px 0;
+  text-align: center;
+}
+
+
+/* 그룹 디테일 - 함께하는 사람들 */
+.people-item .avatar {
+  /*padding: 0 2px;*/
+  text-align: center;
+  position: relative;
+
+}
+.people-item .avatar img.circle {
+  width: 100%;
+}
+
+
+.people-item .name {
+  margin-top:0px;
+  margin-bottom:10px;
+  text-align: center;
+}
+.people-item a {
+  color: inherit;
+}
+
+
+/* 그룹 디테일 - 함께하는 사람들의 프로필사진들 */
+.people-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  /*justify-content: space-around;*/
+
+
+}
+/* 그룹 디테일 - 각 프로필 크기, 간격 */
+.people-item {
+  margin: 0 1% 20px;
+}
+
+
+
+
+.people {
+  height: 100%;
+  display: block;
+}
+
+
+
+/* 가장 작은 화면 */
+@media only screen and (max-width: 600px) {
+  .people-item .avatar{
+    width: 55px;
+  }
+  .detail .row:not(:first-child) {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+}
+/* 중간 화면  */
+@media only screen and (min-width: 601px) {
+  .people-item .avatar{
+    width: 60px;
+  }
+}
+/* 가장 큰 화면 */
+@media only screen and (min-width: 993px) {
+  .people-item .avatar{
+    width: 60px;
+  }
+}
+
+/* 함께하는 사람들 - ?명 / ?명 정원 */
+.people .people-num {
+  color: #777;
+}
+.people .people-num{
+  font-size: 1.0rem;
+}
+.people .people-num i {
+  vertical-align: middle;
+  margin-right: 3px;
+}
+
+/* 작은 avatar의 추가,삭제 버튼 */
+.people-item .avatar button {
+  position: absolute;
+  right:-5px;
+  top: -5px;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  line-height: 20px;
+  font-size: 25px;
+  border: 0px;
+  color: white;
+}
+
+/* 참여중인/참여대기 사람들 - 관리자용 편집버튼 */
+.people .card-title .btn {
+  padding: 0 5px;
+  font-size: 1.0rem;
+  height: 25px;
+  line-height: 25px;
+}
+
+/* 참여사람들 카드의 제목 */
+.participating-people .card-title,
+.waiting-people .card-title{
+  margin-bottom:15px !important;
+}
+
+
+.display {
+  display: block !important;
+}
+
+
+.card-notice {
+  margin-bottom: 20px !important;
+  font-style: italic;
+  text-align: center;
+  color: rgba(0,0,0,0.3) !important;
+}
+
+.collection-item.avatar {
+
+}
+
+

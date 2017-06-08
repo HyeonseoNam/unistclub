@@ -1,4 +1,5 @@
 from django.db import models
+from account.models import UcUser
 
 # Create your models here.
 
@@ -9,7 +10,6 @@ type_list = (
 )
 
 class Club(models.Model):
-    # sns_type = models.CharField(choices=sns_type_list, max_length=15, null=False)
 
     # 이름
     name = models.CharField(max_length=10, null=False)
@@ -71,9 +71,5 @@ class Club(models.Model):
     apply_url = models.CharField(max_length=255)
 
     # 회장 user id
-    #leader_id  = models.ForeignKey(User)
-    leader_id  = models.PositiveIntegerField()
-
-    # 관리자 id
-    admin1_id = models.PositiveIntegerField()
-    admin2_id = models.PositiveIntegerField()
+    leader_id  = models.ForeignKey(UcUser)
+    # TODO : admin을 manytomany로 두고 그 중 1하면 leader로 두개하면 어떨까 - 일단 admin은 놔둠
