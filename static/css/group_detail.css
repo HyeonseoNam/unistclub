@@ -55,11 +55,17 @@
         padding: 0 !important;
         margin-bottom: 20px !important;
     }
-    .detail .collection-item.avatar {
-        padding-left: 20px;
-    }
+
+    /* 댓글, 댓글쓰기 왼쪽 프로필 사진 크기 조정 */
     .detail .collection-item.avatar img {
-        display: none !important;
+      /* 이미지 사이즈 관련 */
+      width: 45px !important;
+      height: 45px !important;
+      margin-left: -7px;
+    }
+    .detail .collection-item.avatar {
+      /* 이미지 사이즈 공간 관련 */
+      padding-left: 70px;
     }
 
 }
@@ -75,27 +81,8 @@
 
 }
 
-/* 각 section의 제목에 해당 */
-#group_photo_row .card-content h5 {
-    font-size: 1.5rem;
-    font-weight: 700;
-}
-
-/* 각 section의 내용에 해당 */
-#group_photo_row .card-content p {
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: rgba(0,0,0,0.6);
-}
 
 
-
-/* 카드의 icon */
-.detail .card-content i {
-    vertical-align: middle;
-    padding-bottom: 4px;
-    color: rgba(0,0,0,0.6);
-}
 
 
 /* 참여하기 버튼의 wrapper */
@@ -154,6 +141,10 @@
 @media only screen and (max-width: 600px) {
   .people-item .avatar{
     width: 55px;
+  }
+  .detail .row:not(:first-child) {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
   }
 }
 /* 중간 화면  */
@@ -225,3 +216,5 @@
 .collection-item.avatar {
 
 }
+
+

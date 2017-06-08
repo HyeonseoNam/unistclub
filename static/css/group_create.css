@@ -1,3 +1,7 @@
 label{
     vertical-align: top;
 }
+
+#group_create .card-content-row {
+    margin: 20px 0;
+}

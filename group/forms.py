@@ -9,6 +9,24 @@ class GroupForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(GroupForm, self).__init__(*args, **kwargs)
 
+        self.fields['description'].widget.attrs.update({
+            'class' : 'materialize-textarea',
+        })
+
+        self.fields['apply_start'].widget.attrs.update({
+            'class' : 'datepicker',
+            'type' : 'date',
+        })
+        self.fields['apply_end'].widget.attrs.update({
+            'class' : 'datepicker',
+            'type' : 'date',
+        })
+
+        # template에 나타날 select 첫번째 문구설정
+        choices = self.fields['group_status']._get_choices()
+        choices[0] = ('', '그룹의 카테고리를 선택하세요.')
+        self.fields['group_status']._set_choices(choices)
+
 
     class Meta:
         model = Group

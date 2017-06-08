@@ -1,14 +1,6 @@
-{% extends 'group/group_base.html' %}
-{% load staticfiles %}
-{% block group_css %}
-    <link rel="stylesheet" href="{% static 'css/group_create.css' %}">
-{% endblock %}
-{% block group_content %}
-<h1>form_for group</h1>
+
     <form action="{% url 'group_create' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
         {{ form.as_p }}
 
         <button type="submit">그룹 생성하기</button>
     </form>
-
-{% endblock %}

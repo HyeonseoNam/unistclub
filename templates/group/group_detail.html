@@ -20,24 +20,28 @@
 <div class="section">
   <div class="container">
     <div class="detail" id="group_photo_row">
+      {# 그룹 이미지, 타이틀 #}
       <div class="row">
-      <div class="col l5 m5 s12 detail-wrapper">
+        <div class="col l5 m5 s12 detail-wrapper">
         <div class="detail-image-cover">
               {#                            <img class="responsive-img" src="http://placehold.it/350x250" alt="placeholder">#}
           <img class="responsive-img" src="{{ group.get_group_photo }}" alt="placeholder" id="group_photo_img">
         </div>
       </div>
-              <div class="detail-title-wrapper col l7 m7 s12">
-                <h3>{{ group.group_name }}</h3>
-                <ul class="info">
-                  <li><i class="material-icons">event</i>{{ today|timesince:group.apply_end }} 남음</li>
-                  <li><i class="material-icons">supervisor_account</i>{{ joined_list|length }}명 / {{ group.max_member }}정원</li>
-                  <li><i class="material-icons">info</i>{{ group.group_status }}</li>
-                </ul>
-              </div>
-</div>
+        <div class="detail-title-wrapper col l7 m7 s12">
+        <h3>{{ group.group_name }}</h3>
+        <ul class="info">
+          <li><i class="material-icons">event</i>{{ today|timesince:group.apply_end }} 남음</li>
+          <li><i class="material-icons">supervisor_account</i>{{ joined_list|length }}명 / {{ group.max_member }}정원</li>
+          <li><i class="material-icons">info</i>{{ group.group_status }}</li>
+        </ul>
+      </div>
+      </div> <!-- //row -->
 
+      {# 그룹 주요내용 #}
       <div class="row">
+
+        {# 그룹소개 카드 #}
         <div class="col l12 m12 s12">
           <div class="card">
             <div class="card-content">
@@ -48,6 +52,8 @@
             </div>
           </div>
         </div>
+
+        {# 일정 #}
         <div class="col l6 m6 s12">
           <div class="card">
             <div class="card-content">
@@ -60,6 +66,8 @@
             </div>
           </div>
         </div>
+
+        {# 모임장소 #}
         <div class="col l6 m6 s12">
           <div class="card">
             <div class="card-content">
@@ -97,169 +105,155 @@
           {% endif %}
         </div> <!-- //row -->
 
-      {# 그룹디테일 - 참여사람들 #}
-      <div class="col l12 m12 s12">
-
+        {# 그룹디테일 - 참여사람들, 대기중 사람들 #}
+        <div class="col l12 m12 s12">
           <div class="card people">
-          <div class="card-content">
-          {# 참여중인 사람들 #}
-          <section class="participating-people">
-                <span class="card-title"><i class="material-icons">supervisor_account</i> 참여중인 사람들&nbsp;&nbsp;&nbsp;<span class="people-num">{{ joined_list|length }}명 / {{ group.max_member }}정원&nbsp;&nbsp;&nbsp;</span>
-                  {% if request.user == group.admin %}
-                    {# 그룹장인 경우 '편집' 버튼이 활성화되어있다. #}
-                    <a class="btn blue-grey lighten-3" id="participating-edit">편집</a>
-                  {% endif %}
-                </span>
+            <div class="card-content">
+              {# 참여중인 사람들 #}
+              <section class="participating-people">
+                    <span class="card-title"><i class="material-icons">supervisor_account</i> 참여중인 사람들&nbsp;&nbsp;&nbsp;<span class="people-num">{{ joined_list|length }}명 / {{ group.max_member }}정원&nbsp;&nbsp;&nbsp;</span>
+                      {% if request.user == group.admin %}
+                        {# 그룹장인 경우 '편집' 버튼이 활성화되어있다. #}
+                        <a class="btn blue-grey lighten-3" id="participating-edit">편집</a>
+                      {% endif %}
+                    </span>
 
-                {# 그룹장의 경우 편집 #}
-                {% if request.user == group.admin %}
-                  <form id="joined_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
-                  <div class="people-wrapper">
-                  {# Todo: for 문 수정 #}
-                  {% for i in "123456789012345" %}
-                    <div class="people-item ">
-                    <div class="avatar">
-                      {# Todo: 사람들 이미지 넣기 #}
-                      <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
-{#                      <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>#}
-                      {# Todo: member id 넣기 문 수정 #}
-                      <button class="member_delete_btn z-depth-1-half red lighten-1 " style="display: none;" type="button" data_id="">-</button>
-                    </div>
-                      {# Todo: user page url 넣기, 이름넣기 #}
-                    <a href="#"><h6 class="name">이름</h6></a>
-                  </div>
-                  {% endfor %}
-                  </div>
-                  </form>
-
-                {# 참여중인 사람들#}
-                {% elif request.user in joined_list %}
-                <div class="people-wrapper">
-                  {% for i in "123456789012345" %}
-                    <div class="people-item ">
-                    <div class="avatar">
-                      <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle  z-depth-1">
-
+                    {# 그룹장의 경우 편집 #}
+                    {% if request.user == group.admin %}
                       <form id="joined_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
-                        <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>
+                      <div class="people-wrapper">
+                      {# Todo: for 문 수정 #}
+                      {% for i in "123456789012345" %}
+                        <div class="people-item ">
+                        <div class="avatar">
+                          {# Todo: 사람들 이미지 넣기 #}
+                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+    {#                      <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>#}
+                          {# Todo: member id 넣기 문 수정 #}
+                          <button class="member_delete_btn z-depth-1-half red lighten-1 " style="display: none;" type="button" data_id="">-</button>
+                        </div>
+                          {# Todo: user page url 넣기, 이름넣기 #}
+                        <a href="#"><h6 class="name">이름</h6></a>
+                      </div>
+                      {% endfor %}
+                      </div>
                       </form>
+
+                    {# 참여중인 사람들#}
+                    {% elif request.user in joined_list %}
+                    <div class="people-wrapper">
+                      {% for i in "123456789012345" %}
+                        <div class="people-item ">
+                        <div class="avatar">
+                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle  z-depth-1">
+
+                          <form id="joined_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
+                            <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>
+                          </form>
+                        </div>
+                        <a href=""><h6 class="name">Title</h6></a>
+                      </div>
+                      {% endfor %}
                     </div>
-                    <a href=""><h6 class="name">Title</h6></a>
-                  </div>
-                  {% endfor %}
-                </div>
 
-                {# 참여대기인 사람들은 보이지 않음 #}
-                {% elif request.user in applied_list %}
-                <p class="card-notice">
-                  참여신청이 완료되면 참여중인 사람들을 볼 수 있습니다.
-                </p>
+                    {# 참여대기인 사람들은 보이지 않음 #}
+                    {% elif request.user in applied_list %}
+                    <p class="card-notice">
+                      참여신청이 완료되면 참여중인 사람들을 볼 수 있습니다.
+                    </p>
 
-                {# 참여신청 누르지 않은 사람들에게 보이는 문구 #}
-                {% else %}
-                <p class="card-notice">
-                  참여중인 사람들만 보입니다.
-                </p>
+                    {# 참여신청 누르지 않은 사람들에게 보이는 문구 #}
+                    {% else %}
+                    <p class="card-notice">
+                      참여중인 사람들만 보입니다.
+                    </p>
 
-                {% endif %}
+                    {% endif %}
 
-            </section>
-          {# 참여대기 사람들 #}
-          <section class="waiting-people">
-                <span class="card-title"><i class="material-icons">supervisor_account</i> 참여대기중&nbsp;&nbsp;&nbsp;<span class="people-num">{{ applied_list|length }}명</span>
-                </span>
+                </section>
+              {# 참여대기 사람들 #}
+              <section class="waiting-people">
+                    <span class="card-title"><i class="material-icons">supervisor_account</i> 참여대기중&nbsp;&nbsp;&nbsp;<span class="people-num">{{ applied_list|length }}명</span>
+                    </span>
 
-                {# [그룹장]의 경우 편집 #}
-                {% if request.user == group.admin %}
-                <form id="waiting_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
-                  <div class="people-wrapper">
-                  {# Todo: for 문 수정 #}
-                  {% for i in "123456789012345" %}
-{#                    {% for member in joined_list %}#}
-                    <div class="people-item ">
-                    <div class="avatar">
-                      {# Todo: 사람들 이미지 넣기 #}
-                      <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
-{#                      <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>#}
-                      {# Todo: member id 넣기 문 수정 #}
-                      <button class=" z-depth-1-half blue accent-2"  type="button" data_id="">+</button>
-                    </div>
-                      {# Todo: user page url 넣기, 이름넣기 #}
-                    <a href="#"><h6 class="name">이름</h6></a>
-                  </div>
-                  {% endfor %}
-                  </div>
-                  </form>
+                    {# [그룹장]의 경우 편집 #}
+                    {% if request.user == group.admin %}
+                    <form id="waiting_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
+                      <div class="people-wrapper">
+                      {# Todo: for 문 수정 #}
+                      {% for i in "123456789012345" %}
+    {#                    {% for member in joined_list %}#}
+                        <div class="people-item ">
+                        <div class="avatar">
+                          {# Todo: 사람들 이미지 넣기 #}
+                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+    {#                      <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>#}
+                          {# Todo: member id 넣기 문 수정 #}
+                          <button class=" z-depth-1-half blue accent-2"  type="button" data_id="">+</button>
+                        </div>
+                          {# Todo: user page url 넣기, 이름넣기 #}
+                        <a href="#"><h6 class="name">이름</h6></a>
+                      </div>
+                      {% endfor %}
+                      </div>
+                      </form>
 
-                {# [참여중인 사람들] 혹은 [대기중인 사람들] #}
-                {% elif request.user in joined_list or request.user in applied_list %}
-                <div class="people-wrapper">
-                  {# Todo: for 문 수정 #}
-                  {% for i in "123456789012345" %}
-{#                    {% for member in joined_list %}#}
-                    <div class="people-item ">
-                    <div class="avatar">
-                      {# Todo: 사람들 이미지 넣기 #}
-                      <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
-                    </div>
-                      {# Todo: user page url 넣기, 이름넣기 #}
-                    <a href="#"><h6 class="name">이름</h6></a>
-                  </div>
-                  {% endfor %}
-                  </div>
+                    {# [참여중인 사람들] 혹은 [대기중인 사람들] #}
+                    {% elif request.user in joined_list or request.user in applied_list %}
+                    <div class="people-wrapper">
+                      {# Todo: for 문 수정 #}
+                      {% for i in "123456789012345" %}
+    {#                    {% for member in joined_list %}#}
+                        <div class="people-item ">
+                        <div class="avatar">
+                          {# Todo: 사람들 이미지 넣기 #}
+                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                        </div>
+                          {# Todo: user page url 넣기, 이름넣기 #}
+                        <a href="#"><h6 class="name">이름</h6></a>
+                      </div>
+                      {% endfor %}
+                      </div>
 
-                {# 참여신청 누르지 않은 사람들에게 보이는 문구 #}
-                {% else %}
-                <p class="card-notice">
-                  참여신청 중인 사람들만 보입니다.
-                </p>
+                    {# 참여신청 누르지 않은 사람들에게 보이는 문구 #}
+                    {% else %}
+                    <p class="card-notice">
+                      참여신청 중인 사람들만 보입니다.
+                    </p>
 
-                {% endif %}
-            </section>
+                    {% endif %}
+                </section>
+            </div>
           </div>
-          </div>
-      </div>
+        </div>
 
-
-
-      <div class="col l12 m12 s12 detail-submit">
-      {% if request.user in applied_list or request.user in joined_list %}
-        {% if request.user == group.admin %}
-          {# Todo: 그룹수정하기 액션 부여 #}
-          <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
-            <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
-            <button class="btn-large waves-effect waves-light orange lighten-3" type="submit">그룹 수정하기</button>
-          </form>
+        {# 그룹 참여버튼 #}
+        <div class="col l12 m12 s12 detail-submit">
+        {% if request.user in applied_list or request.user in joined_list %}
+          {% if request.user == group.admin %}
+            {# Todo: 그룹수정하기 액션 부여 #}
+            <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
+              <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
+              <button class="btn-large waves-effect waves-light orange lighten-3" type="submit">그룹 수정하기</button>
+            </form>
+          {% else %}
+            <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
+              <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
+              <button class="btn-large waves-effect waves-light blue lighten-4" type="submit">참여취소하기</button>
+            </form>
+          {% endif %}
         {% else %}
-          <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
+        <form action="/group/membership_participate/" method="POST">{% csrf_token %}
             <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
-            <button class="btn-large waves-effect waves-light blue lighten-4" type="submit">참여취소하기</button>
-          </form>
+            <button class="btn-large waves-effect waves-light blue accent-2" type="submit">함께하기</button>
+        </form>
         {% endif %}
-      {% else %}
-      <form action="/group/membership_participate/" method="POST">{% csrf_token %}
-          <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
-          <button class="btn-large waves-effect waves-light blue accent-2" type="submit">함께하기</button>
-      </form>
-      {% endif %}
 
-    </div>
       </div>
+      </div> <!-- //row -->
 
-
-    <div class="row">
-    {#==================================================================#}
-
-              <!-- 참여하기 폼으로 넘어가는 버튼 -->
-
-
-
-
-    </div> <!-- //row -->
-
-
-
-              <section class="group_comment_write">
+      {# 댓글 작성 section #}
+      <section class="group_comment_write">
                 <ul class="collection card">
                   <li class="collection-item avatar"> <!-- -->
                     {# Todo: group_detail avatar 이미지변경 #}
@@ -273,10 +267,10 @@
                   </li>
                 </ul>
 
-              </section>
+              </section> <!-- //section -->
 
-
-    <section class="group_comment">
+      {# 댓글 list section #}
+      <section class="group_comment">
                 <ul class="collection card" id="comment_wrapper">
                   {% for comment in comments %}
                     <li class="collection-item avatar">
@@ -296,10 +290,7 @@
                     </li>
                   {% endfor %}
                 </ul>
-              </section>
-
-
-
+              </section> <!-- //section -->
     </div>
   </div>
 </div>
@@ -349,13 +340,15 @@
                 success: function(response) { // on success..
                     {# Todo: 성공 알람 띄워주기 #}
                     $('#comment_form').find('textarea').val(' ');
-                    $('#comment_wrapper').append(
-                      {# Todo: 유저 a태그 넣기 #}
-                      "<li class='collection-item avatar'>"+
-                      "<img src='" + response["comment_user_photo"] + "' alt='user_photo' class='circle z-depth-1'>" +
-                      "<span class='title'>" + response["comment_user"] + "</span> <span class='time'>" + response["comment_created"] + "</span>" +
-                      "<p>" + response["added_comment"] + "</p> </li>"
-                    );
+                    $("html, body").animate({ scrollTop: $(document).height() }, 500);
+                    var item = $(
+                       {# Todo: 유저 a태그 넣기 #}
+                        "<li class='collection-item avatar'>"+
+                        "<img src='" + response["comment_user_photo"] + "' alt='user_photo' class='circle z-depth-1'>" +
+                        "<span class='title'>" + response["comment_user"] + "</span> <span class='time'>" + response["comment_created"] + "</span>" +
+                        "<p>" + response["added_comment"] + "</p> </li>").hide();
+                    $('#comment_wrapper').append(item);
+                    item.fadeIn(1500);
                 }
             });
             return false;
