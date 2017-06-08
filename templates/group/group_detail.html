@@ -281,8 +281,11 @@
                 <form action="group/{{ group.group_id }}" id="comment_delete_form" method="post">{% csrf_token %}
                   {% for comment in comments %}
                     <li class="collection-item avatar">
-                      <img src="{{ commnet.user.get_user_photo }}" alt="" class="circle z-depth-1">
-                      <span class="title">{{ comment.user.name }}</span> <span class="time">{{ comment.created_at }}</span>
+                      <a href="/accounts/{{ comment.user.user_id }}">
+                        <img src="{{ comment.user.get_user_photo }}" alt="" class="circle z-depth-1">
+
+
+                      <span class="title">{{ comment.user.name }}</span>  </a> <span class="time">{{ comment.created_at }}</span>
                       <p>
                         {{ comment.content }}
                       </p>
@@ -355,7 +358,6 @@
                 dataType: "json",
                 url: $(this).attr('action'), // the file to call
                 success: function(response) { // on success..
-                    {# Todo: 성공 알람 띄워주기 #}
                     $('#comment_form').find('textarea').val(' ');
                     $("html, body").animate({ scrollTop: $(document).height() }, 500);
                     var item = $(

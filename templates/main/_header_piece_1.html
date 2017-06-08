@@ -18,7 +18,6 @@
               </a>
                             <!-- Dropdown Structure -->
             <ul id='feature-dropdown' class='dropdown-content'>
-                {# TOdo: mypage 만들고 등록하기. #}
                 <li><a href="/accounts/{{ request.user.user_id }}">My</a></li>
                 <li><a href="{% url 'account:logout' %}">로그아웃</a></li>
             </ul>

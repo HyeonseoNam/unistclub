@@ -98,8 +98,11 @@ def account_detail(request, user_id):
     # 멤버십에서 joined, waiting인 멤버십 쿼리셋 뽑기
 
     template = 'account/account_detail.html'
-    context={'joined_groups':joined_group_list, 'waiting_groups':waiting_group_list,
-             'mycomments':mycomments}
+    context={
+        'user': user,
+        'joined_groups':joined_group_list,
+        'waiting_groups':waiting_group_list,
+        'mycomments':mycomments}
     return render(request, template, context)
 
 @login_required(login_url='/accounts/login')
