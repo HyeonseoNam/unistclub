@@ -47,6 +47,19 @@
           <div class="gallery-curve-wrapper">
             <a class="gallery-cover gray">
               <img class="responsive-img" src="{{ group.get_group_photo }}" alt="placeholder">
+                {% if group.admin == request.user %}
+                    <div class="chip tag admin">
+                        내가 만든 그룹
+                    </div>
+                {% elif group.is_always_apply or group.is_apply %}
+                    <div class="chip tag applying">
+                        지원중
+                    </div>
+                {% else %}
+                    <div class="chip tag terminated">
+                        지원마감
+                    </div>
+                {% endif %}
             </a>
             <div class="gallery-header">
               <span>{{ group.group_name }}</span>

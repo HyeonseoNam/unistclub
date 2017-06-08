@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404,HttpResponse,Ht
 from .forms import GroupForm, CommentForm, GroupChangeForm
 from .models import Group, Comment, Membership
 from account.models import UcUser
-from datetime import datetime
+from datetime import datetime, date
 from pytz import timezone
 import json
 

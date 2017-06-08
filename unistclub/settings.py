@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'main',
     'account',
     'club',
@@ -133,3 +134,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'account.login'
 AUTH_USER_MODEL = 'account.UcUser'
+
+# crontab part
+CRONJOBS = [
+    ('00 00 * * *', 'group.cron.update_is_apply')
+]
