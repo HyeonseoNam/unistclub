@@ -1,8 +1,10 @@
 from django.shortcuts import render, render_to_response,redirect
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .forms import UserCreationForm
+from .forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout
+from .models import UcUser
+from group.models import Membership, Group, Comment
 
 from django.template import RequestContext
 # from .models import UcUser
@@ -60,5 +62,40 @@ def signup(request):
     return render(request, template, context)
 
 
+def account_detail(request):
+    user = request.user
+    joined_group_list = []
+    waiting_group_list = []
+    mycomments = []
+    membership_joined = Membership.objects.filter(member=user, status=True)
+    membership_waiting = Membership.objects.filter(member=user, status=False)
+    for m in membership_joined:
+        joined_group_list.append(m.group)
 
+    for m in membership_waiting:
+        waiting_group_list.append(m.group)
 
+    mycomments = Comment.objects.filter(user=user)
+    # 멤버십에서 joined, waiting인 멤버십 쿼리셋 뽑기
+
+    template = 'account/account_detail.html'
+    context={'joined_groups':joined_group_list, 'waiting_groups':waiting_group_list,
+             'mycomments':mycomments}
+    return render(request, template, context)
+
+def account_change(request):
+    user = request.user
+    form = UserChangeForm(instance=user)
+    if request.method == "POST":
+        form = UserChangeForm(request.POST, request.FILES or None, instance=user)
+        if form.is_valid():
+            # instance = form.save(commit=False)
+            # instance.save()
+            form.save(user)
+            return redirect('/accounts/detail/')
+
+    template = 'account/account_change.html'
+    context = {
+        "form": form,
+    }
+    return render(request, template, context)

@@ -67,17 +67,23 @@
     Comment
     <form id="comment_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
         {{ comment_form.as_p }}
-        <button type="submit">입력</button>
+        <button type="button">입력</button>
     </form>
     <br/>
     <hr>
     <br/>
     <div class="comments_wrapper">
-        {% for comment in comments %}
-            <div class="comment_wrapper">
-                {{ comment.user }} | {{ comment.content }} | {{ comment.created_at }}
-            </div>
-        {% endfor %}
+        <form id="comment_delete_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
+            {% for comment in comments %}
+                <div class="comment_wrapper" data_id="{{ comment.id }}">
+                    {{ comment.user }} | {{ comment.content }} | {{ comment.created_at }}
+                    {% if comment.user == request.user %}
+                        <button class="comment_delete_btn" data_id="{{ comment.id }}" type="button">삭제하기</button>
+                    {% endif %}
+                    <br/>
+                </div>
+            {% endfor %}
+        </form>
     </div>
 {% endblock %}
 
@@ -87,13 +93,17 @@
         $('#comment_form').submit(function() { // catch the form's submit event
             $.ajax({ // create an AJAX call...
                 method: 'POST',
-                data: {csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
-                comment_content: $(this).find('input[type=text]').val()},
+                data: {
+                    csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                    comment_content: $(this).find('input[type=text]').val()
+                },
                 dataType: "json",
                 url: $(this).attr('action'), // the file to call
                 success: function(response) { // on success..
-                    $('.comments_wrapper').append('<div class="comment_wrapper">'+
-                        response["comment_user"] + ' | ' + response["added_comment"] + ' | ' + response["comment_created"]+'</div>');
+                        $('.comments_wrapper').append('<div class="comment_wrapper" data_id='+response["comment_id"]+'>'+
+                            response["comment_user"] + ' | ' + response["added_comment"] + ' | ' + response["comment_created"]
+                            + '<button class="comment_delete_btn" data_id="'+response["comment_id"]+'"'+'' +
+                            ' type="button">삭제하기</button>'+'</div>');
                 }
             });
             return false;
@@ -164,6 +174,32 @@
             });
             return false;
         });
+
+        var temp_data_id3 = "";
+        $('.comments_wrapper').on('click', ".comment_delete_btn",function(){
+            temp_data_id3 = $(this).attr('data_id');
+            $('#comment_delete_form').submit();
+        });
+
+        $('#comment_delete_form').submit(function () { // catch the form's submit even
+            $.ajax({ // create an AJAX call...
+                method: 'POST',
+                data: {
+                    csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                    comment_id: temp_data_id3,
+                    deleting: 1,
+                    comment_change:1,
+                },
+                dataType: "json",
+                url: $(this).attr('action'), // the file to call
+                success: function (response) { // on success.
+                    var temp = response["selected_comment_id"];
+                    $('.comment_wrapper[data_id='+temp+']')[0].remove();
+                }
+            });
+            return false;
+        });
+
     });
 
 
@@ -177,9 +213,5 @@
             alert('{{ message }}');
         }
     });
-
-    {% if messages %}
-        alert('hi');
-    {% endif %}
     </script>
 {% endblock %}
