@@ -22,10 +22,25 @@
             <li><a href="#my">내 그룹</a></li>
             <li><a href="#applying">지원가능 그룹</a></li>
             <li><a href="#terminated">지원마감 그룹</a></li>
+
+            <li class="right search_wrapper">
+            <div class="input-field col s6">
+               <form id="group_search_form" action="{% url 'group_main' %}" method="post">{% csrf_token %}
+              <input placeholder="그룹명을 검색하세요." id="first_name" type="text" class="validate" name="search_content">
+                 <button type="submit">검색</button>
+                 </form>
+            </div>
+            </li>
           </ul>
         </div>
       </div>
   </nav>
+
+
+
+
+
+
 {% endblock %}
 
 {% block group_content %}
