@@ -6,16 +6,18 @@
 {% endblock %}
 
 {% block club_content %}
-    {% for club in clubs %}
-        <a href="{{ club.get_absolute_url }}">
-            <div class="club_each_wrapper">
-                {{ club.club_name }} <br>
-                {{ club.club_status }} <br>
-                {{ club.description }} <br>
-            </div>
-        </a>
-    {% endfor %}
-    <a href="{% url 'club_create' %}">동아리 등록하기</a>
+
+{# ====== 이전코드, 뽑아쓸것 ====== #}
+{#    {% for club in clubs %}#}
+{#        <a href="{{ club.get_absolute_url }}">#}
+{#            <div class="club_each_wrapper">#}
+{#                {{ club.club_name }} <br>#}
+{#                {{ club.club_status }} <br>#}
+{#                {{ club.description }} <br>#}
+{#            </div>#}
+{#        </a>#}
+{#    {% endfor %}#}
+{#    <a href="{% url 'club_create' %}">동아리 등록하기</a>#}
 <h1>club_main</h1>
 {% endblock %}
 

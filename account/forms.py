@@ -34,6 +34,26 @@ class UserCreationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['login_id'].widget.attrs.update({
+          'class' : 'validate',
+            'id' : 'login_id'
+        })
+        self.fields['name'].widget.attrs.update({
+          'class' : 'validate',
+            'id' : 'name'
+        })
+        self.fields['email'].widget.attrs.update({
+          'class' : 'validate',
+            'id' : 'email'
+        })
+        self.fields['password1'].widget.attrs.update({
+          'class' : 'validate',
+            'id' : 'password1'
+        })
+        self.fields['password2'].widget.attrs.update({
+          'class' : 'validate',
+            'id' : 'password2'
+        })
         # self.fields[self._meta.model.USERNAME_FIELD].widget.attrs.update({'autofocus': ''})
 
     def clean_password2(self):
@@ -50,7 +70,7 @@ class UserCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
-        user.user_id = ''.join(random.sample('0123456789', 5))
+        user.user_id = ''.join(random.sample('0123456789',5))
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()

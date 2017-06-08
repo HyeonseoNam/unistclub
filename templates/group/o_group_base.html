@@ -1,0 +1,21 @@
+   <section class="group_comment">
+                <ul class="collection card " id="comment_wrapper">
+                  {% for comment in comments %}
+                    <li class="collection-item avatar">
+                    {# Todo: group_detail comment avatar 이미지변경 #}
+                      <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                      <span class="title">{{ comment.user.name }}</span> <span class="time">{{ comment.created_at }}</span>
+                      <p>
+                        {{ comment.content }}
+                      </p>
+{#                      <ul class="list-inline">#}
+                        {# TODO: 댓글 삭제, 수정기능 연동, if문달기 #}
+{#                        <li><a href="#"><i class="material-icons">thumb_up</i></a></li>#}
+{#                        <li><a href="#"><i class="material-icons">mode_edit</i></a></li>#}
+{#                        <li><a href="#"><i class="material-icons">delete</i></a></li>#}
+{#                      </ul>#}
+
+                    </li>
+                  {% endfor %}
+                </ul>
+              </section>

@@ -2,36 +2,111 @@
 {% load staticfiles %}
 
 {% block group_css %}
-    <link rel="stylesheet" href="{% static 'css/group_main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/group_main.css' %}">
+{% endblock %}
+
+{% block group_nav %}
+{# ---- Todo: nav 문구 설정 ---- #}
+            <div class="nav-header center">
+          <h1>공통의 주제로 뭉치다,</h1>
+          <div class="tagline">Grouping</div>
+        </div>
+      </div>
+<!-- Sub - Header -->
+{# ---- Todo: sub-nav 배경색 설정 ---- #}
+      <div class="categories-wrapper light-blue darken-1">
+        <div class="categories-container">
+          <ul class="categories container">
+            <li class="active"><a href="#all">All</a></li>
+            <li><a href="#my">참여중인 그룹</a></li>
+            <li><a href="#ongoing">진행중인 그룹</a></li>
+            <li><a href="#closed">종료된 그룹</a></li>
+          </ul>
+        </div>
+      </div>
+  </nav>
 {% endblock %}
 
 {% block group_content %}
-    <div class="search_wrapper">
-        <form id="group_search_form" action="{% url 'group_main' %}" method="post">{% csrf_token %}
-            <input type="text" name="search_content"/>
-            <button type="submit">검색</button>
-        </form>
-    </div>
-    <br/>
-
-    {% for group in groups %}
-        <a href="{{ group.get_absolute_url }}">
-            <div class="group_each_wrapper">
-                {{ group.group_name }} <br>
-                {{ group.group_status }} <br>
-                {{ group.description }} <br>
+  <!-- Gallery -->
+  <div id="portfolio" class="section gray">
+  <div class="container">
+    <div class="gallery row">
+      {#{% for i in "1234567890123" %}#}
+      {% for group in groups %}
+        {#            <a href="{{ group.get_absolute_url }}">#}
+        {#                <div class="group_each_wrapper">#}
+        {#                {{ group.group_name }} <br>#}
+        {#                {{ group.group_status }} <br>#}
+        {#                {{ group.description }} <br>#}
+        {#            </div>#}
+        {#        </a>#}
+        {#    {% endfor %}#}
+        {# Todo: 신청가능한지 태그클래스 남기기 #}
+        <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
+          <div class="gallery-curve-wrapper">
+            <a class="gallery-cover gray">
+              <img class="responsive-img" src="{{ group.get_group_photo }}" alt="placeholder">
+            </a>
+            <div class="gallery-header">
+              <span>{{ group.group_name }}</span>
             </div>
-            {% if group.admin == request.user %}
-                <form class="group_delete_form" action="{% url 'group_delete' group.group_id %}" method="POST">{% csrf_token %}
-                    <button type="submit">삭제하기</button>
-                </form>
-            {% endif %}
-        </a>
-    {% endfor %}
+            <div class="gallery-body">
+              <div class="title-wrapper">
+                <h3>{{ group.group_name }}</h3>
+                <ul class="info">
+                  <li><i class="material-icons">event</i>{{ today|timesince:group.apply_end }} 남음</li>
+                  {# Todo: group_main - joined_list를 불러올수있어야함 #}
+                  <li><i class="material-icons">supervisor_account</i>5명 / {{ group.max_member }}정원</li>
+                  <li><i class="material-icons">info</i>{{ group.group_status }}</li>
+                </ul>
+              </div>
+              <hr>
+              <section>
+                <p class="description">
+                  {{ group.description }}
+                </p>
+              </section>
 
+            </div>
+            <div class="gallery-action">
+              <a href="/group/{{ group.group_id }}/" class="btn-floating btn-large waves-effect waves-light">자세히</a>
+            </div>
+
+          </div>
+        </div>
+
+
+
+      {% endfor %}
+
+    </div>
     <a href="{% url 'group_create' %}">그룹 만들기</a>
-<h1>group_main</h1>
+  </div><!-- /.container -->
+
+
+  {# ====== 이전코드, 검색관련 뽑아쓸것 ====== #}
+  {#    <div class="search_wrapper">#}
+  {#        <form id="group_search_form" action="{% url 'group_main' %}" method="post">{% csrf_token %}#}
+  {#            <input type="text" name="search_content"/>#}
+  {#            <button type="submit">검색</button>#}
+  {#        </form>#}
+  {#    </div>#}
+  {#    <br/>#}
+  {##}
+  {#    {% for group in groups %} #}
+  {#        <a href="{{ group.get_absolute_url }}">#}
+  {#            <div class="group_each_wrapper">#}
+  {#                {{ group.group_name }} <br>#}
+  {#                {{ group.group_status }} <br>#}
+  {#                {{ group.description }} <br>#}
+  {#            </div>#}
+  {#        </a>#}
+  {#    {% endfor %}#}
+
+  {#<h1>group_main</h1>#}
 {% endblock %}
 
-{% block js %}
+{% block group_js %}
+  <script src="{% static 'js/vendor/galleryExpand.js' %} "></script>
 {% endblock %}

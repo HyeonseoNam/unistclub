@@ -1,0 +1,138 @@
+<div class="detail-body">
+
+              <hr>
+              <section>
+                <h5>그룹 소개</h5>
+                <p class="description">
+                  {{ group.description }}
+                </p>
+              </section>
+              <hr>
+              <section>
+                <h5>모임시간</h5>
+                <p class="description">
+                  {{ group.meeting_time }}
+                </p>
+              </section>
+              <section>
+                <h5>모임장소</h5>
+                <p class="description">
+                  {{ group.meeting_place }}
+                </p>
+              </section>
+
+              {% if request.user in joined_list or request.user == group.admin or request.user in applied_list%}
+              <section class="contact">
+                <h5>연락처</h5>
+                <p class="description">
+                  {{ group.contact }}
+                </p>
+              </section>
+              {% endif %}
+
+              {# Todo: group_main if문처리 해주어야 한다. #}
+              <section class="people clearfix">
+                <h5>함께하는 사람들&nbsp;&nbsp;&nbsp;<span class="people-num"><i class="material-icons">supervisor_account</i>{{ joined_list|length }}명 / {{ group.max_member }}정원</span>
+                </h5>
+              {% if request.user in joined_list or request.user == group.admin%}
+              {# Todo: 삭제하기 form은 관리자만해당 #}
+
+                  <form id="joined_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
+                    {% for member in joined_list %}
+                    <div class="people-item col l1 m2 s2 ">
+                      <div class="avatar">
+                        {# Todo: group_detail 프로필사진으로 등록 #}
+                        <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle ">
+                      </div>
+                      <a href="#"><h6 class="name">{{ member.name }}</h6></a>
+                      <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>
+                    </div>
+                  {% endfor %}
+                  </form>
+
+              {% endif %}
+                <br>
+              </section>
+
+            {# Todo: group_detail 참여기다리는 사람 if문처리 #}
+            {% if request.user == group.admin %}
+              <section class="people clearfix">
+                <h5>참여를 기다리는 사람들&nbsp;&nbsp;&nbsp;<span class="people-num"><i class="material-icons">supervisor_account</i>{{ applied_list|length }}명</span>
+                </h5>
+
+                  {# Todo: group_detail 참여대기 사람들 계층구조 손보기#}
+                  <form id="waiting_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
+                    {% for member in joined_list %}
+                    <div class="people-item col l1 m2 s2 ">
+                      <div class="avatar">
+                        {# Todo: group_detail 프로필사진으로 등록 #}
+                        <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle ">
+                      </div>
+                      <a href="#"><h6 class="name">{{ member.name }}</h6></a>
+                      <button class="member_add_btn" type="button" data_id="{{ member.user_id }}">추가하기</button>
+                    </div>
+                    {% endfor %}
+                  </form>
+
+              <!-- 참여하기 폼으로 넘어가는 버튼 -->
+              <br>
+              </section>
+            {% endif %}
+  <section class="group_participate">
+
+    {# 이미 참여신청을 하였었다면 취소버튼 #}
+    {% if request.user in applied_list or request.user in joined_list %}
+    <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
+        <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
+        <button class="btn-large waves-effect waves-light blue lighten-4" type="submit">참가 취소하기</button>
+    </form>
+
+    {# 이미 참여신청안되어 있다면 참가하기버튼 #}
+    {% else %}
+    <form action="/group/membership_participate/" method="POST">{% csrf_token %}
+        <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
+
+        <button class="btn-large waves-effect waves-light blue accent-2" type="submit">함께 참여하기</button>
+    </form>
+    {% endif %}
+  <br>
+  </section>
+
+              <section class="group_comment_write">
+                <ul class="collection card">
+                  <li class="collection-item avatar"> <!-- -->
+                    {# Todo: group_detail avatar 이미지변경 #}
+                    <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                    <form class="input-field" id="comment_form" action="/group/{{ group.group_id }}/" method="POST">
+                      {% csrf_token %}
+                      {{ comment_form.content }}
+                      <label for="id_content">댓글을 입력하세요</label>
+                      <button type="submit" class="btn right blue accent-2">댓글작성</button>
+                    </form>
+                  </li>
+                </ul>
+
+              </section>
+              <section class="group_comment">
+                <ul class="collection card">
+                  {% for comment in comments %}
+                    <li class="collection-item avatar">
+                    {# Todo: group_detail comment avatar 이미지변경 #}
+                      <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                      <span class="title">{{ comment.user.name }}</span> <span class="time">{{ comment.created_at }}</span>
+                      <p>
+                        {{ comment.content }}
+                      </p>
+{#                      <ul class="list-inline">#}
+                        {# TODO: 댓글 삭제, 수정기능 연동, if문달기 #}
+{#                        <li><a href="#"><i class="material-icons">thumb_up</i></a></li>#}
+{#                        <li><a href="#"><i class="material-icons">mode_edit</i></a></li>#}
+{#                        <li><a href="#"><i class="material-icons">delete</i></a></li>#}
+{#                      </ul>#}
+
+                    </li>
+                  {% endfor %}
+                </ul>
+              </section>
+
+            </div>

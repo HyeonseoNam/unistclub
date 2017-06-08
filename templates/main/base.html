@@ -3,24 +3,41 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="theme-color" content="#ffffff">
-    {% block meta %}
-    {% endblock %}
-    <title>[UNIST CLUB]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta %}{% endblock %}
+
+    <title>유니스트 클럽</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-{#    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>#}
+    <!-- Lato Font -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <!-- Stylesheet -->
+    <link href="{% static 'css/vendor/gallery-materialize.css' %}" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     {% block css %}{% endblock %}
 </head>
 <body>
-{% include 'main/header.html' %}
-{% block jumbotron %}{% endblock %}
-<div style="margin-bottom: 100px;">
-{% block content %}{% endblock %}
-</div>
+    {# 하위 페이지에서 nav의 색 및 배경이미지 설정 #}
+    {% block nav %}{% endblock %}
+    {% include 'main/_header_piece_1.html' %} {# 무시 #}
 
-{% include 'main/footer.html' %}
-{% block js %}{% endblock %}
+    {# 하위 페이지에서 subnav의 색 및 탭 설정 #}
+    {% block sub_nav %}{% endblock %}
+    {% include 'main/_header_piece_2.html' %} {# 무시 #}
 
-</body>
+    {% block content %}{% endblock %}
+
+
+    <!-- Javascript -->
+{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>#}
+{#    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>#}
+        <script src="{% static 'js/vendor/jquery-3.2.1.min.js' %}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/vendor/imagesloaded.pkgd.min.js' %} "></script>
+    <script src="{% static 'js/vendor/masonry.pkgd.min.js' %} "></script>
+    <script src="https://cdn.jsdelivr.net/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="{% static 'js/vendor/color-thief.min.js' %} "></script>
+    <script src="{% static 'js/vendor/init.js' %} "></script>
+    {% block js %}{% endblock %}
+  </body>
 </html>

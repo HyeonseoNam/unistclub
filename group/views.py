@@ -25,7 +25,6 @@ def group_detail(request, group_id):
     # group_instance = Group.objects.is_apply()
     group_instance = Group.objects.all()
     group = get_object_or_404(group_instance, group_id=group_id)
-
     # alert 메세지
     message = ""
 
@@ -33,6 +32,7 @@ def group_detail(request, group_id):
     comments = Comment.objects.filter(group=group)
     # comment 작성 또는 멤버 추가나 삭제관련
     if request.is_ajax():
+        print('request.is_ajax()')
         # 멤버 추가 혹은 삭제 부분
         if 'member_change' in request.POST:
             passed_user_id = int(request.POST["user_id"])
@@ -87,7 +87,12 @@ def group_detail(request, group_id):
                 am_pm = "오후"
             ajax_datetime = real_datetime.strftime('%Y년 %m월 %d일 %H:%M ') # 년 월 일 시간까지 입력
             ajax_datetime = ajax_datetime + am_pm # 오전 오후 붙이는 곳
-            data = {'comment_user': instance.user, 'added_comment': instance.content, 'comment_created': ajax_datetime, 'comment_id':instance.id}
+            data = {
+                'comment_user': instance.user,
+                'comment_user_photo': instance.user.photo,
+                'added_comment': instance.content,
+                'comment_created': ajax_datetime
+            }
             json_data = json.dumps(data, sort_keys=True, default=str)
             return HttpResponse(json_data, content_type='application/json')
         else:
