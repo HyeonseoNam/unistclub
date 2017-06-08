@@ -5251,7 +5251,7 @@ button.btn-floating {
 
 .dropdown-content li > a, .dropdown-content li > span {
   font-size: 16px;
-  color: #26a69a;
+  color: #2979ff;
   display: block;
   line-height: 22px;
   padding: 14px 16px;
@@ -9138,4 +9138,105 @@ nav .categories-wrapper .categories-container .categories > li {
   height: 250px;
   width: 100%;
   background-color: #00acc1;
+}
+
+
+/* ---------- 이중 카드구조 CSS ---------- */
+.card .inner-card-image {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.card .inner-card-image img {
+  display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  border: 0;
+}
+.card .inner-card-title {
+  color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
+    padding: 24px;
+  font-size: 24px;
+    font-weight: 300;
+}
+
+.card .inner-card-content {
+  padding: 24px;
+    border-radius: 0 0 2px 2px;
+}
+.card .inner-card-content p {
+  margin: 0;
+    color: inherit;
+}
+/* ---------- // 이중 카드구조 CSS ---------- */
+
+
+/* 카드 내 배경 overlay */
+.inner-background {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #1466d6;
+  background: -moz-linear-gradient(108deg, #1466d6 0%, #1cd8d2 100%);
+  background: -webkit-linear-gradient(108deg, #1466d6 0%, #1cd8d2 100%);
+  background: linear-gradient(108deg, #1466d6 0%, #1cd8d2 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1466d6', endColorstr='#1cd8d2',GradientType=1 );
+  opacity: 0.5;
+  z-index: 1;
+}
+/* 카드내 배경 마우스 호버 애니메이션 */
+.inner-background:hover {
+  opacity: 0;
+    -webkit-transition: opacity 0.3s;
+    -moz-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+
+.card .inner-card-content {
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+
+/* 타이틀이 맨 위에오도록. */
+.card .inner-card-title {
+  z-index: 2;
+}
+
+
+
+
+/* 가장 작은 화면 */
+@media only screen and (max-width: 600px) {
+  /* 이중 카드 크기의 반응형 사이즈 */
+  .inner-card-sizing .inner-card-image {
+    height: 200px;
+  }
+}
+/* 중간 화면  */
+@media only screen and (min-width: 601px) {
+  /* 이중 카드 크기의 반응형 사이즈 */
+  .inner-card-sizing .inner-card-image {
+    height: 230px;
+  }
+}
+/* 가장 큰 화면 */
+@media only screen and (min-width: 993px) {
+  /* 이중 카드 크기의 반응형 사이즈 */
+  .inner-card-sizing .inner-card-image {
+    height: 250px;
+  }
 }

@@ -33,6 +33,16 @@ label{
     color: rgba(0,0,0,0.6);
 }
 
+/* datepicker가 있는 row의 margin 조정 */
+.row-datepicker .card-content-row {
+    margin-top: 0 !important;
+}
+
+.group-creation-btn {
+    font-size: 10px;
+    line-height: 56px;
+}
+
 /* 카드의 태그들 */
 .chip.tag{
     position:absolute;
