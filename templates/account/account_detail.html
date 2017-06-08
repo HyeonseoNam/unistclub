@@ -28,7 +28,7 @@
               <div class="col l4 m4 s12">
                 <div class="card-profile-wrapper">
 {#                  <img src="{{ request.user.photo }}" alt="account-profile" class="card-profile">#}
-                  <img src="{% static 'img/user_profile_temp.png' %}" alt="account-profile" class="card-profile circle z-depth-1-half">
+                  <img src="{{ user.get_user_photo }}" alt="account-profile" class="card-profile circle z-depth-1-half">
                 </div>
                 <span class=""></span>
               </div>
