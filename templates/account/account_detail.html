@@ -34,18 +34,21 @@
               </div>
               <div class="col l8 m8 s12" >
 
-                  <span class="card-title">{{ request.user.name }}</span>
+                  <span class="card-title">{{ user.name }}</span>
                   {# Todo: email은 자신의 것만 보인다. #}
-                  <p>{{ request.user.email }} <span class="notyet">&nbsp;비공개</span></p>
-                  {% if request.user.major == '' %}
+              {% if request.user == user %}
+                <p>{{ user.email }} <span class="notyet">&nbsp;비공개</span></p>
+              {% endif %}
+
+                  {% if user.major == '' %}
                     <p class="notyet">전공정보가 입력되어 있지 않습니다.</p>
                   {% else %}
-                    <p>{{ request.user.major }} | {{ request.user.minor }}</p>
+                    <p>{{ user.major }} | {{ user.minor }}</p>
                   {% endif %}
-                  {% if request.user.description == '' %}
+                  {% if user.description == '' %}
                     <p class="notyet">소개글이 작성되어 있지 않습니다.</p>
                   {% else %}
-                    <p>{{ request.user.description }}</p>
+                    <p>{{ user.description }}</p>
                   {% endif %}
 
               </div>
@@ -55,7 +58,7 @@
 
          <section class="account-group-participating">
            <span class="card-title">
-             내가 속한 그룹 {{ joined_groups|length }}
+             사용자가 속한 그룹 {{ joined_groups|length }}
             </span>
            <div class="row">
            {% if joined_groups|length == 0 %}

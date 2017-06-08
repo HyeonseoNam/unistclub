@@ -9240,3 +9240,7 @@ nav .categories-wrapper .categories-container .categories > li {
     height: 250px;
   }
 }
+
+.card a {
+  color: rgba(0,0,0,0.85);
+}
