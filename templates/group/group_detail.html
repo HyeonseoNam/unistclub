@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block group_nav %}
-{# ---- Todo: nav 문구 설정 ---- #}
             <div class="nav-header center">
           <h1>&nbsp;</h1>
           <div class="tagline">&nbsp;</div>
@@ -123,18 +122,14 @@
                     {% if request.user == group.admin %}
                       <form id="joined_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
                       <div class="people-wrapper">
-                      {# Todo: for 문 수정 #}
-                      {% for i in "123456789012345" %}
+                      {% for member in joined_list %}
                         <div class="people-item ">
                         <div class="avatar">
-                          {# Todo: 사람들 이미지 넣기 #}
-                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
-    {#                      <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>#}
-                          {# Todo: member id 넣기 문 수정 #}
-                          <button class="member_delete_btn z-depth-1-half red lighten-1 " style="display: none;" type="button" data_id="">-</button>
+                          <img src="{{ member.get_user_photo }}" alt="" class="circle z-depth-1">
+                          <button class="member_delete_btn z-depth-1-half red lighten-1 " style="display: none;" type="button" data_id="{{ member.user_id }}">-</button>
                         </div>
-                          {# Todo: user page url 넣기, 이름넣기 #}
-                        <a href="#"><h6 class="name">이름</h6></a>
+                          {# Todo: user page url 넣기 #}
+                        <a href="#"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                       </div>
@@ -143,16 +138,16 @@
                     {# 참여중인 사람들#}
                     {% elif request.user in joined_list %}
                     <div class="people-wrapper">
-                      {% for i in "123456789012345" %}
+                      {% for member in joined_list %}
                         <div class="people-item ">
                         <div class="avatar">
-                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle  z-depth-1">
-
+                          <img src="{{ member.get_user_photo }}" alt="" class="circle  z-depth-1">
                           <form id="joined_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
                             <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>
                           </form>
                         </div>
-                        <a href=""><h6 class="name">Title</h6></a>
+                        {# todo: 유저 링크설정 #}
+                        <a href="#"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                     </div>
@@ -181,19 +176,14 @@
                     {% if request.user == group.admin %}
                     <form id="waiting_form" action="/group/{{ group.group_id }}/" method="POST">{% csrf_token %}
                       <div class="people-wrapper">
-                      {# Todo: for 문 수정 #}
-                      {% for i in "123456789012345" %}
-    {#                    {% for member in joined_list %}#}
+                      {% for member in applied_list %}
                         <div class="people-item ">
                         <div class="avatar">
-                          {# Todo: 사람들 이미지 넣기 #}
-                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
-    {#                      <button class="member_delete_btn" type="button" data_id="{{ member.user_id }}">삭제하기</button>#}
-                          {# Todo: member id 넣기 문 수정 #}
-                          <button class=" z-depth-1-half blue accent-2"  type="button" data_id="">+</button>
+                          <img src="{{ member.get_user_photo }}" alt="" class="circle z-depth-1">
+                          <button class=" z-depth-1-half blue accent-2"  type="button" data_id="{{ member.user_id }}">+</button>
                         </div>
-                          {# Todo: user page url 넣기, 이름넣기 #}
-                        <a href="#"><h6 class="name">이름</h6></a>
+                          {# Todo: user page url 넣기 #}
+                        <a href="#"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                       </div>
@@ -202,16 +192,13 @@
                     {# [참여중인 사람들] 혹은 [대기중인 사람들] #}
                     {% elif request.user in joined_list or request.user in applied_list %}
                     <div class="people-wrapper">
-                      {# Todo: for 문 수정 #}
-                      {% for i in "123456789012345" %}
-    {#                    {% for member in joined_list %}#}
+                      {% for member in applied_list %}
                         <div class="people-item ">
                         <div class="avatar">
-                          {# Todo: 사람들 이미지 넣기 #}
-                          <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                          <img src="{{ member.get_user_photo }}" alt="" class="circle z-depth-1">
                         </div>
-                          {# Todo: user page url 넣기, 이름넣기 #}
-                        <a href="#"><h6 class="name">이름</h6></a>
+                          {# Todo: user page url 넣기 #}
+                        <a href="#"><h6 class="name">{{ member.name }}</h6></a>
                       </div>
                       {% endfor %}
                       </div>
@@ -232,21 +219,20 @@
         <div class="col l12 m12 s12 detail-submit">
         {% if request.user in applied_list or request.user in joined_list %}
           {% if request.user == group.admin %}
-            {# Todo: 그룹수정하기 액션 부여 #}
-            <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
+            <form action="{% url 'group_change' group.group_id %}" method="POST">{% csrf_token %}
               <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
               <button class="btn-large waves-effect waves-light orange lighten-3" type="submit">그룹 수정하기</button>
             </form>
           {% else %}
-            <form action="/group/membership_cancel/" method="POST">{% csrf_token %}
+            <form action="{% url 'membership_cancel' %}" method="POST">{% csrf_token %}
               <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
               <button class="btn-large waves-effect waves-light blue lighten-4" type="submit">참여취소하기</button>
             </form>
           {% endif %}
         {% else %}
-        <form action="/group/membership_participate/" method="POST">{% csrf_token %}
+        <form action="{% url 'membership_participate' %}" method="POST">{% csrf_token %}
             <input type="hidden" value="{{ group.group_id }}" name="group_id"/>
-            <button class="btn-large waves-effect waves-light blue accent-2" type="submit">함께하기</button>
+            <button class="btn-large waves-effect waves-light blue accent-2" type="submit">함께 참여하기</button>
         </form>
         {% endif %}
 
@@ -257,8 +243,7 @@
       <section class="group_comment_write">
                 <ul class="collection card">
                   <li class="collection-item avatar"> <!-- -->
-                    {# Todo: group_detail avatar 이미지변경 #}
-                    <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                    <img src="{{ request.user.photo }}" alt="" class="circle z-depth-1">
                     <form class="input-field" id="comment_form" action="/group/{{ group.group_id }}/" method="POST">
                       {% csrf_token %}
                       {{ comment_form.content }}
@@ -273,23 +258,31 @@
       {# 댓글 list section #}
       <section class="group_comment">
                 <ul class="collection card" id="comment_wrapper">
+                <form action="group/{{ group.group_id }}" id="comment_delete_form" method="post">{% csrf_token %}
                   {% for comment in comments %}
                     <li class="collection-item avatar">
-                    {# Todo: group_detail comment avatar 이미지변경 #}
-                      <img src="{% static 'img/user_profile_temp.png' %}" alt="" class="circle z-depth-1">
+                      <img src="{{ commnet.user.get_user_photo }}" alt="" class="circle z-depth-1">
                       <span class="title">{{ comment.user.name }}</span> <span class="time">{{ comment.created_at }}</span>
                       <p>
                         {{ comment.content }}
                       </p>
-{#                      <ul class="list-inline">#}
+
+
+
+                      <ul class="list-inline">
                         {# TODO: 댓글 삭제, 수정기능 연동, if문달기 #}
 {#                        <li><a href="#"><i class="material-icons">thumb_up</i></a></li>#}
 {#                        <li><a href="#"><i class="material-icons">mode_edit</i></a></li>#}
-{#                        <li><a href="#"><i class="material-icons">delete</i></a></li>#}
-{#                      </ul>#}
+                        {% if request.user == comment.user %}
+                        <li>
+                        <button class="comment_delete_btn" data_id="{{ comment.id }}" type="button"><i class="material-icons">delete</i></button>
+{#                          <a href="#"><i class="material-icons">delete</i></a></li>#}
+                        {% endif %}
+                      </ul>
 
                     </li>
                   {% endfor %}
+                </form>
                 </ul>
               </section> <!-- //section -->
 

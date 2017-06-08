@@ -1,7 +1,73 @@
-label{
-    vertical-align: top;
-}
-
 #account .card-content-row {
     margin: 20px 0;
+}
+
+/* 카드 div가 위로 올라올 수 있도록 */
+#account > .container {
+    margin-top: -100px !important;
+}
+
+#account > .container > .row:first-child > .card:first-child {
+    z-index: 20;
+}
+
+/* 가장 작은 화면 */
+@media only screen and (max-width: 600px) {
+  /* 프로필사진 이미지 크기 */
+  #account .card-profile-wrapper {
+      width: 170px;
+      height: 170px;
+  }
+}
+/* 중간 화면  */
+@media only screen and (min-width: 601px) {
+   /* 프로필사진 이미지 크기 */
+  #account .card-profile-wrapper {
+      width: 180px;
+      height: 180px;
+  }
+}
+/* 가장 큰 화면 */
+@media only screen and (min-width: 993px) {
+    /* 프로필사진 이미지 크기 */
+  #account .card-profile-wrapper {
+      width: 200px;
+      height: 200px;
+  }
+}
+
+#account .card-profile-wrapper {
+    margin: 0 auto;
+}
+/* 이미지 100% */
+#account .card-profile-wrapper img {
+    width: 100%;
+}
+
+#account .card-content p {
+    margin: 5px 0;
+}
+
+
+.notyet {
+    color: rgba(0,0,0,0.5) !important;
+    font-style: italic;
+}
+
+/* 각 section의 간격 */
+#account section .card-title{
+    margin-top:20px;
+}
+
+/* 참가중인 그룹이 없을때의 문 */
+.account-group-participating .notyet,
+.account-group-waiting .notyet {
+  text-align: center;
+  font-size: 18px;
+}
+
+/* 줄 위, 아래 간격 */
+.card-content hr {
+  margin-top: 50px;
+  margin-bottom: 20;
 }
