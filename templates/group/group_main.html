@@ -1,5 +1,6 @@
 {% extends 'group/group_base.html' %}
 {% load staticfiles %}
+{% load clubtags %}
 
 {% block group_css %}
   <link rel="stylesheet" href="{% static 'css/group_main.css' %}">
@@ -18,9 +19,9 @@
         <div class="categories-container">
           <ul class="categories container">
             <li class="active"><a href="#all">All</a></li>
-            <li><a href="#my">참여중인 그룹</a></li>
-            <li><a href="#ongoing">진행중인 그룹</a></li>
-            <li><a href="#closed">종료된 그룹</a></li>
+            <li><a href="#my">내 그룹</a></li>
+            <li><a href="#applying">지원가능 그룹</a></li>
+            <li><a href="#terminated">지원마감 그룹</a></li>
           </ul>
         </div>
       </div>
@@ -32,21 +33,42 @@
   <div id="portfolio" class="section gray">
   <div class="container">
     <div class="gallery row">
-      {#{% for i in "1234567890123" %}#}
       {% for group in groups %}
-        {#            <a href="{{ group.get_absolute_url }}">#}
-        {#                <div class="group_each_wrapper">#}
-        {#                {{ group.group_name }} <br>#}
-        {#                {{ group.group_status }} <br>#}
-        {#                {{ group.description }} <br>#}
-        {#            </div>#}
-        {#        </a>#}
-        {#    {% endfor %}#}
-        {# Todo: 신청가능한지 태그클래스 남기기 #}
-        <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter polygon">
+        {% if group.admin == request.user %}
+            <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter my">
+        {% elif request.user|is_participating:group.group_id == 2 %}
+            <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter my">
+        {% elif request.user|is_participating:group.group_id == 3 %}
+            <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter my">
+        {% elif group.is_always_apply or group.is_apply %}
+            <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter applying">
+        {% else %}
+            <div class="col l4 m6 s12 gallery-item gallery-expand gallery-filter terminated">
+        {% endif %}
           <div class="gallery-curve-wrapper">
             <a class="gallery-cover gray">
               <img class="responsive-img" src="{{ group.get_group_photo }}" alt="placeholder">
+                {% if group.admin == request.user %}
+                    <div class="chip tag admin my">
+                        내가 만든 그룹
+                    </div>
+                {% elif request.user|is_participating:group.group_id == 2 %}
+                    <div class="chip tag participating my">
+                        참여중
+                    </div>
+                {% elif request.user|is_participating:group.group_id == 3 %}
+                    <div class="chip tag waiting my">
+                        참여대기중
+                    </div>
+                {% elif group.is_always_apply or group.is_apply %}
+                    <div class="chip tag applying">
+                        지원가능
+                    </div>
+                {% else %}
+                    <div class="chip tag terminated">
+                        지원마감
+                    </div>
+                {% endif %}
             </a>
             <div class="gallery-header">
               <span>{{ group.group_name }}</span>

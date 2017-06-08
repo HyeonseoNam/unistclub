@@ -1,10 +1,12 @@
-from django.shortcuts import render, render_to_response,redirect
+from django.shortcuts import render, render_to_response,redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import login, logout
 from .models import UcUser
 from group.models import Membership, Group, Comment
+from django.contrib.auth.decorators import login_required
 
 from django.template import RequestContext
 # from .models import UcUser
@@ -36,14 +38,29 @@ from django.template import RequestContext
 # login이 필요한 view의 경우 데코레이터 추가
 # @login_required(login_url='/accounts/login/')
 
-
+# custom_login
+def custom_login(request, *args, **kwargs):
+    # 만약에 유저가 로그인 되어있다면 메인으로 보내기
+    if request.user.is_anonymous:
+        return login(request, *args, **kwargs)
+    elif request.user:
+        return redirect('/')
+    else:
+        return login(request, *args, **kwargs)
 
 def signup(request):
     """
     signup to register users
     """
+    # 만약에 유저가 로그인 되어있다면 메인으로 보내기
+    if request.user.is_anonymous:
+        pass
+    elif request.user:
+        return redirect('/')
+
     template = 'registration/signup.html'
     userForm = UserCreationForm()
+    message = ""
     # 가입 양식 작성하하여 제출 시 POST
     if request.method == "POST":
         userForm = UserCreationForm(request.POST, request.FILES or None)
@@ -51,19 +68,21 @@ def signup(request):
         if userForm.is_valid():
             userForm.save()
             return HttpResponseRedirect(
-                reverse("account:signup_ok_url")    # signup_ok라는 url으로
+                reverse("account:login")    #
             )
+        else:
+            message="패스워드가 일치하지 않습니다."
 
     # 가입 양식 미작성 시 GET. 아무처리하지 X
     elif request.method == "GET":
         pass
 
-    context = {"userForm" : userForm}
+    context = {"userForm" : userForm, "message": message}
     return render(request, template, context)
 
-
-def account_detail(request):
-    user = request.user
+@login_required(login_url='/accounts/login')
+def account_detail(request, user_id):
+    user = get_object_or_404(UcUser, user_id=user_id)
     joined_group_list = []
     waiting_group_list = []
     mycomments = []
@@ -83,6 +102,7 @@ def account_detail(request):
              'mycomments':mycomments}
     return render(request, template, context)
 
+@login_required(login_url='/accounts/login')
 def account_change(request):
     user = request.user
     form = UserChangeForm(instance=user)

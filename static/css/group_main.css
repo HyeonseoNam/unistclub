@@ -32,3 +32,31 @@ label{
     padding-bottom: 4px;
     color: rgba(0,0,0,0.6);
 }
+
+/* 카드의 태그들 */
+.chip.tag{
+    position:absolute;
+    top:9px;
+    right:2px;
+    color:white;
+}
+
+.chip.tag.admin{
+    background-color:#0d47a1 ;
+}
+
+.chip.tag.participating{
+    background-color:#1e88e5;
+}
+
+.chip.tag.waiting{
+    background-color:#9fa8da;
+}
+
+.chip.tag.applying{
+    background-color:#4caf50;
+}
+
+.chip.tag.terminated{
+    background-color:#DFDFDF;
+}
