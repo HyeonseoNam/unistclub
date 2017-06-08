@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import login, logout
 from .models import UcUser
 from group.models import Membership, Group, Comment
 from django.contrib.auth.decorators import login_required
@@ -37,12 +38,24 @@ from django.template import RequestContext
 # login이 필요한 view의 경우 데코레이터 추가
 # @login_required(login_url='/accounts/login/')
 
-
+# custom_login
+def custom_login(request, *args, **kwargs):
+    # 만약에 유저가 로그인 되어있다면 메인으로 보내기
+    if request.user.is_anonymous:
+        return login(request, *args, **kwargs)
+    elif request.user:
+        return redirect('/')
+    else:
+        return login(request, *args, **kwargs)
 
 def signup(request):
     """
     signup to register users
     """
+    # 만약에 유저가 로그인 되어있다면 메인으로 보내기
+    if request.user.is_anonymous:
+        return redirect('/')
+
     template = 'registration/signup.html'
     userForm = UserCreationForm()
     message = ""

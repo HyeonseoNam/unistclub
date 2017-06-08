@@ -5,7 +5,7 @@ from account import views
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import logout, login
-from .views import signup, account_detail, account_change
+from .views import signup, account_detail, account_change, custom_login
 
 
 urlpatterns = [
@@ -18,7 +18,7 @@ urlpatterns = [
 
 
 
-    url(r'^login/$', login, name='login'),
+    url(r'^login/$', custom_login, name='login'),
     url(r'^logout/$', logout, {
         # logout 시 이동하는 페이지. login_url 경로 변경시 절대값경로로 변경해야한다.
         # 'next_page': '/accounts/login',

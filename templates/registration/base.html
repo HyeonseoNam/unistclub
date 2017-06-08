@@ -29,13 +29,6 @@
 {% endblock %}
 
 {% block group_js %}
-    <script>
-        $(document).ready(function() {
-            {% if request.user %}
-                window.location.replace('/');
-            {% endif %}
-        });
-    </script>
     {% block registration_js %}
     {% endblock %}
 {% endblock %}
