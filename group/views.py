@@ -32,7 +32,6 @@ def group_detail(request, group_id):
     comments = Comment.objects.filter(group=group)
     # comment 작성 또는 멤버 추가나 삭제관련
     if request.is_ajax():
-        print('request.is_ajax()')
         # 멤버 추가 혹은 삭제 부분
         if 'member_change' in request.POST:
             passed_user_id = int(request.POST["user_id"])
@@ -177,6 +176,11 @@ def group_create(request):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.admin = request.user # merge: 로그인 user 등록
+
+            # 그룹 생성할때 지원 날짜 사이에 있으면 is_apply는 true
+            if instance.apply_start <= date.today() and date.today() <= instance.apply_end:
+                instance.is_apply = True
+
             # 자기 자신도 멤버로 참여하기
             membership = Membership(group=instance, member=request.user, status=True)
             membership.save()
@@ -208,7 +212,7 @@ def group_change(request, group_id):
 
         else:
             pass
-    template = 'group/group_change.html'
+    template = 'group/o_group_change.html'
     context = {
         "form": form,
         "group": group

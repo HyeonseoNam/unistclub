@@ -1,5 +1,6 @@
 {% extends 'group/group_base.html' %}
 {% load staticfiles %}
+{% load clubtags %}
 
 {% block group_css %}
   <link rel="stylesheet" href="{% static 'css/group_main.css' %}">
@@ -51,9 +52,17 @@
                     <div class="chip tag admin">
                         내가 만든 그룹
                     </div>
+                {% elif request.user|is_participating:group.group_id == 2 %}
+                    <div class="chip tag participating">
+                        참여중
+                    </div>
+                {% elif request.user|is_participating:group.group_id == 3 %}
+                    <div class="chip tag waiting">
+                        참여대기중
+                    </div>
                 {% elif group.is_always_apply or group.is_apply %}
                     <div class="chip tag applying">
-                        지원중
+                        지원가능
                     </div>
                 {% else %}
                     <div class="chip tag terminated">
