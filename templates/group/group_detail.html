@@ -82,6 +82,7 @@
         {# 그룹디테일 - 연락처 #}
         <div class="col l12 m12 s12">
 
+
           {# 만약 참가되어있는 유저라면 #}
           {% if request.user in applied_list or request.user in joined_list %}
           <div class="card blue accent-2">
@@ -291,6 +292,7 @@
                   {% endfor %}
                 </ul>
               </section> <!-- //section -->
+
     </div>
   </div>
 </div>
@@ -333,6 +335,7 @@
         $('#comment_form').submit(function() { // catch the form's submit event
             $.ajax({ // create an AJAX call...
                 method: 'POST',
+
                 data: {csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
                 comment_content: $(this).find('textarea').val()},
                 dataType: "json",
@@ -349,6 +352,7 @@
                         "<p>" + response["added_comment"] + "</p> </li>").hide();
                     $('#comment_wrapper').append(item);
                     item.fadeIn(1500);
+
                 }
             });
             return false;
@@ -419,6 +423,32 @@
             });
             return false;
         });
+
+        var temp_data_id3 = "";
+        $('.comments_wrapper').on('click', ".comment_delete_btn",function(){
+            temp_data_id3 = $(this).attr('data_id');
+            $('#comment_delete_form').submit();
+        });
+
+        $('#comment_delete_form').submit(function () { // catch the form's submit even
+            $.ajax({ // create an AJAX call...
+                method: 'POST',
+                data: {
+                    csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                    comment_id: temp_data_id3,
+                    deleting: 1,
+                    comment_change:1,
+                },
+                dataType: "json",
+                url: $(this).attr('action'), // the file to call
+                success: function (response) { // on success.
+                    var temp = response["selected_comment_id"];
+                    $('.comment_wrapper[data_id='+temp+']')[0].remove();
+                }
+            });
+            return false;
+        });
+
     });
 
 
@@ -432,10 +462,6 @@
             alert('{{ message }}');
         }
     });
-
-    {% if messages %}
-        alert('hi');
-    {% endif %}
     </script>
 {#  <script src="{% static 'js/group_detail.js' %} "></script>#}
     <script src="{% static 'js/vendor/galleryExpand.js' %} "></script>
