@@ -36,6 +36,7 @@ def group_detail(request, group_id):
     if request.is_ajax():
         # 멤버 추가 혹은 삭제 부분
         if 'member_change' in request.POST:
+            print('member_change')
             passed_user_id = int(request.POST["user_id"])
             selected_user = UcUser.objects.get(user_id=passed_user_id)
             selected_membership = Membership.objects.get(member=selected_user, group=group)
@@ -49,8 +50,8 @@ def group_detail(request, group_id):
                 if selected_membership.status == True:
                     selected_membership.status = False
                     selected_membership.save()
-
-            data = {'selected_user_id':selected_user.user_id, 'selected_user_name':selected_user.name}
+            data = {'selected_user_id':selected_user.user_id, 'selected_user_name':selected_user.name,
+                    'selected_user_photo': selected_user.get_user_photo}
             json_data = json.dumps(data, sort_keys=True, default=str)
             return HttpResponse(json_data, content_type='application/json')
 
