@@ -81,3 +81,7 @@ label{
     background: transparent;
     border: 0;
 }
+
+.title-wrapper h3 {
+    font-size: 2.0rem !important;
+}
