@@ -113,3 +113,4 @@ db.sqlite3
 !media/default/*
 media/groups/*
 media/users/*
+*/secret.py

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from account.secret import gmail_password
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -139,3 +140,14 @@ AUTH_USER_MODEL = 'account.UcUser'
 CRONJOBS = [
     ('00 00 * * *', 'group.cron.update_is_apply')
 ]
+
+# email confirmation part
+ACCOUNT_ACTIVATION_DAYS = 7
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'unistclub@gmail.com'
+EMAIL_HOST_PASSWORD = gmail_password
+SERVER_EMAIL = 'unistclub@gmail.com'
+DEFAULT_FROM_MAIL = 'unist_club'
