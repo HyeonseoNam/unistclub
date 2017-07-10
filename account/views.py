@@ -9,8 +9,17 @@ from group.models import Membership, Group, Comment
 from django.contrib.auth.decorators import login_required
 
 from django.template import RequestContext
-# from .models import UcUser
-# from django.contrib.auth.decorators import login_required
+
+# email 인증
+from django.http import HttpResponse
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+# from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+
 
 #
 #
@@ -45,6 +54,8 @@ def custom_login(request, *args, **kwargs):
         return login(request, *args, **kwargs)
     elif request.user:
         return redirect('/')
+    elif not request.user.is_active:
+        return redirect('/')
     else:
         return login(request, *args, **kwargs)
 
@@ -66,10 +77,26 @@ def signup(request):
         userForm = UserCreationForm(request.POST, request.FILES or None)
         # valid할 경우만 저장 TODO:is_valid() 양식에 맞게 생성필요.
         if userForm.is_valid():
-            userForm.save()
-            return HttpResponseRedirect(
-                reverse("account:login")    #
-            )
+            # userForm.save()
+            user = userForm.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            subject = 'Activate your blog account.'
+            message = render_to_string('acc_active_email.html', {
+                'user': user, 'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            # user.email_user(subject, message)
+            toemail = userForm.cleaned_data.get('email')
+            email = EmailMessage(subject, message, to=[toemail])
+            email.send()
+            return HttpResponse('Please confirm your email address to complete the registration')
+
+            # return HttpResponseRedirect(
+            #     reverse("account:login")    #
+            # )
         else:
             message="패스워드가 일치하지 않습니다."
 
@@ -122,3 +149,18 @@ def account_change(request):
         "form": form,
     }
     return render(request, template, context)
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = UcUser.objects.get(user_id=uid)
+    except(TypeError, ValueError, OverflowError, UcUser.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')

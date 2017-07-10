@@ -5,7 +5,7 @@ from account import views
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import logout, login
-from .views import signup, account_detail, account_change, custom_login
+from .views import signup, account_detail, account_change, custom_login, activate
 
 
 urlpatterns = [
@@ -16,7 +16,7 @@ urlpatterns = [
     # signup submit 후 완료화면
     url(r'^signup_ok/$', TemplateView.as_view(template_name='registration/signup_ok.html'), name='signup_ok_url'),
 
-
+    # url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', activate, name='activate'),
 
     url(r'^login/$', custom_login, name='login'),
     url(r'^logout/$', logout, {
@@ -38,7 +38,7 @@ urlpatterns = [
     #     auth_views.login,
     #     name='login',
     #     kwargs={
-    #         'template_name': 'login.html'
+    #         'templ    ate_name': 'login.html'
     #     }
     # ),
     # url(

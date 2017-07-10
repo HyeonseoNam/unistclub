@@ -22,6 +22,7 @@ from club.views import club_detail, club_main, club_create
 from group.views import group_create, group_main, group_detail,\
     membership_cancel, membership_participate, group_change, group_delete
 
+from account.views import activate
 
 urlpatterns = [
     url(r'', include('main.urls', namespace='main')),
@@ -37,6 +38,7 @@ urlpatterns = [
     url(r'^group/membership_participate', membership_participate, name="membership_participate"),
     url(r'^group/change/(?P<group_id>\d+)/$', group_change, name='group_change'),
     url(r'^group/delete/(?P<group_id>\d+)/$', group_delete, name='group_delete'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', activate, name='activate'),
 ]
 
 if settings.DEBUG:
