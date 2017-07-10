@@ -17,14 +17,10 @@ def get_secret(setting, secrets=secrets):
         error_msg = "Set the {0} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
 
+
 SECRET_KEY = get_secret("SECRET_KEY")
 
 
-
-
-SECRET_KEY = 'tt4%t&taa*drp*-4k)^*_*f1pa5o0p6xun&f3z=0%*w5siwpgg'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 
 
 # Application definition
