@@ -104,7 +104,7 @@ fabric.properties
 *$py.class
 
 # Secret files
-secret.json
+secrets.json
 venv/*
 myvenv/*
 */migrations/*
