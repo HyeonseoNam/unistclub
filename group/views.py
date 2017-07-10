@@ -89,8 +89,8 @@ def group_detail(request, group_id):
             ajax_datetime = real_datetime.strftime('%Y년 %m월 %d일 %H:%M ') # 년 월 일 시간까지 입력
             ajax_datetime = ajax_datetime + am_pm # 오전 오후 붙이는 곳
             data = {
-                'comment_user': instance.user,
-                'comment_user_photo': instance.user.photo,
+                'comment_user': instance.user.name,
+                'comment_user_photo': instance.user.get_user_photo,
                 'added_comment': instance.content,
                 'comment_created': ajax_datetime
             }
