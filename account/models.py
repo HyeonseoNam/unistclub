@@ -55,8 +55,8 @@ class UcUser(AbstractBaseUser, PermissionsMixin):
     # 부전공(선택)
     minor = models.CharField(max_length=30)
 
-
-
+    # 메일 인증을 위한 is_active
+    is_active = models.BooleanField(default=False)
 
     objects = UcUserManager()
 
