@@ -91,6 +91,7 @@ def signup(request):
             # user.email_user(subject, message)
             toemail = userForm.cleaned_data.get('email')
             email = EmailMessage(subject, message, to=[toemail])
+            email.content_subtype = "html"
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
 
